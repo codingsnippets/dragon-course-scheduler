@@ -45,15 +45,10 @@ public class UserHistory {
 		JL3.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
 		
 		JLabel JL4 = new JLabel("Please select the quarter term that you would like to schedule?");
-		final JRadioButton Fall = new JRadioButton("Fall");
-		final JRadioButton Winter = new JRadioButton("Winter");
-		final JRadioButton Spring = new JRadioButton("Spring");
-		final JRadioButton Summer = new JRadioButton("Summer");
-		final ButtonGroup group = new ButtonGroup();
-		group.add(Fall);
-		group.add(Winter);
-		group.add(Spring);
-		group.add(Summer);
+		final JCheckBox Fall = new JCheckBox("Fall");
+		final JCheckBox Winter = new JCheckBox("Winter");
+		final JCheckBox Spring = new JCheckBox("Spring");
+		final JCheckBox Summer = new JCheckBox("Summer");
 		UserBackground.add(JL4);
 		JL4.setAlignmentX(Component.CENTER_ALIGNMENT);
 		//all for term radio buttons proper alignment
@@ -82,19 +77,24 @@ public class UserHistory {
 		frame.setLocationRelativeTo(null);
 		
 		//action listener that enables button once proper information is entered by user
-		ActionListener radioButtonActionListener = new ActionListener() {
+		ActionListener checkBoxActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!submit.isEnabled()) {
-					if (group.getSelection() != null) {
+					if (Fall.isSelected() || Winter.isSelected() || Spring.isSelected() || Summer.isSelected()) {
 						submit.setEnabled(true);
+					}
+				}
+				if (submit.isEnabled()) {
+					if(!Fall.isSelected() && !Winter.isSelected() && !Spring.isSelected() && !Summer.isSelected()) {
+						submit.setEnabled(false);
 					}
 				}
 			}
 		};
-		Fall.addActionListener(radioButtonActionListener);
-		Winter.addActionListener(radioButtonActionListener);
-		Spring.addActionListener(radioButtonActionListener);
-		Summer.addActionListener(radioButtonActionListener);
+		Fall.addActionListener(checkBoxActionListener);
+		Winter.addActionListener(checkBoxActionListener);
+		Spring.addActionListener(checkBoxActionListener);
+		Summer.addActionListener(checkBoxActionListener);
 		
 		//button to next page (no error handling yet)
 		submit.addActionListener(new ActionListener() {
