@@ -1,7 +1,10 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
-public class UserHistory {
+public class UserHistory {	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public static void UserHistoryInterface() {
 		JPanel UserBackground = new JPanel();
@@ -42,11 +45,11 @@ public class UserHistory {
 		JL3.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
 		
 		JLabel JL4 = new JLabel("Please select the quarter term that you would like to schedule?");
-		JRadioButton Fall = new JRadioButton("Fall");
-		JRadioButton Winter = new JRadioButton("Winter");
-		JRadioButton Spring = new JRadioButton("Spring");
-		JRadioButton Summer = new JRadioButton("Summer");
-		ButtonGroup group = new ButtonGroup();
+		final JRadioButton Fall = new JRadioButton("Fall");
+		final JRadioButton Winter = new JRadioButton("Winter");
+		final JRadioButton Spring = new JRadioButton("Spring");
+		final JRadioButton Summer = new JRadioButton("Summer");
+		final ButtonGroup group = new ButtonGroup();
 		group.add(Fall);
 		group.add(Winter);
 		group.add(Spring);
@@ -62,15 +65,60 @@ public class UserHistory {
 		termsPanel.add(Summer);
 		UserBackground.add(termsPanel);
 		JL4.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
-		termsPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+		termsPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
 		
+		//submit button
+		final JButton submit = new JButton("Submit History and Select Classes!");
+		submit.setEnabled(false);
+		UserBackground.add(submit);
+		submit.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		JFrame frame = new JFrame("User History");
+		final JFrame frame = new JFrame("User History");
 		frame.add(UserBackground);
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800, 500);
+		frame.setSize(800, 550);
+		frame.setLocationRelativeTo(null);
+		
+		//action listener that enables button once proper information is entered by user
+		ActionListener radioButtonActionListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!submit.isEnabled()) {
+					if (group.getSelection() != null) {
+						submit.setEnabled(true);
+					}
+				}
+			}
+		};
+		Fall.addActionListener(radioButtonActionListener);
+		Winter.addActionListener(radioButtonActionListener);
+		Spring.addActionListener(radioButtonActionListener);
+		Summer.addActionListener(radioButtonActionListener);
+		
+		//button to next page (no error handling yet)
+		submit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClassSelection selectionFrame = new ClassSelection();
+				//Set Term
+				if (Fall.isSelected()) {
+					selectionFrame.changeTerm(Term.Fall);
+				}
+				else if (Winter.isSelected()) {
+					selectionFrame.changeTerm(Term.Winter);
+				}
+				else if (Spring.isSelected()) {
+					selectionFrame.changeTerm(Term.Spring);
+				}
+				else if (Summer.isSelected()) {
+					selectionFrame.changeTerm(Term.Summer);
+				}
+				//Set Tracks
+				
+				frame.setVisible(false);
+				selectionFrame.ClassSelectionInterface();
+			}});
+
 	}
 	
 	public static void main(String[] args) {
