@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 class UHO{};
-class Term{};
 class Filter{
 
 	public ArrayList<Integer> getMajors() {
