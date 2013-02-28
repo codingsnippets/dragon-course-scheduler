@@ -1,4 +1,8 @@
 
 public enum Term {
-	Past,Fall,Winter,Spring,Summer
+	History,
+	Fall,
+	Winter,
+	Spring,
+	Summer
 }
