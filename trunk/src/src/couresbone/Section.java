@@ -1,3 +1,9 @@
+/*
+ * Dragon Course Scheduler
+ * Author: Stan Kolakowski
+ * Copyright © 2013
+ */
+
 package couresbone;
 
 public class Section 
@@ -14,6 +20,9 @@ public class Section
 	private Integer concentrationReq = 0;
 	private String location = "";
 	
+	/**
+	 * Default contructor.
+	 */
 	public Section()
 	{
 		
@@ -43,25 +52,29 @@ public class Section
 		
 	}
 	
+	/**
+	 * The <code>getCrn()</code> function retrieves the crn number of this
+	 * Section
+	 * </br>
+	 * @return Integer crn
+	 */
 	public Integer getCrn()
 	{
 		return this.crn;
 	}
 	
+	/**
+	 * The <code>toCsv()</code> function creates a string of comma separated
+	 * values of the Section.
+	 * </br>
+	 * @return String csv
+	 */
 	public String toCsv()
 	{
 		String csv = "";
 		
 		return csv;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 } //End of Section class.
