@@ -1,25 +1,25 @@
 package couresbone;
 
-import java.util.ArrayList;
-
 public class Section 
 {
+	@SuppressWarnings("unused")
 	private Integer courseId = 0;
 	private Integer crn = 0;
 	private String teacher = "";
 	private Integer section = 0;
 	private Boolean time_conflict = false;
 	private Boolean depend_conflict = false;
-	private Timeslot timeslot;
+	private Timeslot time;
 	private Boolean majorReq = false;
 	private Integer concentrationReq = 0;
+	private String location = "";
 	
-	public void Section()
+	public Section()
 	{
 		
 	}
 	
-	public void Section(Integer id,
+	public Section(Integer id,
 						Integer c,
 						String prof,
 						Integer s,
@@ -27,17 +27,19 @@ public class Section
 						Boolean depConflict,
 						Timeslot ts,
 						Boolean mjrReq,
-						Integer trackReq )
+						Integer trackReq,
+						String loc )
 	{
-		courseId = id;
-		crn = c;
-		teacher = prof;
-		section = s;
-		time_conflict = tConflict;
-		depend_conflict = depConflict;
-		timeslot = ts;
-		majorReq = mjrReq;
-		concentrationReq = trackReq;
+		this.courseId = id;
+		this.crn = c;
+		this.teacher = prof;
+		this.section = s;
+		this.time_conflict = tConflict;
+		this.depend_conflict = depConflict;
+		this.time = ts;
+		this.majorReq = mjrReq;
+		this.concentrationReq = trackReq;
+		this.location = loc;
 		
 	}
 	
