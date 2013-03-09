@@ -14,6 +14,7 @@ public class TermTableTest {
 
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 
 	@Test

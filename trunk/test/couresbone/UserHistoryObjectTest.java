@@ -108,7 +108,12 @@ public class UserHistoryObjectTest {
 	@Test
 	public void testUserHistoryObject() {
 		
-		assertEquals("Checking default constructor: ", uho.getClass().getName(), "UserHistoryObject");
+		System.out.println("Testing constructor " + name.getMethodName().substring(4) + "()  ...");
+		//System.out.println("class name: " + uho.getClass().getName());
+
+		assertEquals("Checking default constructor: ", uho.getClass().getName(),
+				"couresbone.UserHistoryObject");
+		
 		
 	}
 
@@ -117,7 +122,7 @@ public class UserHistoryObjectTest {
 	{
 		Integer m = 2;
 		
-		System.out.print("Testing method " + name.getMethodName().substring(4) + "() by " +
+		System.out.println("Testing method " + name.getMethodName().substring(4) + "() by " +
 				"setting Major to Integer: " + m + " ...");
 		
 		
@@ -130,7 +135,7 @@ public class UserHistoryObjectTest {
 	@Test
 	public void testAddClass() 
 	{
-		System.out.print("Testing method " + name.getMethodName().substring(4) + "() by " +
+		System.out.println("Testing method " + name.getMethodName().substring(4) + "() by " +
 				"adding a Section that is not-extistant in UHO...");
 		
 		boolean passed = false;
@@ -144,7 +149,7 @@ public class UserHistoryObjectTest {
 	@Test
 	public void testRemoveClass() 
 	{
-		System.out.print("Testing method " + name.getMethodName().substring(4) + "() by " +
+		System.out.println("Testing method " + name.getMethodName().substring(4) + "() by " +
 				"removing a Section that is extistant in UHO...");
 		
 		full_uho.removeClass(Term.Fall, test_existSection);
