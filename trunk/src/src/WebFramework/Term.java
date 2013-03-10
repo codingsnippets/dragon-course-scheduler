@@ -1,7 +1,10 @@
-package WebFramework;
-
 
 public enum Term {
+Past {
+	public String toString() {
+		return "Past";
+	}
+},
 Fall {
 	public String toString() {
 		return "Fall";

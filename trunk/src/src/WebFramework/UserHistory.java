@@ -1,14 +1,27 @@
-package WebFramework;
-
+import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class UserHistory {	
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public static void UserHistoryInterface() {
+public class UserHistory extends Applet {
+	private static final long serialVersionUID = 1L;
+	private JTextField PreviousClassesField = new JTextField(100);
+	private JTextField MajorCodeField = new JTextField(100);
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private JList TrackList = new JList(new Object[]{"Algorithms and Data Structures", "Artificial Intelligence", "Computer and Network Security", "Computer Graphics and Vision", "Game Development and Design", "Human Computer Interaction", "Numerical Analysis", "Numeric and Symbolic Computation", "Programming Languages", "Software Engineering", "Systems"});
+	private JCheckBox Fall = new JCheckBox("Fall");
+	private JCheckBox Winter = new JCheckBox("Winter");
+	private JCheckBox Spring = new JCheckBox("Spring");
+	private JCheckBox Summer = new JCheckBox("Summer");
+	
+	public UserHistory() {
+		super();
+	}
+	
+	public void init() {
 		JPanel UserBackground = new JPanel();
 		UserBackground.setLayout(new BoxLayout(UserBackground, BoxLayout.Y_AXIS));
 		
@@ -19,7 +32,7 @@ public class UserHistory {
 		Header.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
 		
 		JLabel JL1 = new JLabel("Please enter all classes you have completed with a C- or higher (seperate with commas):");
-		JTextField PreviousClassesField = new JTextField(100);
+		
 		JL1.setLabelFor(PreviousClassesField);
 		UserBackground.add(JL1);
 		JL1.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -27,7 +40,7 @@ public class UserHistory {
 		PreviousClassesField.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		JLabel JL2 = new JLabel("Please enter your major code (i.e.: CS for computer science):");
-		JTextField MajorCodeField = new JTextField(100);
+		
 		MajorCodeField.setHorizontalAlignment(JTextField.CENTER);
 		JL2.setLabelFor(MajorCodeField);
 		UserBackground.add(JL2);
@@ -37,7 +50,7 @@ public class UserHistory {
 		JL2.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
 		
 		JLabel JL3 = new JLabel("Please select your (2) tracks from the list below");
-		JList TrackList = new JList(new Object[]{"Algorithms and Data Structures", "Artificial Intelligence", "Computer and Network Security", "Computer Graphics and Vision", "Game Development and Design", "Human Computer Interaction", "Numerical Analysis", "Numeric and Symbolic Computation", "Programming Languages", "Software Engineering", "Systems"});
+		
 		TrackList.setLayoutOrientation(JList.VERTICAL_WRAP);
 		JL3.setLabelFor(TrackList);
 		UserBackground.add(JL3);
@@ -47,10 +60,6 @@ public class UserHistory {
 		JL3.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
 		
 		JLabel JL4 = new JLabel("Please select the quarter term that you would like to schedule?");
-		final JCheckBox Fall = new JCheckBox("Fall");
-		final JCheckBox Winter = new JCheckBox("Winter");
-		final JCheckBox Spring = new JCheckBox("Spring");
-		final JCheckBox Summer = new JCheckBox("Summer");
 		UserBackground.add(JL4);
 		JL4.setAlignmentX(Component.CENTER_ALIGNMENT);
 		//all for term radio buttons proper alignment
@@ -70,13 +79,10 @@ public class UserHistory {
 		UserBackground.add(submit);
 		submit.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		final JFrame frame = new JFrame("User History");
-		frame.add(UserBackground);
-		frame.pack();
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800, 550);
-		frame.setLocationRelativeTo(null);
+		add(UserBackground);
+		repaint();
+		setVisible(true);
+		setSize(800, 550);
 		
 		//action listener that enables button once proper information is entered by user
 		ActionListener checkBoxActionListener = new ActionListener() {
@@ -102,29 +108,33 @@ public class UserHistory {
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClassSelection selectionFrame = new ClassSelection();
-				//Set couresbone.Term
-				if (Fall.isSelected()) {
-					selectionFrame.changeTerm(Term.Fall);
-				}
-				else if (Winter.isSelected()) {
-					selectionFrame.changeTerm(Term.Winter);
-				}
-				else if (Spring.isSelected()) {
-					selectionFrame.changeTerm(Term.Spring);
-				}
-				else if (Summer.isSelected()) {
-					selectionFrame.changeTerm(Term.Summer);
-				}
-				//Set Tracks
-				
-				frame.setVisible(false);
-				selectionFrame.ClassSelectionInterface();
-			}});
+				selectionFrame.init();
+				setVisible(false);
+			}
+		});
 
 	}
 	
-	public static void main(String[] args) {
-		UserHistoryInterface();
+	//getters
+	public Term[] getTerms() {
+		ArrayList<Term> selectedTerms = new ArrayList<Term>();
+		if(Fall.isSelected()) {
+			selectedTerms.add(Term.Fall);
+		}
+		if(Winter.isSelected()) {
+			selectedTerms.add(Term.Winter);
+		}
+		if(Spring.isSelected()) {
+			selectedTerms.add(Term.Spring);
+		}
+		if(Summer.isSelected()) {
+			selectedTerms.add(Term.Summer);
+		}
+		Term[] returnTerms = new Term[selectedTerms.size()];
+		for(int i = 0; i < selectedTerms.size(); i++) {
+			returnTerms[i] = selectedTerms.get(i);
+		}
+		return returnTerms;
 	}
 	
 }

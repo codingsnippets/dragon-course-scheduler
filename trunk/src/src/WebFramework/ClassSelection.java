@@ -1,17 +1,16 @@
-package WebFramework;
-
+import java.applet.Applet;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
+public class ClassSelection extends Applet{
+	private static final long serialVersionUID = 1L;
+	protected static Term activeTerm;
+	protected DefaultTableModel WeeklyTableModel = new DefaultTableModel(new Object[]{"Time", "M", "T", "W", "R", "F"}, 28);
+	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Prereq. For"}, 15);
 
-public class ClassSelection extends WebFramework{
-	public ClassSelection() {	}
-
-	public ClassSelection(Term t) {
-		term = t;
-	}
 	
-	public void ClassSelectionInterface() {	
+	public void init() {	
 		JPanel SelectClasses = new JPanel();
 		SelectClasses.setLayout(new BoxLayout(SelectClasses, BoxLayout.Y_AXIS));
 		
@@ -23,13 +22,13 @@ public class ClassSelection extends WebFramework{
 		
 		JPanel UserHistory = new JPanel(new BorderLayout());
 		JTextArea UserInfo = new JTextArea(10,0);
-		JButton GoToMenu = new JButton("Menu (Change couresbone.Term, Export/View Schedule, etc.)");
+		JButton GoToMenu = new JButton("Menu (Change Term, Export/View Schedule, etc.)");
 		UserHistory.add(UserInfo, BorderLayout.CENTER);
 		UserHistory.add(GoToMenu, BorderLayout.EAST);
 		SelectClasses.add(UserHistory);
 		
 		//currently planning
-		JLabel CurrentlyPlanning = new JLabel("Currently Planning: " + term.toString() + " couresbone.Term");
+		JLabel CurrentlyPlanning = new JLabel("Currently Planning: " +/* activeTerm.toString() +*/ " Term");
 		CurrentlyPlanning.setFont(new Font("Arial", Font.PLAIN, 20));
 		CurrentlyPlanning.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
 		JTable PlanningTable = new JTable(PlanningTableModel);
@@ -40,24 +39,20 @@ public class ClassSelection extends WebFramework{
 		PlanningTable.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		//weekly schedule
-		JLabel WeeklySchedule = new JLabel(term.toString() + " couresbone.Term Weekly Schedule");
+		JLabel WeeklySchedule = new JLabel(/*activeTerm.toString() +*/ " Term Weekly Schedule");
 		JTable WeeklyTable = new JTable(WeeklyTableModel);
 		SelectClasses.add(WeeklySchedule);
 		WeeklySchedule.setAlignmentX(Component.CENTER_ALIGNMENT);
 		SelectClasses.add(WeeklyTable);
 		WeeklyTable.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		//frame
-		final JFrame frame = new JFrame("Select Classes");
-		frame.add(SelectClasses);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(SelectClasses);
 		
 		//Set Size of frame and center
 		Toolkit tk = Toolkit.getDefaultToolkit();  
 		int xSize = ((int) tk.getScreenSize().getWidth());  
 		int ySize = (int) ((int) tk.getScreenSize().getHeight()*(0.80));  
-		frame.setSize(xSize/2,ySize);
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
+		setSize(xSize/2,ySize);
+		setVisible(true);
 	}
 }
