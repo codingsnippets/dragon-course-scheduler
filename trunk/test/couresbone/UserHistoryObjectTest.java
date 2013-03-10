@@ -1,6 +1,7 @@
 package couresbone;
 
 import couresbone.Term;
+import Filter.course_schedule;
 
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -21,15 +22,12 @@ public class UserHistoryObjectTest {
 	private Integer major = 1;
 	private ArrayList<Boolean> avalability;
 	private ArrayList<Integer> classes;
-	private static Section test_nonexistSection = 
-			new Section(
-					555, 55, "five", 5, true, false, 
-					new Timeslot(5, 5), true, 5, "bobstreet");
+	private static course_schedule test_new_course_sched = 
+			new course_schedule(
+					);
 	
-	private static Section test_existSection = 
-			new Section(
-					111, 11, "one", 1, false, false, 
-					new Timeslot(1, 2), false, 1, "market");
+	private static course_schedule test_exist_course_sched = 
+			new course_schedule();
 	
 	@SuppressWarnings("serial")
 	private static ArrayList<Integer> concentration = new ArrayList<Integer>(){{
@@ -63,23 +61,23 @@ public class UserHistoryObjectTest {
 	}};
 	
 	@SuppressWarnings({"serial", "unchecked", "rawtypes" })	
-	private static ArrayList<ArrayList<Section>> coursework = 
-		new ArrayList<ArrayList<Section>>(){{
+	private static ArrayList<ArrayList<course_schedule>> coursework = 
+		new ArrayList<ArrayList<course_schedule>>(){{
 		add(
 			new ArrayList(){{
-				add( new Section(111, 11, "one", 1, false, false, 
-						new Timeslot(1, 2), false, 1, "market") );
+				add( new course_schedule() );
 				
-				add( new Section(222, 22, "two", 2, true, true, 
-						new Timeslot(3, 4), true, 2, "chestnut") );
+				add( new course_schedule() );
 				
 			}}
 		
 		);
 		add(
 			new ArrayList(){{
-				add( new Section(333, 33, "three", 3, false, false, new Timeslot(1, 2), false, 3, "Spruce") );
-				add( new Section(444, 44, "four", 4, true, true, new Timeslot(3, 4), true, 4, "Spring") );
+				add( new course_schedule() 
+				);
+				add( new course_schedule() 
+				);
 					
 			}}
 			
@@ -140,8 +138,8 @@ public class UserHistoryObjectTest {
 		
 		boolean passed = false;
 		
-		full_uho.addClass(Term.Fall, test_nonexistSection);
-		assertTrue(full_uho.getCoursework().get(1).contains(test_nonexistSection));
+		full_uho.addClass(Term.Fall, test_new_course_sched);
+		assertTrue(full_uho.getCoursework().get(1).contains(test_new_course_sched));
 		
 		
 	}
@@ -152,8 +150,8 @@ public class UserHistoryObjectTest {
 		System.out.println("Testing method " + name.getMethodName().substring(4) + "() by " +
 				"removing a Section that is extistant in UHO...");
 		
-		full_uho.removeClass(Term.Fall, test_existSection);
-		assertFalse(full_uho.getCoursework().get(1).contains(test_existSection));
+		full_uho.removeClass(Term.Fall, test_exist_course_sched);
+		assertFalse(full_uho.getCoursework().get(1).contains(test_exist_course_sched));
 		
 	}
 
