@@ -1,7 +1,6 @@
-package Filter;
+package filter;
 
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
 
 /*
     Course schedule Entity class

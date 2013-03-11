@@ -1,9 +1,8 @@
-package Filter;
+package filter;
 
 
 import couresbone.TermTable;
 import couresbone.UserHistoryObject;
-import org.omg.CORBA.ULongSeqHolder;
 
 import java.util.ArrayList;
 

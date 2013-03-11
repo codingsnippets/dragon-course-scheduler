@@ -1,4 +1,4 @@
-package Filter;
+package filter;
 
 public class dbcredential {
 
