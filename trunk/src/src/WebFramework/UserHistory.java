@@ -2,14 +2,15 @@ import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 
 public class UserHistory extends Applet {
 	private static final long serialVersionUID = 1L;
-	private JTextField PreviousClassesField = new JTextField(100);
-	private JTextField MajorCodeField = new JTextField(100);
+	private JTextField PreviousClassesField = new JTextField(5);
+	private JTextField MajorCodeField = new JTextField(5);
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JList TrackList = new JList(new Object[]{"Algorithms and Data Structures", "Artificial Intelligence", "Computer and Network Security", "Computer Graphics and Vision", "Game Development and Design", "Human Computer Interaction", "Numerical Analysis", "Numeric and Symbolic Computation", "Programming Languages", "Software Engineering", "Systems"});
 	private JCheckBox Fall = new JCheckBox("Fall");
@@ -79,10 +80,11 @@ public class UserHistory extends Applet {
 		UserBackground.add(submit);
 		submit.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
+		UserBackground.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		add(UserBackground);
-		repaint();
 		setVisible(true);
 		setSize(800, 550);
+		repaint();
 		
 		//action listener that enables button once proper information is entered by user
 		ActionListener checkBoxActionListener = new ActionListener() {
@@ -107,8 +109,7 @@ public class UserHistory extends Applet {
 		//button to next page (no error handling yet)
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClassSelection selectionFrame = new ClassSelection();
-				selectionFrame.init();
+				//ClassSelection selectionFrame = (ClassSelection)getAppletContext().getApplet("ClassSelection");
 				setVisible(false);
 			}
 		});
@@ -116,6 +117,21 @@ public class UserHistory extends Applet {
 	}
 	
 	//getters
+	public String[] getPreviousClasses() {
+		return PreviousClassesField.getText().split(",");
+	}
+	
+	public String getMajorCode() {
+		return MajorCodeField.getText();
+	}
+	
+	public String[] getTrackList() {
+		@SuppressWarnings("unchecked")
+		List<String> selectedValues = TrackList.getSelectedValuesList();
+		
+		return (String[]) selectedValues.toArray();
+	}
+	
 	public Term[] getTerms() {
 		ArrayList<Term> selectedTerms = new ArrayList<Term>();
 		if(Fall.isSelected()) {
