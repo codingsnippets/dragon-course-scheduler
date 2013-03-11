@@ -6,7 +6,7 @@
 
 package couresbone;
 
-import filter.course_db_connect;
+import Filter.course_db_connect;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class schedule
 
     }
 
-    /*
+    /**
         @param String dbhost
         @param String dbuser
         @param String dbpass
@@ -102,22 +102,12 @@ public class schedule
     public Integer getCoursename() {
         return this.coursename;
     }
-
-
-
-    /**
-	 * The <code>getCrn()</code> function retrieves the crn number of this
-	 * schedule
-	 * </br>
-	 * @return Integer crn
-	 */
-
 	
 	/**
-	 * The <code>toCsv()</code> function creates a string of comma separated
+	 * The <code>toCsv</code> function creates a string of comma separated
 	 * values of the schedule.
 	 * </br>
-	 * @return String csv
+	 * @return  csv string
 	 */
 	public String toCsv()
 	{

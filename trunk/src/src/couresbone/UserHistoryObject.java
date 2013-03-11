@@ -37,10 +37,10 @@ public class UserHistoryObject
 	}
 	
 	/**
-	 * The <code>getMajor()</code> function retrieves the major of the 
-	 * UHO.
+	 * The <code>getMajor</code> function retrieves the major of the 
+	 * UserHistoryObject.
 	 * </br>
-	 * @return The major set in the UHO.
+	 * @return The major set in the UserHistoryObject.
 	 */
 	public Integer getMajor()
 	{
@@ -59,18 +59,22 @@ public class UserHistoryObject
 	}
 	
 	/**
-	 * 
-	 * @param  MajorCode
+	 * The <code>setMajor</code> function sets the major of the UserHistoryObject.
+	 * </br>
+	 * @param majorCode The major represented as an integer.
 	 */
-	public void setMajor(int MajorCode)
+	public void setMajor(int majorCode)
 	{
-		this.major = MajorCode;
+		this.major = majorCode;
 	}
 	
-
-
-    //TODO  obvious problem, code smell: code clone, all four terms does not differ that much but have to many lines of
-    //TODO  similar code. Change them, otherwise there is no point in having a enum class
+	/**
+	 * The <code>setClasses</code> function sets the provided classes to the 
+	 * provided term.
+	 * </br>
+	 * @param term History, Fall, Winter, Spring, or Summer
+	 * @param classes
+	 */
 	public void setClasses(Term term, ArrayList<schedule> classes)
 	{
 		Integer crn;
@@ -261,7 +265,6 @@ public class UserHistoryObject
 	 * @param add
 	 * @param schedule
 	 */
-	
 	public void modAvail(Term term, boolean add, schedule schedule)
 	{
 		

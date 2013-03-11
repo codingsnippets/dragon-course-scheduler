@@ -13,19 +13,19 @@ public class Timeslot
 	private Integer numBlock;
 	
 	/**
-	 * The <code>Timeslot()</code> constructor creates a new Timeslot Object,
-	 * provided an Integer start time  and number of 10 min intervals it 
+	 * The <code>Timeslot</code> constructor creates a new Timeslot Object,
+	 * provided an Integer start time  and the number of 10 min intervals it 
 	 * will contain. 
 	 * </br>
 	 * Start time is formatted in the following way:
 	 * (0=Monday 8:00am, 83=Monday 9:50pm, 84=Tuesday 8:00am)
-	 * @param Integer start_time
-	 * @param Integer number_of_10_min_timeblocks
+	 * @param start_time
+	 * @param num_blocks
 	 */
-	public Timeslot(Integer s, Integer n)
+	public Timeslot(Integer start_time, Integer num_blocks)
 	{
-		this.startBlock=s;
-		this.numBlock=n;
+		this.startBlock	=	start_time;
+		this.numBlock	=	num_blocks;
 	}
 	
 	/**
@@ -40,9 +40,9 @@ public class Timeslot
 	}
 	
 	/**
-	 * The <code>setStartBlock()</code> function sets the start time of Timeslot.
+	 * The <code>setStartBlock</code> function sets the start time of Timeslot.
 	 * </br>
-	 * @param Integer start_time
+	 * @param startBlock
 	 */
 	public void setStartBlock(Integer startBlock) 
 	{
@@ -50,10 +50,10 @@ public class Timeslot
 	}
 	
 	/**
-	 * The <code>getNumBlock()</code> function retrieves the number of 10-
+	 * The <code>getNumBlock</code> function retrieves the number of 10-
 	 * minute intervals the Timeslot object includes.
 	 * </br>
-	 * @return Integer num_intervals
+	 * @return The number of 10-minute intervals (blocks).
 	 */
 	public Integer getNumBlock() 
 	{
@@ -61,10 +61,10 @@ public class Timeslot
 	}
 	
 	/**
-	 * The <code>setNumBlock()</code> function sets the number of 10-minute 
+	 * The <code>setNumBlock</code> function sets the number of 10-minute 
 	 * intervals of the Timeslot.
 	 * </br>
-	 * @param Integer num_intervals
+	 * @param numBlock the number of 10-minute intervals(blocks).
 	 */
 	public void setNumBlock(Integer numBlock) 
 	{
@@ -75,7 +75,7 @@ public class Timeslot
 	 * The <code>getSlots()</code> function returns an ArrayList of the
 	 * 10-minute interval times of the Timeslot object.
 	 * </br>
-	 * @return ArrayList<Integer> time_slots
+	 * @return an arraylist of integer time slots 
 	 */
 	public ArrayList<Integer> getSlots() 
 	{
