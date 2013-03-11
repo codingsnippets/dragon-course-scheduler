@@ -12,7 +12,6 @@ import Filter.course_schedule;
 
 public class UserHistoryObject 
 {
-
 	private Integer major = 0;
 	private ArrayList<Integer> concentration = new ArrayList<Integer>();
 	private ArrayList<ArrayList<course_schedule>> coursework = 
@@ -66,7 +65,7 @@ public class UserHistoryObject
 	 * The <code>setMajor</code> function sets the major of the User-History
 	 * Object.
 	 * </br>
-	 * @param major
+	 * @param major The major represented as an integer.
 	 */
 	public void setMajor(int major)
 	{
@@ -77,7 +76,7 @@ public class UserHistoryObject
 	 * The <code>setClasses</code> function sets the provided classes to the 
 	 * provided term.
 	 * </br>
-	 * @param term
+	 * @param term History, Fall, Winter, Spring, or Summer
 	 * @param classes
 	 */
 	public void setClasses(Term term, ArrayList<course_schedule> classes)
