@@ -1,7 +1,6 @@
 /*
  * Dragon Course Scheduler
  * Author: Stan Kolakowski
- * Copyright � 2013
  */
 
 package couresbone;
@@ -57,37 +56,41 @@ public class UHO {
 	 * The <code>setMajor()</code> function sets the major of the User-History
 	 * Object.
 	 * </br>
-	 * @param Integer m
+	 * @param  MajorCode
 	 */
-	public void setMajor(int m)
+	public void setMajor(int MajorCode)
 	{
-		this.major = m;
+		this.major = MajorCode;
 	}
 	
 	/**
 	 * The <code>setClasses()</code> function sets the provided classes to the 
 	 * provided term.
 	 * </br>
-	 * @param couresbone.Term
-	 * @param ArrayList<Integer> classes
+	 * @param term
+	 * @param classes
 	 */
-	public void setClasses(Term t, ArrayList<schedule> classes)
+
+
+    //TODO  obvious problem, code smell: code clone, all four terms does not differ that much but have to many lines of
+    //TODO  similar code. Change them, otherwise there is no point in having a enum class
+	public void setClasses(Term term, ArrayList<schedule> classes)
 	{
 		Integer crn;
 		boolean exist = false;
 		
-		switch(t)
+		switch(term)
 		{
 		
 			case History:
 				
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(0).size(); j++)
 					{
-						if( this.coursework.get(0).get(j).getCrn() == crn)
+						if( this.coursework.get(0).get(j).getCRN() == crn)
 						{
 							//this.coursework.get(0).get(j).set( classes.get(i) );
 							exist = true;
@@ -107,11 +110,11 @@ public class UHO {
 				
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(1).size(); j++)
 					{
-						if( this.coursework.get(1).get(j).getCrn() == crn)
+						if( this.coursework.get(1).get(j).getCRN() == crn)
 						{
 							exist = true;
 							break;
@@ -129,11 +132,11 @@ public class UHO {
 			case Winter:
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(2).size(); j++)
 					{
-						if( this.coursework.get(2).get(j).getCrn() == crn)
+						if( this.coursework.get(2).get(j).getCRN() == crn)
 						{
 							exist = true;
 							break;
@@ -151,11 +154,11 @@ public class UHO {
 			case Spring:
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(3).size(); j++)
 					{
-						if( this.coursework.get(3).get(j).getCrn() == crn)
+						if( this.coursework.get(3).get(j).getCRN() == crn)
 						{
 							exist = true;
 							break;
@@ -173,11 +176,11 @@ public class UHO {
 			case Summer:
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(4).size(); j++)
 					{
-						if( this.coursework.get(4).get(j).getCrn() == crn)
+						if( this.coursework.get(4).get(j).getCRN() == crn)
 						{
 							exist = true;
 							break;
@@ -204,24 +207,25 @@ public class UHO {
 	 * The <code>addClass</code> function adds a class section to the provided 
 	 * term.
 	 * </br>
-	 * @param coursebone.Term t
-	 * @param Integer CRN
+	 * @param term
+	 * @param schedule
 	 * @return
 	 */
-	public void addClass(Term t, schedule s)
+    //TODO same thing here, code clone
+	public void addClass(Term term, schedule schedule)
 	{
-		Integer course_crn = s.getCrn();
+		Integer course_crn = schedule.getCRN();
 		boolean exists = false;
 		
-		switch(t)
+		switch(term)
 		{
 			case History:
 				
 				for (int i = 0; i < coursework.get(0).size(); i++ )
 				{
-					if (coursework.get(0).get(i).getCrn() == course_crn )
+					if (coursework.get(0).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(0).set(i, s);
+						this.coursework.get(0).set(i, schedule);
 						exists = true;
 						break;
 					}
@@ -230,7 +234,7 @@ public class UHO {
 				
 				if(exists != true)
 				{
-					this.coursework.get(0).add(s);
+					this.coursework.get(0).add(schedule);
 				}
 				
 				
@@ -240,9 +244,9 @@ public class UHO {
 				
 				for (int i = 0; i < coursework.get(1).size(); i++ )
 				{
-					if (coursework.get(1).get(i).getCrn() == course_crn )
+					if (coursework.get(1).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(1).set(i, s);
+						this.coursework.get(1).set(i, schedule);
 						exists = true;
 						break;
 					}
@@ -251,7 +255,7 @@ public class UHO {
 				
 				if(exists != true)
 				{
-					this.coursework.get(1).add(s);
+					this.coursework.get(1).add(schedule);
 				}
 				
 				break;
@@ -259,9 +263,9 @@ public class UHO {
 			case Winter:
 				for (int i = 0; i < coursework.get(2).size(); i++ )
 				{
-					if (coursework.get(2).get(i).getCrn() == course_crn )
+					if (coursework.get(2).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(2).set(i, s);
+						this.coursework.get(2).set(i, schedule);
 						exists = true;
 						break;
 					}
@@ -270,7 +274,7 @@ public class UHO {
 				
 				if(exists != true)
 				{
-					this.coursework.get(2).add(s);
+					this.coursework.get(2).add(schedule);
 				}
 				
 				break;
@@ -278,9 +282,9 @@ public class UHO {
 			case Spring:
 				for (int i = 0; i < coursework.get(3).size(); i++ )
 				{
-					if (coursework.get(3).get(i).getCrn() == course_crn )
+					if (coursework.get(3).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(3).set(i, s);
+						this.coursework.get(3).set(i, schedule);
 						exists = true;
 						break;
 					}
@@ -289,7 +293,7 @@ public class UHO {
 				
 				if(exists != true)
 				{
-					this.coursework.get(3).add(s);
+					this.coursework.get(3).add(schedule);
 				}
 				
 				break;
@@ -297,9 +301,9 @@ public class UHO {
 			case Summer:
 				for (int i = 0; i < coursework.get(4).size(); i++ )
 				{
-					if (coursework.get(4).get(i).getCrn() == course_crn )
+					if (coursework.get(4).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(4).set(i, s);
+						this.coursework.get(4).set(i, schedule);
 						exists = true;
 						break;
 					}
@@ -308,7 +312,7 @@ public class UHO {
 				
 				if(exists != true)
 				{
-					this.coursework.get(4).add(s);
+					this.coursework.get(4).add(schedule);
 				}
 				
 				break;
@@ -323,19 +327,19 @@ public class UHO {
 	 * The <code>removeClass()</code> function removes a class from the provided 
 	 * term.
 	 * </br>
-	 * @param coursebone.Term term
-	 * @param Timeslot time-slot
+	 * @param  term
+	 * @param  timeslot
 	 */
-	public void removeClass(Term t, schedule s)
+	public void removeClass(Term term, schedule timeslot)
 	{
-		Integer course_crn = s.getCrn();
+		Integer course_crn = timeslot.getCRN();
 		
-		switch(t){
+		switch(term){
 		
 			case History:
 				for (int i = 0; i < coursework.get(0).size(); i++ )
 				{
-					if (coursework.get(0).get(i).getCrn() == course_crn )
+					if (coursework.get(0).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(0).remove(i);
 					}
@@ -347,7 +351,7 @@ public class UHO {
 			case Fall:
 				for (int i = 0; i < coursework.get(1).size(); i++ )
 				{
-					if (coursework.get(1).get(i).getCrn() == course_crn )
+					if (coursework.get(1).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(1).remove(i);
 					}
@@ -359,7 +363,7 @@ public class UHO {
 			case Winter:
 				for (int i = 0; i < coursework.get(2).size(); i++ )
 				{
-					if (coursework.get(2).get(i).getCrn() == course_crn )
+					if (coursework.get(2).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(2).remove(i);
 					}
@@ -371,7 +375,7 @@ public class UHO {
 			case Spring:
 				for (int i = 0; i < coursework.get(3).size(); i++ )
 				{
-					if (coursework.get(3).get(i).getCrn() == course_crn )
+					if (coursework.get(3).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(3).remove(i);
 					}
@@ -383,7 +387,7 @@ public class UHO {
 			case Summer:
 				for (int i = 0; i < coursework.get(0).size(); i++ )
 				{
-					if (coursework.get(4).get(i).getCrn() == course_crn )
+					if (coursework.get(4).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(4).remove(i);
 					}
@@ -402,14 +406,14 @@ public class UHO {
 	 * The <code>modAvail</code> function updates the availability of a schedule
 	 * provided the schedule and a Term enum constant.
 	 * </br>
-	 * @param Term term
-	 * @param Boolean add 
-	 * @param Section section
+	 * @param term
+	 * @param add
+	 * @param schedule
 	 */
-	public void modAvail(Term t, boolean add, schedule s)
+	public void modAvail(Term term, boolean add, schedule schedule)
 	{
 		
-		switch(t)
+		switch(term)
 		{
 		
 			case Fall:
