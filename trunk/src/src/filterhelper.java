@@ -4,4 +4,7 @@ public class filterhelper {
 
         filter.course_db_connect.getRecord()
     }
+    public static void main(String [ ] args){
+
+    }
 }

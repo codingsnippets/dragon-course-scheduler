@@ -2,10 +2,10 @@
  * Dragon Course Scheduler
  */
 
-import couresbone.Section;
+import couresbone.schedule;
 import couresbone.Term;
 //TODO double check this value and maybe it is the webframwork
-import couresbone.UserHistoryObject;
+import couresbone.UHO;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -32,7 +32,7 @@ class Filter
 
 public class DragonCourseScheduler 
 {
-	private UserHistoryObject user;
+	private UHO user;
 	private Term currTerm;
 	private ArrayList<ArrayList<Integer>> offerings;
 	private Filter filter;
@@ -160,25 +160,25 @@ public class DragonCourseScheduler
 	} 
 	
 	/**
-	 * The <code>addClass()</code> function adds a Section provided a 
+	 * The <code>addClass()</code> function adds a schedule provided a
 	 * constant of the Term enumeration.
 	 * </br>
 	 * @param term
 	 * @param schedule
 	 */
-	private void addClass(Term term, Section schedule)
+	private void addClass(Term term, schedule schedule)
 	{
 		user.addClass(term, schedule);
 	}
 		
 	/**
-	 * The <code>removeClass()</code> function removes a Section provided a 
+	 * The <code>removeClass()</code> function removes a schedule provided a
 	 * constant of the Term enumeration.
 	 * </br>
 	 * @param term
 	 * @param schedule
 	 */
-	private void removeClass(Term term, Section schedule)
+	private void removeClass(Term term, schedule schedule)
 	{
 		user.removeClass(term, schedule);
 	}

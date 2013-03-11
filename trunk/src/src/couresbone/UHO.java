@@ -1,33 +1,33 @@
 /*
  * Dragon Course Scheduler
  * Author: Stan Kolakowski
- * Copyright © 2013
+ * Copyright ï¿½ 2013
  */
 
 package couresbone;
 
 import java.util.ArrayList;
 
-public class UserHistoryObject {
+public class UHO {
 
 	private Integer major = 0;
 	private ArrayList<Integer> concentration = new ArrayList<Integer>();
-	private ArrayList<ArrayList<Section>> coursework = new ArrayList<ArrayList<Section>>();
+	private ArrayList<ArrayList<schedule>> coursework = new ArrayList<ArrayList<schedule>>();
 	private ArrayList<ArrayList<Boolean>> availability = new ArrayList<ArrayList<Boolean>>();
 	
 	
 	/**
-	 * The <code>UserHistoryObject()</code> function is the default constructor.
+	 * The <code>UHO()</code> function is the default constructor.
 	 * </br>
 	 */
-	public UserHistoryObject()
+	public UHO()
 	{
 		
 	}
 	
-	public UserHistoryObject(Integer mj, ArrayList<Integer> tracks,
-			ArrayList<ArrayList<Section>> sections, 
-			ArrayList<ArrayList<Boolean>> avail)
+	public UHO(Integer mj, ArrayList<Integer> tracks,
+               ArrayList<ArrayList<schedule>> sections,
+               ArrayList<ArrayList<Boolean>> avail)
 	{
 		this.major = mj;
 		this.concentration = tracks;
@@ -43,7 +43,7 @@ public class UserHistoryObject {
 	
 	/**
 	 * The <code>getMajor()</code> function retrieves the major of the 
-	 * UserHistoryObject.
+	 * UHO.
 	 * </br>
 	 * @return Integer major
 	 */
@@ -71,7 +71,7 @@ public class UserHistoryObject {
 	 * @param couresbone.Term
 	 * @param ArrayList<Integer> classes
 	 */
-	public void setClasses(Term t, ArrayList<Section> classes)
+	public void setClasses(Term t, ArrayList<schedule> classes)
 	{
 		Integer crn;
 		boolean exist = false;
@@ -208,7 +208,7 @@ public class UserHistoryObject {
 	 * @param Integer CRN
 	 * @return
 	 */
-	public void addClass(Term t, Section s)
+	public void addClass(Term t, schedule s)
 	{
 		Integer course_crn = s.getCrn();
 		boolean exists = false;
@@ -326,7 +326,7 @@ public class UserHistoryObject {
 	 * @param coursebone.Term term
 	 * @param Timeslot time-slot
 	 */
-	public void removeClass(Term t, Section s)
+	public void removeClass(Term t, schedule s)
 	{
 		Integer course_crn = s.getCrn();
 		
@@ -399,14 +399,14 @@ public class UserHistoryObject {
 	}
 	
 	/**
-	 * The <code>modAvail</code> function updates the availability of a Section
-	 * provided the Section and a Term enum constant.
+	 * The <code>modAvail</code> function updates the availability of a schedule
+	 * provided the schedule and a Term enum constant.
 	 * </br>
 	 * @param Term term
 	 * @param Boolean add 
 	 * @param Section section
 	 */
-	public void modAvail(Term t, boolean add, Section s)
+	public void modAvail(Term t, boolean add, schedule s)
 	{
 		
 		switch(t)
@@ -441,7 +441,7 @@ public class UserHistoryObject {
 	
 	/**
 	 * The <code>toCsv()</code> function creates a string of comma separated
-	 * values of the UserHistoryObject.
+	 * values of the UHO.
 	 * </br>
 	 * @return String csv
 	 */
@@ -458,4 +458,4 @@ public class UserHistoryObject {
 
 	} // End of Main()
 
-} //End of couresbone.UserHistoryObject()
+} //End of couresbone.UHO()

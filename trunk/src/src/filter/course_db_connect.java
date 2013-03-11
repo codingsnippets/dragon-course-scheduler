@@ -68,11 +68,6 @@ public class course_db_connect {
                return recordField;
            }
 
-
-
-
-
-
        }
 
 

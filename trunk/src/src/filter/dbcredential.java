@@ -6,15 +6,15 @@ public class dbcredential {
     private String dbname= "cs451dbremote";
     private String dbpass= "S4aw6WRA4u!";
 
-    private String getDbpass() {
+    protected String getDbpass() {
         return dbpass;
     }
 
-    private String getDbname() {
+    protected String getDbname() {
         return dbname;
     }
 
-    private String getOst() {
+    protected String getOst() {
         return ost;
     }
 

@@ -2,21 +2,43 @@ package filter;
 
 
 import couresbone.TermTable;
-import couresbone.UserHistoryObject;
+import couresbone.UHO;
 
 import java.util.ArrayList;
 
-public class Filter {
-    ArrayList getMajors(){
-         return null;
+class Filter {
+    /*
+     * Method Name: getMajors
+     * Method Description:  This method will get major information based on the UHO and return classes for the user to select
+     * @param
+     * @return  A list of classes that available for the student to take
+     */
+    protected ArrayList getMajors(){
+        ArrayList majors = new ArrayList();
+
+        dbcredential db = new dbcredential();
+
+        String table = "schedule";
+        String fields= "CRN";
+
+        return course_db_connect.getRecord(db.getOst(),db.getDbname(),db.getDbpass(),table,fields);
+
     }
-    ArrayList getConcentration(Integer MajorCode){
+    /*
+     * Method Name: getConcentration
+     * Method Description:  This method will take in a unique major code and return concentrations available for the user.
+     * @param MajorCode the major is converted into unique identifier for db to recognize
+     * @return
+     */
+    protected ArrayList getConcentration(Integer MajorCode){
+        String table="track";
+        String fields="";
         return null;
     };
-    TermTable getClasses(TermTable t, UserHistoryObject userHistory){
+    protected TermTable getClasses(TermTable t, UHO userHistory){
         return null;
     };
-    String getDescription(){
+    protected String getDescription(){
         return null;
     };
 }
