@@ -1,7 +1,5 @@
 /*
  * Dragon Course Scheduler
- * Author: 
- * Copyright © 2013
  */
 
 package couresbone;
@@ -28,7 +26,7 @@ public class TermTable
     /**
      * The <code>setTimes()</code> function sets the times of TernTable.
      * </br>
-     * @param HashMap<Integer, Timeslot> times
+     * @param times
      */
 	public void setTimes(HashMap<Integer, Timeslot> times) 
 	{

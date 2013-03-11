@@ -1,7 +1,5 @@
 /*
  * Dragon Course Scheduler
- * Author: 
- * Copyright © 2013
  */
 
 package couresbone;
