@@ -4,6 +4,7 @@
  * Copyright © 2013
  */
 
+import Filter.course_schedule;
 import couresbone.Section;
 import couresbone.Term;
 import couresbone.UserHistoryObject;
@@ -39,10 +40,10 @@ public class DragonCourseScheduler
 	private Filter filter;
 	
 	/**
-	 * The <code>getMajors()</code> function retrieves the user's major(s) from
+	 * The <code>getMajors</code> function retrieves the user's major(s) from
 	 * the filter
 	 * </br>
-	 * @return ArrayList<Integer> majors
+	 * @return ArrayList of major integers.
 	 */
 	private ArrayList<Integer> getMajors()
 	{
@@ -50,10 +51,10 @@ public class DragonCourseScheduler
 	}
 	
 	/**
-	 * The <code>getConcentrations()</code> function retrieves the user's
+	 * The <code>getConcentrations</code> function retrieves the user's
 	 * concentrations from the filter.  
 	 * </br>
-	 * @return ArrayList concentrations
+	 * @return An ArrayList of string concentrations
 	 */
 	private ArrayList<String> getConcentrations()
 	{
@@ -61,27 +62,26 @@ public class DragonCourseScheduler
 	}
 	
 	/**
-	 * The <code>setMajor()</code> function sets the major of the user in the 
+	 * The <code>setMajor</code> function sets the major of the user in the 
 	 * UHO.
 	 * </br>
-	 * @param Integer major
-	 * @return 
+	 * @param major The major represented as an integer.
 	 */
-	private void setMajor(Integer m)
+	private void setMajor(Integer major)
 	{
-		user.setMajor(m);
+		user.setMajor(major);
 	}
 	
 	/**
-	 * The <code>parseHistory()</code> function parses the csv String of the 
+	 * The <code>parseHistory</code> function parses the csv String of the 
 	 * user's history courses and creates an ArrayList of courses to be added
 	 * to the UHO.
 	 * </br>
-	 * @param String csv
+	 * @param history_csv
 	 */
-	private void parseHistory(String s)
+	private void parseHistory(String history_csv)
 	{
-		String[] classes=s.split(",");
+		String[] classes = history_csv.split(",");
 		ArrayList<Integer> courses = new ArrayList<Integer>();
 		
 		for(String c:classes)
@@ -104,7 +104,7 @@ public class DragonCourseScheduler
 						n="0"+n;
 					}
 					
-					id+=n;
+					id += n;
 				}
 			}
 			
@@ -118,17 +118,17 @@ public class DragonCourseScheduler
 	
 	
 	/**
-	 * The <code>inputFile()</code> function ...
+	 * The <code>inputFile</code> function ...
 	 * </br>
-	 * @param String
+	 * @param csv
 	 */
-	private void inputFile(String s)//expects CSV input, can be over multiple lines for readability
+	private void inputFile(String csv)//expects CSV input, can be over multiple lines for readability
 	{
 		BufferedReader inp;
 		
 		try 
 		{
-			inp = new BufferedReader(new FileReader(s));
+			inp = new BufferedReader(new FileReader(csv));
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -161,38 +161,38 @@ public class DragonCourseScheduler
 	} 
 	
 	/**
-	 * The <code>addClass()</code> function adds a Section provided a 
+	 * The <code>addClass</code> function adds a Section provided a 
 	 * constant of the Term enumeration.
 	 * </br>
-	 * @param Term
-	 * @param Section
+	 * @param term History, Fall, Winter, Spring, or Summer
+	 * @param course
 	 */
-	private void addClass(Term t, Section s)
+	private void addClass(Term term, course_schedule course)
 	{
-		user.addClass(t, s);
+		user.addClass(term, course);
 	}
 		
 	/**
-	 * The <code>removeClass()</code> function removes a Section provided a 
+	 * The <code>removeClass</code> function removes a Section provided a 
 	 * constant of the Term enumeration.
 	 * </br>
-	 * @param Term
-	 * @param Section
+	 * @param term History, Fall, Winter, Spring, or Summer
+	 * @param course
 	 */
-	private void removeClass(Term t, Section s)
+	private void removeClass(Term term, course_schedule course)
 	{
-		user.removeClass(t, s);
+		user.removeClass(term, course);
 	}
 	
 	/**
-	 * The <code>changeTerm()</code> function 
+	 * The <code>changeTerm</code> function 
 	 * </br>
-	 * @param Term
+	 * @param term History, Fall, Winter, Spring, or Summer
 	 */
-	private void changeTerm(Term t)
+	private void changeTerm(Term term)
 	{
-		currTerm = t;
+		currTerm = term;
 	}
 
 	
-} //End of class.
+} //End of DragonCourseScheduler.
