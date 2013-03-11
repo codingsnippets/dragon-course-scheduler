@@ -8,88 +8,95 @@ package couresbone;
 
 import java.util.ArrayList;
 
-public class UserHistoryObject {
+import Filter.course_schedule;
+
+public class UserHistoryObject 
+{
 
 	private Integer major = 0;
 	private ArrayList<Integer> concentration = new ArrayList<Integer>();
-	private ArrayList<ArrayList<Section>> coursework = new ArrayList<ArrayList<Section>>();
-	private ArrayList<ArrayList<Boolean>> availability = new ArrayList<ArrayList<Boolean>>();
+	private ArrayList<ArrayList<course_schedule>> coursework = 
+			new ArrayList<ArrayList<course_schedule>>();
+	private ArrayList<ArrayList<Boolean>> availability = 
+			new ArrayList<ArrayList<Boolean>>();
 	
 	
 	/**
-	 * The <code>UserHistoryObject()</code> function is the default constructor.
-	 * </br>
+	 * The default constructor.
+	 * 
 	 */
 	public UserHistoryObject()
 	{
 		
 	}
 	
-	public UserHistoryObject(Integer mj, ArrayList<Integer> tracks,
-			ArrayList<ArrayList<Section>> sections, 
-			ArrayList<ArrayList<Boolean>> avail)
+	public UserHistoryObject(Integer major, ArrayList<Integer> tracks,
+			ArrayList<ArrayList<course_schedule>> courses, 
+			ArrayList<ArrayList<Boolean>> availability)
 	{
-		this.major = mj;
+		this.major = major;
 		this.concentration = tracks;
-		this.coursework = sections;
-		this.availability = avail;
+		this.coursework = courses;
+		this.availability = availability;
 	}
 	
-	
-	/*------------------------------------------------------------------------
-	 *  			F U N C T I O N S
-	 *  ----------------------------------------------------------------------
-	 */
-	
 	/**
-	 * The <code>getMajor()</code> function retrieves the major of the 
+	 * The <code>getMajor</code> function retrieves the major of the 
 	 * UserHistoryObject.
 	 * </br>
-	 * @return Integer major
+	 * @return The major set in the UserHistoryObject.
 	 */
 	public Integer getMajor()
 	{
-		return major;
+		return this.major;
 		
 	}
 	
 	/**
-	 * The <code>setMajor()</code> function sets the major of the User-History
-	 * Object.
+	 * The <code>getCoursework</code> function retrieves the ArrayList of courses.
 	 * </br>
-	 * @param Integer m
+	 * @return The courses saved in the coursework attribute.
 	 */
-	public void setMajor(int m)
+	public ArrayList<ArrayList<course_schedule>> getCoursework()
 	{
-		this.major = m;
+		return this.coursework;
 	}
 	
 	/**
-	 * The <code>setClasses()</code> function sets the provided classes to the 
+	 * The <code>setMajor</code> function sets the major of the User-History
+	 * Object.
+	 * </br>
+	 * @param major
+	 */
+	public void setMajor(int major)
+	{
+		this.major = major;
+	}
+	
+	/**
+	 * The <code>setClasses</code> function sets the provided classes to the 
 	 * provided term.
 	 * </br>
-	 * @param couresbone.Term
-	 * @param ArrayList<Integer> classes
+	 * @param term
+	 * @param classes
 	 */
-	public void setClasses(Term t, ArrayList<Section> classes)
+	public void setClasses(Term term, ArrayList<course_schedule> classes)
 	{
 		Integer crn;
 		boolean exist = false;
 		
-		switch(t)
+		switch(term)
 		{
-		
 			case History:
 				
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(0).size(); j++)
 					{
-						if( this.coursework.get(0).get(j).getCrn() == crn)
+						if( this.coursework.get(0).get(j).getCRN() == crn)
 						{
-							//this.coursework.get(0).get(j).set( classes.get(i) );
 							exist = true;
 							break;
 						}
@@ -99,7 +106,7 @@ public class UserHistoryObject {
 					{
 						this.coursework.get(0).add( classes.get(i) );
 					}
-				}
+				} //end for
 					
 				break;
 				
@@ -107,11 +114,11 @@ public class UserHistoryObject {
 				
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(1).size(); j++)
 					{
-						if( this.coursework.get(1).get(j).getCrn() == crn)
+						if( this.coursework.get(1).get(j).getCRN() == crn)
 						{
 							exist = true;
 							break;
@@ -129,11 +136,11 @@ public class UserHistoryObject {
 			case Winter:
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(2).size(); j++)
 					{
-						if( this.coursework.get(2).get(j).getCrn() == crn)
+						if( this.coursework.get(2).get(j).getCRN() == crn)
 						{
 							exist = true;
 							break;
@@ -151,11 +158,11 @@ public class UserHistoryObject {
 			case Spring:
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(3).size(); j++)
 					{
-						if( this.coursework.get(3).get(j).getCrn() == crn)
+						if( this.coursework.get(3).get(j).getCRN() == crn)
 						{
 							exist = true;
 							break;
@@ -173,11 +180,11 @@ public class UserHistoryObject {
 			case Summer:
 				for(int i = 0; i < classes.size(); i++)
 				{
-					crn = classes.get(i).getCrn();
+					crn = classes.get(i).getCRN();
 					
 					for(int j = 0; j < this.coursework.get(4).size(); j++)
 					{
-						if( this.coursework.get(4).get(j).getCrn() == crn)
+						if( this.coursework.get(4).get(j).getCRN() == crn)
 						{
 							exist = true;
 							break;
@@ -199,29 +206,28 @@ public class UserHistoryObject {
 		
 	}
 	
-	
 	/**
 	 * The <code>addClass</code> function adds a class section to the provided 
 	 * term.
 	 * </br>
-	 * @param coursebone.Term t
-	 * @param Integer CRN
-	 * @return
+	 * @param term History, Fall, Winter, Spring, or Summer
+	 * @param course A course_schedule object
+	 * @see course_schedule
 	 */
-	public void addClass(Term t, Section s)
+	public void addClass(Term term, course_schedule course)
 	{
-		Integer course_crn = s.getCrn();
+		Integer course_crn = course.getCRN();
 		boolean exists = false;
 		
-		switch(t)
+		switch(term)
 		{
 			case History:
 				
 				for (int i = 0; i < coursework.get(0).size(); i++ )
 				{
-					if (coursework.get(0).get(i).getCrn() == course_crn )
+					if (coursework.get(0).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(0).set(i, s);
+						this.coursework.get(0).set(i, course);
 						exists = true;
 						break;
 					}
@@ -230,9 +236,8 @@ public class UserHistoryObject {
 				
 				if(exists != true)
 				{
-					this.coursework.get(0).add(s);
+					this.coursework.get(0).add(course);
 				}
-				
 				
 				break;
 		
@@ -240,9 +245,9 @@ public class UserHistoryObject {
 				
 				for (int i = 0; i < coursework.get(1).size(); i++ )
 				{
-					if (coursework.get(1).get(i).getCrn() == course_crn )
+					if (coursework.get(1).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(1).set(i, s);
+						this.coursework.get(1).set(i, course);
 						exists = true;
 						break;
 					}
@@ -251,7 +256,7 @@ public class UserHistoryObject {
 				
 				if(exists != true)
 				{
-					this.coursework.get(1).add(s);
+					this.coursework.get(1).add(course);
 				}
 				
 				break;
@@ -259,9 +264,9 @@ public class UserHistoryObject {
 			case Winter:
 				for (int i = 0; i < coursework.get(2).size(); i++ )
 				{
-					if (coursework.get(2).get(i).getCrn() == course_crn )
+					if (coursework.get(2).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(2).set(i, s);
+						this.coursework.get(2).set(i, course);
 						exists = true;
 						break;
 					}
@@ -270,7 +275,7 @@ public class UserHistoryObject {
 				
 				if(exists != true)
 				{
-					this.coursework.get(2).add(s);
+					this.coursework.get(2).add(course);
 				}
 				
 				break;
@@ -278,9 +283,9 @@ public class UserHistoryObject {
 			case Spring:
 				for (int i = 0; i < coursework.get(3).size(); i++ )
 				{
-					if (coursework.get(3).get(i).getCrn() == course_crn )
+					if (coursework.get(3).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(3).set(i, s);
+						this.coursework.get(3).set(i, course);
 						exists = true;
 						break;
 					}
@@ -289,7 +294,7 @@ public class UserHistoryObject {
 				
 				if(exists != true)
 				{
-					this.coursework.get(3).add(s);
+					this.coursework.get(3).add(course);
 				}
 				
 				break;
@@ -297,9 +302,9 @@ public class UserHistoryObject {
 			case Summer:
 				for (int i = 0; i < coursework.get(4).size(); i++ )
 				{
-					if (coursework.get(4).get(i).getCrn() == course_crn )
+					if (coursework.get(4).get(i).getCRN() == course_crn )
 					{
-						this.coursework.get(4).set(i, s);
+						this.coursework.get(4).set(i, course);
 						exists = true;
 						break;
 					}
@@ -308,7 +313,7 @@ public class UserHistoryObject {
 				
 				if(exists != true)
 				{
-					this.coursework.get(4).add(s);
+					this.coursework.get(4).add(course);
 				}
 				
 				break;
@@ -320,22 +325,22 @@ public class UserHistoryObject {
 	}
 	
 	/**
-	 * The <code>removeClass()</code> function removes a class from the provided 
+	 * The <code>removeClass</code> function removes a class from the provided 
 	 * term.
 	 * </br>
-	 * @param coursebone.Term term
-	 * @param Timeslot time-slot
+	 * @param term History, Fall, Winter, Spring, or Summer
+	 * @param course
 	 */
-	public void removeClass(Term t, Section s)
+	public void removeClass(Term term, course_schedule course)
 	{
-		Integer course_crn = s.getCrn();
+		Integer course_crn = course.getCRN();
 		
-		switch(t){
+		switch(term){
 		
 			case History:
 				for (int i = 0; i < coursework.get(0).size(); i++ )
 				{
-					if (coursework.get(0).get(i).getCrn() == course_crn )
+					if (coursework.get(0).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(0).remove(i);
 					}
@@ -347,7 +352,7 @@ public class UserHistoryObject {
 			case Fall:
 				for (int i = 0; i < coursework.get(1).size(); i++ )
 				{
-					if (coursework.get(1).get(i).getCrn() == course_crn )
+					if (coursework.get(1).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(1).remove(i);
 					}
@@ -359,7 +364,7 @@ public class UserHistoryObject {
 			case Winter:
 				for (int i = 0; i < coursework.get(2).size(); i++ )
 				{
-					if (coursework.get(2).get(i).getCrn() == course_crn )
+					if (coursework.get(2).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(2).remove(i);
 					}
@@ -371,7 +376,7 @@ public class UserHistoryObject {
 			case Spring:
 				for (int i = 0; i < coursework.get(3).size(); i++ )
 				{
-					if (coursework.get(3).get(i).getCrn() == course_crn )
+					if (coursework.get(3).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(3).remove(i);
 					}
@@ -383,7 +388,7 @@ public class UserHistoryObject {
 			case Summer:
 				for (int i = 0; i < coursework.get(0).size(); i++ )
 				{
-					if (coursework.get(4).get(i).getCrn() == course_crn )
+					if (coursework.get(4).get(i).getCRN() == course_crn )
 					{
 						this.coursework.get(4).remove(i);
 					}
@@ -397,19 +402,19 @@ public class UserHistoryObject {
 				break;
 		}
 	}
-	
+		
 	/**
 	 * The <code>modAvail</code> function updates the availability of a Section
 	 * provided the Section and a Term enum constant.
 	 * </br>
-	 * @param Term term
-	 * @param Boolean add 
-	 * @param Section section
+	 * @param term History, Fall, Winter, Spring, or Summer
+	 * @param add 
+	 * @param course
 	 */
-	public void modAvail(Term t, boolean add, Section s)
+	public void modAvail(Term term, boolean add, course_schedule course)
 	{
 		
-		switch(t)
+		switch(term)
 		{
 		
 			case Fall:
@@ -440,10 +445,10 @@ public class UserHistoryObject {
 	} //End of modAvail()
 	
 	/**
-	 * The <code>toCsv()</code> function creates a string of comma separated
+	 * The <code>toCsv</code> function creates a string of comma separated
 	 * values of the UserHistoryObject.
 	 * </br>
-	 * @return String csv
+	 * @return comma separated String defining the UserHistoryObject
 	 */
 	public String toCSV()
 	{
@@ -452,10 +457,5 @@ public class UserHistoryObject {
 		return csv;
 	}
 	
-	public static void main(String[] args)
-	{
-		
-
-	} // End of Main()
 
 } //End of couresbone.UserHistoryObject()
