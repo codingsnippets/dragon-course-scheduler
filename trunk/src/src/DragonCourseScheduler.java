@@ -1,11 +1,10 @@
 /*
  * Dragon Course Scheduler
- * Author: 
- * Copyright © 2013
  */
 
 import couresbone.Section;
 import couresbone.Term;
+//TODO double check this value and maybe it is the webframwork
 import couresbone.UserHistoryObject;
 
 import java.io.BufferedReader;
@@ -64,7 +63,7 @@ public class DragonCourseScheduler
 	 * The <code>setMajor()</code> function sets the major of the user in the 
 	 * UHO.
 	 * </br>
-	 * @param Integer major
+	 * @param m
 	 * @return 
 	 */
 	private void setMajor(Integer m)
@@ -77,7 +76,7 @@ public class DragonCourseScheduler
 	 * user's history courses and creates an ArrayList of courses to be added
 	 * to the UHO.
 	 * </br>
-	 * @param String csv
+	 * @param  s
 	 */
 	private void parseHistory(String s)
 	{
@@ -120,11 +119,11 @@ public class DragonCourseScheduler
 	/**
 	 * The <code>inputFile()</code> function ...
 	 * </br>
-	 * @param String
+	 * @param s
 	 */
 	private void inputFile(String s)//expects CSV input, can be over multiple lines for readability
 	{
-		BufferedReader inp;
+		BufferedReader inp=null;
 		
 		try 
 		{
@@ -164,34 +163,34 @@ public class DragonCourseScheduler
 	 * The <code>addClass()</code> function adds a Section provided a 
 	 * constant of the Term enumeration.
 	 * </br>
-	 * @param Term
-	 * @param Section
+	 * @param term
+	 * @param schedule
 	 */
-	private void addClass(Term t, Section s)
+	private void addClass(Term term, Section schedule)
 	{
-		user.addClass(t, s);
+		user.addClass(term, schedule);
 	}
 		
 	/**
 	 * The <code>removeClass()</code> function removes a Section provided a 
 	 * constant of the Term enumeration.
 	 * </br>
-	 * @param Term
-	 * @param Section
+	 * @param term
+	 * @param schedule
 	 */
-	private void removeClass(Term t, Section s)
+	private void removeClass(Term term, Section schedule)
 	{
-		user.removeClass(t, s);
+		user.removeClass(term, schedule);
 	}
 	
 	/**
 	 * The <code>changeTerm()</code> function 
 	 * </br>
-	 * @param Term
+	 * @param term
 	 */
-	private void changeTerm(Term t)
+	private void changeTerm(Term term)
 	{
-		currTerm = t;
+		currTerm = term;
 	}
 
 	

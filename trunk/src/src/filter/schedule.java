@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /*
     Course schedule Entity class
  */
-public class course_schedule {
+public class schedule {
     public static final String DBTABLE= "current_schedule";
 
 
@@ -25,7 +25,7 @@ public class course_schedule {
     private Integer End_block;
     private Integer coursename;
 
-    public course_schedule(){
+    public schedule(){
 
     }
 
