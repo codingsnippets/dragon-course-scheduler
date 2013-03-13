@@ -1,8 +1,8 @@
 package couresbone;
 
-import couresbone.Term;
-import Filter.course_schedule;
+import junitx.util.PrivateAccessor;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 
+import couresbone.Term;
 
 public class UserHistoryObjectTest {
 	@Rule public TestName name = new TestName();
@@ -22,69 +23,8 @@ public class UserHistoryObjectTest {
 	private Integer major = 1;
 	private ArrayList<Boolean> avalability;
 	private ArrayList<Integer> classes;
-	private static course_schedule test_new_course_sched = 
-			new course_schedule(
-					);
 	
-	private static course_schedule test_exist_course_sched = 
-			new course_schedule();
-	
-	@SuppressWarnings("serial")
-	private static ArrayList<Integer> concentration = new ArrayList<Integer>(){{
-		add(111);
-		add(222);
-		add(333);
-		add(444);
-		
-	}};
-	
-	@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
-	private static ArrayList<ArrayList<Boolean>> availability =
-			new ArrayList<ArrayList<Boolean>>(){{
-		add(
-			new ArrayList()
-			{{
-				add(true);
-				add(false);
-			}}
-				
-			);
-		add(
-			new ArrayList()
-			{{
-				add(true);
-				add(false);
-			}}
-					
-			);
-		
-	}};
-	
-	@SuppressWarnings({"serial", "unchecked", "rawtypes" })	
-	private static ArrayList<ArrayList<course_schedule>> coursework = 
-		new ArrayList<ArrayList<course_schedule>>(){{
-		add(
-			new ArrayList(){{
-				add( new course_schedule() );
-				
-				add( new course_schedule() );
-				
-			}}
-		
-		);
-		add(
-			new ArrayList(){{
-				add( new course_schedule() 
-				);
-				add( new course_schedule() 
-				);
-					
-			}}
-			
-		);
-		
-	}};
-/*---------------------------------------------------------------------------
+/*-----------------------------------------------------------------
  * 			
  * 					Begin Testing.
 ----------------------------------------------------------------------------*/	
@@ -98,8 +38,9 @@ public class UserHistoryObjectTest {
 		
 		uho = new UserHistoryObject();
 		
-		major = 1;
-		full_uho = new UserHistoryObject(major, concentration, coursework, availability);
+		Integer mj = 2;;
+		full_uho = new UserHistoryObject();
+
 		
 	}
 
@@ -124,6 +65,7 @@ public class UserHistoryObjectTest {
 				"setting Major to Integer: " + m + " ...");
 		
 		
+		
 		full_uho.setMajor(m);
 		
 		assertEquals("Testing setMajor()", full_uho.getMajor(), m);
@@ -131,27 +73,133 @@ public class UserHistoryObjectTest {
 	}
 	
 	@Test
-	public void testAddClass() 
+	public void testAddClass() throws Throwable
 	{
-		System.out.println("Testing method " + name.getMethodName().substring(4) + "() by " +
-				"adding a Section that is not-extistant in UHO...");
+		System.out.println("Testing method " + name.getMethodName().substring(4) + "() by.. ");
+		System.out.println("\t" + "adding a new course_schedule to the UHO...");
+	
+		Integer majorCode = 2;
+		
+		final schedule test_new_sched =  new schedule(){{
+			
+			PrivateAccessor.setField(	schedule.class, "CRN",				new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "Subject", 			new String("") 		);
+			PrivateAccessor.setField(	schedule.class, "Course_no",		new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "Term", 			new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Section", 			new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "Instructor_type", 	new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Instructor", 		new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Location", 		new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Weekday", 			new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Start_time", 		new String("")		);
+			PrivateAccessor.setField(	schedule.class, "End_time", 		new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Start_block", 		new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "End_block", 		new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "coursename", 		new Integer(11111)	);
+		
+		}};
+		
+		final schedule test_exist_sched = new schedule(){{
+			
+			PrivateAccessor.setField(	schedule.class, "CRN",				new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "Subject", 			new String("") 		);
+			PrivateAccessor.setField(	schedule.class, "Course_no",		new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "Term", 			new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Section", 			new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "Instructor_type", 	new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Instructor", 		new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Location", 		new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Weekday", 			new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Start_time", 		new String("")		);
+			PrivateAccessor.setField(	schedule.class, "End_time", 		new String("")		);
+			PrivateAccessor.setField(	schedule.class, "Start_block", 		new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "End_block", 		new Integer(11111)	);
+			PrivateAccessor.setField(	schedule.class, "coursename", 		new Integer(11111)	);
+			
+		}};
+		
+		ArrayList<Integer> concentration = new ArrayList<Integer>(){{
+			add(111);
+			add(222);
+			add(333);
+			add(444);
+			
+		}};
+		
+		ArrayList<ArrayList<schedule>> coursework = 
+				new ArrayList<ArrayList<schedule>>(){{
+				add(
+					new ArrayList(){{
+						add( test_exist_sched );
+						
+						add( test_exist_sched );
+						
+					}}
+				
+				);
+				add(
+					new ArrayList(){{
+						add( test_exist_sched 
+						);
+						add( test_exist_sched 
+						);
+							
+					}}
+					
+				);
+				
+			}};
+		
+		ArrayList<ArrayList<Boolean>> availability =
+				new ArrayList<ArrayList<Boolean>>(){{
+			add(
+				new ArrayList()
+				{{
+					add(true);
+					add(false);
+				}}
+					
+				);
+			add(
+				new ArrayList()
+				{{
+					add(true);
+					add(false);
+				}}
+						
+				);
+			
+		}};
+		
+		full_uho = new UserHistoryObject(majorCode, concentration, 
+				coursework, availability);
 		
 		boolean passed = false;
 		
-		full_uho.addClass(Term.Fall, test_new_course_sched);
-		assertTrue(full_uho.getCoursework().get(1).contains(test_new_course_sched));
+		full_uho.addClass(Term.Fall, test_new_sched);
+		assertTrue(full_uho.getCoursework().get(1).contains(test_new_sched));
 		
-		
+		System.out.println("\t" + "adding an existing course_schedule to the UHO...");
+			
 	}
 
 	@Test
-	public void testRemoveClass() 
+	public void testRemoveClass() throws Throwable
 	{
 		System.out.println("Testing method " + name.getMethodName().substring(4) + "() by " +
 				"removing a Section that is extistant in UHO...");
 		
-		full_uho.removeClass(Term.Fall, test_exist_course_sched);
-		assertFalse(full_uho.getCoursework().get(1).contains(test_exist_course_sched));
+		schedule test_exist_sched = 
+				new schedule() {{
+						PrivateAccessor.invoke(schedule.class, "getRecord", 
+								new Class[]{String.class, String.class, String.class},
+								new Object[]{new String(""), new String(""), new String("")}
+						);
+					 
+				}};
+		
+		full_uho.removeClass(Term.Fall, test_exist_sched);
+		assertFalse(full_uho.getCoursework().get(1).contains(test_exist_sched));
 		
 	}
 
