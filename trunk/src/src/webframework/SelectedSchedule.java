@@ -1,4 +1,4 @@
-package webframework;
+package WebFramework;
 import javax.swing.JLabel;
 
 public class SelectedSchedule extends ClassSelection {

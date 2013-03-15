@@ -1,4 +1,4 @@
-package filter;
+package Filter;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package webframework;
+package WebFramework;
 
 import java.applet.Applet;
 import java.awt.*;

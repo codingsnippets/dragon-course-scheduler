@@ -1,8 +1,8 @@
-package filter;
+package Filter;
 
 
 import couresbone.TermTable;
-import couresbone.UHO;
+import couresbone.UserHistoryObject;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ class Filter {
     * @param userHistory:   The User history object that is passed from DCS
     * @return
     */
-    protected TermTable getClasses(TermTable termtable, UHO userHistory){
+    protected TermTable getClasses(TermTable termtable, UserHistoryObject userHistory){
 
         return null;
     };
@@ -63,7 +63,7 @@ class Filter {
     * @param recrodSet      The records returned from the database call
     * @return
     */
-    private void filterhistory(UHO userhistory, ArrayList<String> recrodSet){
+    private void filterhistory(UserHistoryObject userhistory, ArrayList<String> recrodSet){
 
 
     }
