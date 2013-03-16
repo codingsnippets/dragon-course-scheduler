@@ -320,7 +320,101 @@ public class SessionInfo
 	 */
 	public String toCSV()
 	{
+		String sprtr = ",";
 		String csv = "";
+		
+		csv+=this.major;
+		
+		csv+=sprtr;
+		
+		for(Integer i:this.concentration)
+		{
+			csv+=i;
+			csv+=sprtr;
+		}
+		
+		for(int i = 0; i < this.coursework.size(); i++)
+		{
+			for (int k = 0; k < this.coursework.get(i).size(); k++)
+			{
+				csv+=this.coursework.get(i).get(k).getCRN();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getSubject();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getCourse_no();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getTerm();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getSection();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getInstruction_type();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getInstructor();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getLocation();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getWeekday();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getStart_time();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getEnd_time();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getStart_block();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getEnd_block();
+				csv+=sprtr;
+				csv+=this.coursework.get(i).get(k).getCoursename();
+				csv+=sprtr;
+				
+				
+			}
+		}
+		
+		for(int i = 0; i < this.availability.size(); i++)
+		{
+			for (int k = 0; k < this.availability.get(i).size(); k++)
+			{
+				csv+=this.availability.get(i).get(k);
+				csv+=sprtr;
+			}
+		}
+		
+		//last attribute to add. if not the last element add a comma.
+		for(int i = 0; i < this.termOfferings.size(); i++)
+		{
+			csv+=this.termOfferings.get(i).getCRN();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getSubject();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getCourse_no();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getTerm();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getSection();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getInstruction_type();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getInstructor();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getLocation();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getWeekday();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getStart_time();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getEnd_time();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getStart_block();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getEnd_block();
+			csv+=sprtr;
+			csv+=this.termOfferings.get(i).getCoursename();
+			if(i < this.termOfferings.size()-1)
+			{
+				csv+=sprtr;
+			}
+		}
+		
 		
 		return csv;
 	}
