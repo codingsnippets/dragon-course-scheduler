@@ -16,6 +16,7 @@ public class SessionInfo
 			new ArrayList<ArrayList<schedule>>();
 	private ArrayList<ArrayList<Boolean>> availability = 
 			new ArrayList<ArrayList<Boolean>>();
+	public Term[] planTerm;
 	public ArrayList<schedule> termOfferings = new ArrayList<schedule>();
 	
 	/**
