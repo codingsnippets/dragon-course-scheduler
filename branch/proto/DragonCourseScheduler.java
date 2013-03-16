@@ -7,12 +7,7 @@ import java.util.ArrayList;
 import javax.xml.ws.Action;
 
 public class DragonCourseScheduler {
-	private static Term currTerm;
-	private Filter filter;
-	
 	//added
-	private static Term[] userTerms;
-	
 	/*
 	public void update(Action a, Long i, SessionInfo uho){
 		if (a.equals(Add))){ uho.addClass(i);}
@@ -33,8 +28,8 @@ public class DragonCourseScheduler {
 		return s.removeClass(i);
 	}
 	
-	public static SessionInfo updateTerm (SessionInfo s, Term i) {
-		currTerm = i;
+	public static SessionInfo updateTerm (SessionInfo s, Term[] i) {
+		s.planTerm = i;
 		return s;
 	}
 	
