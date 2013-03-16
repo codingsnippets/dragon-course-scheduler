@@ -82,13 +82,6 @@ public class Schedule {
         return this.End_time;
     }
 
-    public Integer getStart_block() {
-        return this.Start_block;
-    }
-
-    public Integer getEnd_block() {
-        return this.End_block;
-    }
 
     public Integer getCoursename() {
         return this.coursename;
