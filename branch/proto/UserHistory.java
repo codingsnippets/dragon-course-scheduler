@@ -18,6 +18,8 @@ public class UserHistory extends Applet {
 	private JCheckBox Spring = new JCheckBox("Spring");
 	private JCheckBox Summer = new JCheckBox("Summer");
 	
+	private DragonCourseScheduler dcs = null;
+	
 	public UserHistory() {
 		super();
 	}
@@ -106,9 +108,13 @@ public class UserHistory extends Applet {
 		Spring.addActionListener(checkBoxActionListener);
 		Summer.addActionListener(checkBoxActionListener);
 		
-		//button to next page (no error handling yet)
+		//button to next page
 		submit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {				
+				dcs.updateTerms(getTerms());
+				dcs.updateHistory(PreviousClassesField.getText());
+				dcs.updateMajor(MajorCodeField.getText());
+				
 				//ClassSelection selectionFrame = (ClassSelection)getAppletContext().getApplet("ClassSelection");
 				setVisible(false);
 			}
