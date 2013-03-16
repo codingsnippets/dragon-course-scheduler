@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -117,7 +116,7 @@ public class UserHistory extends Applet {
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				sessioninfo = DragonCourseScheduler.updateMajor(sessioninfo, getMajorCode());//what is the major value?
-				sessioninfo = DragonCourseScheduler.updateTerms(sessioninfo, getTerms());
+				sessioninfo = DragonCourseScheduler.setTerms(sessioninfo, getTerms());
 				sessioninfo = DragonCourseScheduler.updateHistory(sessioninfo, PreviousClassesField.getText());
 				sessioninfo = DragonCourseScheduler.updateConcentrations(sessioninfo, getTrackList());// please fill in concentration info
 				
