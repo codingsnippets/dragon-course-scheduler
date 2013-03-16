@@ -28,7 +28,7 @@ public class DragonCourseScheduler {
 		return s.removeClass(i);
 	}
 	
-	public static SessionInfo updateTerm (SessionInfo s, Term[] i) {
+	public static SessionInfo setTerms (SessionInfo s, Term[] i) {
 		s.planTerm = i;
 		return s;
 	}
@@ -79,7 +79,7 @@ public class DragonCourseScheduler {
 		user.setMajor(i);
 	}
 	
-	private ArrayList<Long> parseHistory(String s){
+	private ArrayList<Schedule> parseHistory(String s){
 		String[] classes=s.split(",");
 		ArrayList<Long> courses=new ArrayList<Long>();
 		for(String c:classes){
@@ -97,7 +97,13 @@ public class DragonCourseScheduler {
 			}
 			courses.add(Long.parseInt(id));
 		}
-		return courses;
+		ArrayList<Schedule> hist=new ArrayList<Schedule>();
+		for(Long l:courses){
+			Schedule x = new Schedule();
+			x.Course_no=l;
+			hist.add(x);
+		}
+		return hist;
 	}
 	
 	private void inputFile(String s){//expects CSV input, can be over multiple lines for readability
