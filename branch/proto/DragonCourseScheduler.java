@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import javax.xml.ws.Action;
 
 public class DragonCourseScheduler {
-	private Term currTerm;
+	private static Term currTerm;
 	private Filter filter;
 	
 	//added
-	private Term[] userTerms;
+	private static Term[] userTerms;
 	
 	/*
 	public void update(Action a, Long i, SessionInfo uho){
@@ -24,27 +24,32 @@ public class DragonCourseScheduler {
 	public DragonCourseScheduler() {
 	}
 	
-	public SessionInfo updateAdd (SessionInfo s, Long i) {
+	public static SessionInfo updateAdd (SessionInfo s, Long i) {
 		return s.addClass(i);
 	}
 	
-	public SessionInfo updateRemove (SessionInfo s, Long i) {
+	public static SessionInfo updateRemove (SessionInfo s, Long i) {
 		
 		return s.removeClass(i);
 	}
 	
-	public SessionInfo updateTerm (SessionInfo s, Long i) {
-		currTerm=(Term)i;
+	public static SessionInfo updateTerm (SessionInfo s, Term i) {
+		currTerm = i;
 		return s;
 	}
 	
-	public SessionInfo updateConcentrations(SessionInfo s, ArrayList<String> c){
+	public static SessionInfo updateTerms (SessionInfo s, Term[] i) {
+		userTerms = i;
+		return s;
+	}
+	
+	public static SessionInfo updateConcentrations(SessionInfo s, ArrayList<String> c){
 		s.setConcentration(c);
 		return s;
 	}
 	
 	
-	public SessionInfo updateMajor(String major) {
+	public static SessionInfo updateMajor(SessionInfo s, String major) {
 		String result = "";
 		Integer chartoint = null;
 		char[] charArray = major.toUpperCase().toCharArray();
@@ -57,16 +62,14 @@ public class DragonCourseScheduler {
 				result += chartoint;
 			}
 		}
-		setMajor(Integer.parseInteger(result));
-	}
-
-	public SessionInfo updateHistory(SessionInfo s, String h) {
-		s.setClasses( Term.History, parseHistory(s));
+		s.setMajor(Long.parseLong(result));
 		return s;
+		
 	}
 
-	public void updateTerms(Term[] t) {
-		userTerms = t;
+	public static SessionInfo updateHistory(SessionInfo s, String h) {
+		s.setClasses( Term.History, parseHistory(h));
+		return s;
 	}
 	
 	//TODO handle tracks selected by user

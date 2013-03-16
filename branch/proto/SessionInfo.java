@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class SessionInfo 
 {
 
-	private Integer major = 0;
+	private long major = 0;
 	private ArrayList<String> concentration = new ArrayList<String>();
 	private ArrayList<ArrayList<schedule>> coursework = 
 			new ArrayList<ArrayList<schedule>>();
@@ -67,11 +67,11 @@ public class SessionInfo
 	/**
 	 * The <code>setMajor</code> function sets the major of the UserHistoryObject.
 	 * </br>
-	 * @param majorCode The major represented as an integer.
+	 * @param l The major represented as an integer.
 	 */
-	public void setMajor(int majorCode)
+	public void setMajor(long l)
 	{
-		this.major = majorCode;
+		this.major = l;
 	}
 	
 //	/**

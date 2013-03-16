@@ -115,11 +115,11 @@ public class UserHistory extends Applet {
 		
 		//button to next page
 		submit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				sessioninfo=updateMajor(sessioninfo);//what is the major value?
-				sessioninfo=updateTerms(sessioninfo, getTerms());
-				sessioninfo=updateHistory(sessioninfo, PreviousClassesField.getText());
-				sessioninfo=updateConcentration(sessioninfo,):// please fill in concentration info
+			public void actionPerformed(ActionEvent e) {				
+				sessioninfo = DragonCourseScheduler.updateMajor(sessioninfo, getMajorCode());//what is the major value?
+				sessioninfo = DragonCourseScheduler.updateTerms(sessioninfo, getTerms());
+				sessioninfo = DragonCourseScheduler.updateHistory(sessioninfo, PreviousClassesField.getText());
+				sessioninfo = DragonCourseScheduler.updateConcentrations(sessioninfo, getTrackList());// please fill in concentration info
 				
 				//ClassSelection selectionFrame = (ClassSelection)getAppletContext().getApplet("ClassSelection.class");
 				setVisible(false);
@@ -137,11 +137,11 @@ public class UserHistory extends Applet {
 		return MajorCodeField.getText();
 	}
 	
-	public String[] getTrackList() {
+	public ArrayList<String> getTrackList() {
 		@SuppressWarnings("unchecked")
-		List<String> selectedValues = TrackList.getSelectedValuesList();
+		ArrayList<String> selectedValues = (ArrayList<String>) TrackList.getSelectedValuesList();
 		
-		return (String[]) selectedValues.toArray();
+		return selectedValues;
 	}
 	
 	public Term[] getTerms() {
