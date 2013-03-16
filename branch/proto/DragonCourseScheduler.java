@@ -12,11 +12,50 @@ public class DragonCourseScheduler {
 	private ArrayList<ArrayList<Integer>> offerings;
 	private Filter filter;
 	
-	public update(Action a, Integer i, SessionInfo uho){
+	//added
+	private Term[] userTerms;
+	
+	/*
+	public void update(Action a, Integer i, SessionInfo uho){
 		if (a.equals(Add))){ uho.addClass(i);}
 		else if (a.equals(Remove)){ uho.removeClass(i))}
 		else{ uho.term=Term(i) )
 	}
+	*/
+	
+	public void updateAdd (Integer i) {
+		addClass(i);
+	}
+	
+	public void updateRemove(Integer i) {
+		removeClass(i);
+	}
+	
+	public void updateMajor(String major) {
+		String result = "";
+		Integer chartoint = null;
+		char[] charArray = major.toUpperCase().toCharArray();
+		for (char majorchar : charArray) {
+			chartoint = Character.getNumericValue(majorchar)-9;
+			if (chartoint < 10) {
+				result += 0 + chartoint;
+			}
+			else {
+				result += chartoint;
+			}
+		}
+		setMajor(Integer.parseInt(result));
+	}
+
+	public void updateHistory(String s) {
+		parseHistory(s);
+	}
+
+	public void updateTerms(Term[] t) {
+		userTerms = t;
+	}
+	
+	//TODO handle tracks selected by user
 	
 	private ArrayList<Integer> getMajors(){
 		return filter.getMajors();
