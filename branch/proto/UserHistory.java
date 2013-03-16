@@ -18,10 +18,15 @@ public class UserHistory extends Applet {
 	private JCheckBox Spring = new JCheckBox("Spring");
 	private JCheckBox Summer = new JCheckBox("Summer");
 	
-	private DragonCourseScheduler dcs = null;
+	private SessionInfo sessioninfo = new SessionInfo();
 	
 	public UserHistory() {
 		super();
+	}
+	
+	public UserHistory(SessionInfo si) {
+		super();
+		sessioninfo = si;
 	}
 	
 	public void init() {
@@ -110,12 +115,15 @@ public class UserHistory extends Applet {
 		
 		//button to next page
 		submit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
+			public void actionPerformed(ActionEvent e) {	
+				
+				DragonCourseScheduler dcs = new DragonCourseScheduler(sessioninfo);
 				dcs.updateTerms(getTerms());
 				dcs.updateHistory(PreviousClassesField.getText());
 				dcs.updateMajor(MajorCodeField.getText());
+				sessioninfo = dcs.getSessionInfo();
 				
-				//ClassSelection selectionFrame = (ClassSelection)getAppletContext().getApplet("ClassSelection");
+				//ClassSelection selectionFrame = (ClassSelection)getAppletContext().getApplet("ClassSelection.class");
 				setVisible(false);
 			}
 		});

@@ -24,5 +24,10 @@ Summer{
 	public String toString() {
 		return "Summer";
 	}
+},
+History{
+	public String toString() {
+		return "History";
+	}
 }
 }

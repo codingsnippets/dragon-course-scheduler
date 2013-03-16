@@ -23,6 +23,14 @@ public class DragonCourseScheduler {
 	}
 	*/
 	
+	public DragonCourseScheduler(SessionInfo sessioninfo) {
+		user = sessioninfo;
+	}
+	
+	public SessionInfo getSessionInfo() {
+		return user;
+	}
+	
 	public void updateAdd (Integer i) {
 		addClass(i);
 	}
