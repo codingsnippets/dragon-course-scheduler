@@ -1,4 +1,3 @@
-import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +5,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class UserHistory extends Applet {
+public class UserHistory extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField PreviousClassesField = new JTextField(5);
 	private JTextField MajorCodeField = new JTextField(5);
@@ -21,11 +20,13 @@ public class UserHistory extends Applet {
 	
 	public UserHistory() {
 		super();
+		init();
 	}
 	
 	public UserHistory(SessionInfo si) {
 		super();
 		sessioninfo = si;
+		init();
 	}
 	
 	public void init() {
@@ -120,7 +121,6 @@ public class UserHistory extends Applet {
 				sessioninfo = DragonCourseScheduler.updateHistory(sessioninfo, PreviousClassesField.getText());
 				sessioninfo = DragonCourseScheduler.updateConcentrations(sessioninfo, getTrackList());// please fill in concentration info
 				
-				//ClassSelection selectionFrame = (ClassSelection)getAppletContext().getApplet("ClassSelection.class");
 				setVisible(false);
 			}
 		});
@@ -162,6 +162,10 @@ public class UserHistory extends Applet {
 			returnTerms[i] = selectedTerms.get(i);
 		}
 		return returnTerms;
+	}
+	
+	public SessionInfo passSession() {
+		return sessioninfo;
 	}
 	
 }
