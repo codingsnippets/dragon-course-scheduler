@@ -1,5 +1,3 @@
-package course_info;
-
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 
@@ -39,4 +37,73 @@ public class Schedule {
         for (String field : newRecord){
         }
      }
+    
+    public String getSubject() {
+        return this.Subject;
+    }
+
+    public Integer getCRN() {
+        return this.CRN;
+    }
+
+    public Long getCourse_no() {
+        return this.Course_no;
+    }
+
+    public String getTerm() {
+        return this.Term;
+    }
+
+    public Integer getSection() {
+        return this.Section;
+    }
+
+    public String getInstruction_type() {
+        return this.Instruction_type;
+    }
+
+    public String getLocation() {
+        return this.Location;
+    }
+
+    public String getInstructor() {
+        return this.Instructor;
+    }
+
+    public String getWeekday() {
+        return this.Weekday;
+    }
+
+    public String getStart_time() {
+        return this.Start_time;
+    }
+
+    public String getEnd_time() {
+        return this.End_time;
+    }
+
+    public Integer getStart_block() {
+        return this.Start_block;
+    }
+
+    public Integer getEnd_block() {
+        return this.End_block;
+    }
+
+    public Integer getCoursename() {
+        return this.coursename;
+    }
+	
+	/**
+	 * The <code>toCsv</code> function creates a string of comma separated
+	 * values of the schedule.
+	 * </br>
+	 * @return  csv string
+	 */
+	public String toCsv()
+	{
+		String csv = "";
+		
+		return csv;
+	}
 }

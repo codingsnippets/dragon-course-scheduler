@@ -3,21 +3,20 @@
  * Author: Stan Kolakowski
  */
 
-package couresbone;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SessionInfo 
 {
 
 	private long major = 0;
 	private ArrayList<String> concentration = new ArrayList<String>();
-	private ArrayList<ArrayList<schedule>> coursework = 
-			new ArrayList<ArrayList<schedule>>();
+	private HashMap<Term, ArrayList<Schedule>> coursework = 
+			new HashMap<Term, ArrayList<Schedule>>();
 	private ArrayList<ArrayList<Boolean>> availability = 
 			new ArrayList<ArrayList<Boolean>>();
 	public Term[] planTerm;
-	public ArrayList<schedule> termOfferings = new ArrayList<schedule>();
+	public ArrayList<Schedule> termOfferings = new ArrayList<Schedule>();
 	
 	/**
 	 * The default constructor.
@@ -28,12 +27,12 @@ public class SessionInfo
 		
 	}
 
-	public setConcentration( ArrayList<String> s){
-		this.concentration=s;
+	public void setConcentration( ArrayList<String> s){
+		this.concentration = s;
 	}
 	
 	public SessionInfo(Integer mj, ArrayList<Integer> tracks,
-               ArrayList<ArrayList<schedule>> courses, ArrayList<schedule> termClasses,
+               ArrayList<ArrayList<Schedule>> courses, ArrayList<Schedule> termClasses,
                ArrayList<ArrayList<Boolean>> avail)
 	{
 		this.major = mj;
@@ -60,7 +59,7 @@ public class SessionInfo
 	 * </br>
 	 * @return The courses saved in the coursework attribute.
 	 */
-	public ArrayList<ArrayList<schedule>> getCoursework()
+	public ArrayList<ArrayList<Schedule>> getCoursework()
 	{
 		return this.coursework;
 	}
@@ -77,12 +76,12 @@ public class SessionInfo
 	
 //	/**
 //	 * The <code>setTermOffer</code> function sets the provided ArrayList of 
-//	 * schedule objects as the classes offered in the current Term.
+//	 * Schedule objects as the classes offered in the current Term.
 //	 * </br>
-//	 * @param termClasses An ArrayList of 'schedule' Objects
-//	 * @see schedule
+//	 * @param termClasses An ArrayList of 'Schedule' Objects
+//	 * @see Schedule
 //	 */
-//	public void setTermOffer(ArrayList<schedule> termClasses)
+//	public void setTermOffer(ArrayList<Schedule> termClasses)
 //	{
 //		this.termOfferings = termClasses;
 //	}
@@ -94,65 +93,9 @@ public class SessionInfo
 	 * @param term History, Fall, Winter, Spring, or Summer
 	 * @param classes
 	 */
-	public void setClasses(Term term, ArrayList<schedule> classes)
+	public void setClasses(Term term, ArrayList<Schedule> classes)
 	{
-		Integer crn;
-		boolean exist = false;
-		int index = -1;
-		
-		switch(term)
-		{
-			case History:
-				index = 0;
-				
-				break;
-				
-			case Fall:
-				index = 1;
-				
-				break;
-			
-			case Winter:
-				index = 2;
-				
-				break;
-				
-			case Spring:
-				index = 3;
-				
-				break;
-				
-			case Summer:
-				index = 4;
-				
-				break;
-				
-			default:
-				System.out.println("UHO: Invalid Term passed: " + term);
-				break;
-			
-		} //end switch
-		
-		for(int i = 0; i < classes.size(); i++)
-		{
-			crn = classes.get(i).getCRN();
-			
-			for(int j = 0; j < this.coursework.get(index).size(); j++)
-			{
-				if( this.coursework.get(index).get(j).getCRN() == crn)
-				{
-					exist = true;
-					break;
-				}
-			}
-			
-			if(!exist)
-			{
-				this.coursework.get(index).add( classes.get(i) );
-			}
-			
-		} //end for
-		
+		this.coursework.put(term, classes);
 	}
 	
 	/**
@@ -160,14 +103,14 @@ public class SessionInfo
 	 * term.
 	 * </br>
 	 * @param term
-	 * @param schedule
+	 * @param Schedule
 	 * @return
 	 */
 	
     //TODO same thing here, code clone
-	public void addClass(Term term, schedule schedule)
+	public void addClass(Term term, Schedule Schedule)
 	{
-		Integer course_crn = schedule.getCRN();
+		Integer course_crn = Schedule.getCRN();
 		boolean exists = false;
 		int index = -1;
 		
@@ -208,7 +151,7 @@ public class SessionInfo
 		{
 			if (coursework.get(index).get(i).getCRN() == course_crn )
 			{
-				this.coursework.get(index).set(i, schedule);
+				this.coursework.get(index).set(i, Schedule);
 				exists = true;
 				break;
 			}
@@ -217,7 +160,7 @@ public class SessionInfo
 		
 		if(exists != true)
 		{
-			this.coursework.get(index).add(schedule);
+			this.coursework.get(index).add(Schedule);
 		}
 	}
 	
@@ -228,7 +171,7 @@ public class SessionInfo
 	 * @param  term
 	 * @param  timeslot
 	 */
-	public void removeClass(Term term, schedule timeslot)
+	public void removeClass(Term term, Schedule timeslot)
 	{
 		Integer course_crn = timeslot.getCRN();
 		int index = -1;
@@ -277,14 +220,14 @@ public class SessionInfo
 	}
 		
 	/**
-	 * The <code>modAvail</code> function updates the availability of a schedule
-	 * provided the schedule and a Term enum constant.
+	 * The <code>modAvail</code> function updates the availability of a Schedule
+	 * provided the Schedule and a Term enum constant.
 	 * </br>
 	 * @param term History, Fall, Winter, Spring, or Summer
 	 * @param add
-	 * @param schedule
+	 * @param Schedule
 	 */
-	public void modAvail(Term term, boolean add, schedule schedule)
+	public void modAvail(Term term, boolean add, Schedule Schedule)
 	{
 		
 		switch(term)

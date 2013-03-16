@@ -79,7 +79,7 @@ public class DragonCourseScheduler {
 		user.setMajor(i);
 	}
 	
-	private ArrayList<Schedule> parseHistory(String s){
+	private static ArrayList<Schedule> parseHistory(String s){
 		String[] classes=s.split(",");
 		ArrayList<Long> courses=new ArrayList<Long>();
 		for(String c:classes){
@@ -87,7 +87,7 @@ public class DragonCourseScheduler {
 			for(char x:c.toCharArray()){
 				if(Character.isDigit(x)){id+=x;	}
 				else{
-					Long val=x-65;//set A to 00, Z to 25;
+					Long val=(long) (x-65);//set A to 00, Z to 25;
 					String n=val.toString();
 					if(n.length()==1){//pad single digit values to 2 spaces
 						n="0"+n;
@@ -95,7 +95,7 @@ public class DragonCourseScheduler {
 					id+=n;
 				}
 			}
-			courses.add(Long.parseInt(id));
+			courses.add(Long.parseLong(id));
 		}
 		ArrayList<Schedule> hist=new ArrayList<Schedule>();
 		for(Long l:courses){
