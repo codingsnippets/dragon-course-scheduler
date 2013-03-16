@@ -1,9 +1,3 @@
-package Filter;
-
-
-import couresbone.TermTable;
-import couresbone.UserHistoryObject;
-
 import java.util.ArrayList;
 
 class Filter {
@@ -13,6 +7,7 @@ class Filter {
      * @param
      * @return  A list of classes that available for the student to take
      */
+
     dbcredential db = new dbcredential();
 
     protected ArrayList getMajors(){
