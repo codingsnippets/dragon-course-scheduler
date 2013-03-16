@@ -7,39 +7,44 @@ import java.util.ArrayList;
 import javax.xml.ws.Action;
 
 public class DragonCourseScheduler {
-	private SessionInfo user;
 	private Term currTerm;
-	private ArrayList<ArrayList<Integer>> offerings;
 	private Filter filter;
 	
 	//added
 	private Term[] userTerms;
 	
 	/*
-	public void update(Action a, Integer i, SessionInfo uho){
+	public void update(Action a, Long i, SessionInfo uho){
 		if (a.equals(Add))){ uho.addClass(i);}
 		else if (a.equals(Remove)){ uho.removeClass(i))}
 		else{ uho.term=Term(i) )
 	}
 	*/
 	
-	public DragonCourseScheduler(SessionInfo sessioninfo) {
-		user = sessioninfo;
+	public DragonCourseScheduler() {
 	}
 	
-	public SessionInfo getSessionInfo() {
-		return user;
+	public SessionInfo updateAdd (SessionInfo s, Long i) {
+		return s.addClass(i);
 	}
 	
-	public void updateAdd (Integer i) {
-		addClass(i);
+	public SessionInfo updateRemove (SessionInfo s, Long i) {
+		
+		return s.removeClass(i);
 	}
 	
-	public void updateRemove(Integer i) {
-		removeClass(i);
+	public SessionInfo updateTerm (SessionInfo s, Long i) {
+		currTerm=(Term)i;
+		return s;
 	}
 	
-	public void updateMajor(String major) {
+	public SessionInfo updateConcentrations(SessionInfo s, ArrayList<String> c){
+		s.setConcentration(c);
+		return s;
+	}
+	
+	
+	public SessionInfo updateMajor(String major) {
 		String result = "";
 		Integer chartoint = null;
 		char[] charArray = major.toUpperCase().toCharArray();
@@ -52,11 +57,12 @@ public class DragonCourseScheduler {
 				result += chartoint;
 			}
 		}
-		setMajor(Integer.parseInt(result));
+		setMajor(Integer.parseInteger(result));
 	}
 
-	public void updateHistory(String s) {
-		parseHistory(s);
+	public SessionInfo updateHistory(SessionInfo s, String h) {
+		s.setClasses( Term.History, parseHistory(s));
+		return s;
 	}
 
 	public void updateTerms(Term[] t) {
@@ -71,19 +77,19 @@ public class DragonCourseScheduler {
 	private ArrayList<String> getConcentrations(){
 		return filter.getConcentrations();
 	}
-	private void setMajor(Integer i){
+	private void setMajor(Long i){
 		user.setMajor(i);
 	}
 	
-	private void parseHistory(String s){
+	private ArrayList<Long> parseHistory(String s){
 		String[] classes=s.split(",");
-		ArrayList<Integer> courses=new ArrayList<Integer>();
+		ArrayList<Long> courses=new ArrayList<Long>();
 		for(String c:classes){
 			String id="";
 			for(char x:c.toCharArray()){
 				if(Character.isDigit(x)){id+=x;	}
 				else{
-					Integer val=x-65;//set A to 00, Z to 25;
+					Long val=x-65;//set A to 00, Z to 25;
 					String n=val.toString();
 					if(n.length()==1){//pad single digit values to 2 spaces
 						n="0"+n;
@@ -91,9 +97,9 @@ public class DragonCourseScheduler {
 					id+=n;
 				}
 			}
-			courses.add(Integer.parseInt(id));
+			courses.add(Long.parseInt(id));
 		}
-		user.setClasses(Past, courses);
+		return courses;
 	}
 	
 	private void inputFile(String s){//expects CSV input, can be over multiple lines for readability
@@ -118,12 +124,12 @@ public class DragonCourseScheduler {
 		parseHistory(parseme);
 	}
 	
-	private void addClass(Integer CRN){
+	private void addClass(Long CRN){
 		user.addClass(CRN);
 	}
 		
 	
-	private void removeClass(Integer CRN){
+	private void removeClass(Long CRN){
 		user.removeClass(CRN);
 	}
 	

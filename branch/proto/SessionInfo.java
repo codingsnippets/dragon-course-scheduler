@@ -11,7 +11,7 @@ public class SessionInfo
 {
 
 	private Integer major = 0;
-	private ArrayList<Integer> concentration = new ArrayList<Integer>();
+	private ArrayList<String> concentration = new ArrayList<String>();
 	private ArrayList<ArrayList<schedule>> coursework = 
 			new ArrayList<ArrayList<schedule>>();
 	private ArrayList<ArrayList<Boolean>> availability = 
@@ -27,6 +27,10 @@ public class SessionInfo
 		
 	}
 
+	public setConcentration( ArrayList<String> s){
+		this.concentration=s;
+	}
+	
 	public SessionInfo(Integer mj, ArrayList<Integer> tracks,
                ArrayList<ArrayList<schedule>> courses, ArrayList<schedule> termClasses,
                ArrayList<ArrayList<Boolean>> avail)

@@ -116,12 +116,10 @@ public class UserHistory extends Applet {
 		//button to next page
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				
-				DragonCourseScheduler dcs = new DragonCourseScheduler(sessioninfo);
-				dcs.updateTerms(getTerms());
-				dcs.updateHistory(PreviousClassesField.getText());
-				dcs.updateMajor(MajorCodeField.getText());
-				sessioninfo = dcs.getSessionInfo();
+				sessioninfo=updateMajor(sessioninfo);//what is the major value?
+				sessioninfo=updateTerms(sessioninfo, getTerms());
+				sessioninfo=updateHistory(sessioninfo, PreviousClassesField.getText());
+				sessioninfo=updateConcentration(sessioninfo,):// please fill in concentration info
 				
 				//ClassSelection selectionFrame = (ClassSelection)getAppletContext().getApplet("ClassSelection.class");
 				setVisible(false);
