@@ -18,8 +18,8 @@ public class Schedule {
     public String Instructor;
     public String Location;
     public String Weekday;
-    public String Start_time;
-    public String End_time;
+    public ArrayList<Timeslot> Times;
+    public Integer Course_no;
     public ArrayList<Boolean> Times;
 
     public Schedule(){
@@ -73,19 +73,13 @@ public class Schedule {
         return this.Weekday;
     }
 
-    public String getStart_time() {
-        return this.Start_time;
-    }
-
-    public String getEnd_time() {
-        return this.End_time;
-    }
-
-
     public String getCoursename() {
         return this.Subject+this.Course_no.toString();
     }
-	
+    
+    public ArrayList<Timeslots> getTimes(){
+    	return this.Times;
+    }
 	/**
 	 * The <code>toCsv</code> function creates a string of comma separated
 	 * values of the schedule.
