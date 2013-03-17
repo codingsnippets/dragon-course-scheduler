@@ -40,8 +40,9 @@ public class SessionInfo
                                             set(i, false);
                                     }
                             }});
-                        }
-                    }};
+                    }
+    };
+
     public Term[] planTerm;
     public ArrayList<Schedule> termOfferings = new ArrayList<Schedule>();
     
@@ -97,7 +98,7 @@ public class SessionInfo
      * </br>
      * @return The courses saved in the coursework attribute.
      */
-    public ArrayList<ArrayList<Schedule>> getCoursework()
+    public HashMap<Term, ArrayList<Schedule>> getCoursework()
     {
             return this.coursework;
     }
@@ -128,7 +129,7 @@ public class SessionInfo
             
         for(Schedule s: classes)
         {
-        	modAvail( term, avail, s.getTime() );
+        	modAvail( term, avail, s.getTimes() );
         }
     }
     
@@ -146,7 +147,7 @@ public class SessionInfo
     {
         Boolean avail = true;
         boolean exists = false;
-        Schedule schedule
+        Schedule schedule = new Schedule();
         
         //find schedule matching crn in termOfferings, and set
         for (int i = 0; i < this.termOfferings.size(); i++ )
@@ -165,7 +166,7 @@ public class SessionInfo
             if (this.coursework.get(term).get(j).getCRN() == crn )
             {
                 this.coursework.get(term).set(j, schedule);
-                modAvail(term, avail, schedule.getTimes() )
+                modAvail(term, avail, schedule.getTimes() );
                 exists = true;
                 break;
             }
@@ -209,7 +210,7 @@ public class SessionInfo
      * @param status - available or not available timeslot
      * @param times - times to be affected.
      */
-    private static void modAvail(Term term, boolean status, ArrayList<Timeslot> times)
+    private void modAvail(Term term, boolean status, ArrayList<Timeslot> times)
     {
         for (Timeslot t: times)
         {
@@ -230,110 +231,110 @@ public class SessionInfo
      * </br>
      * @return comma separated String defining the UserHistoryObject
      */
-    public String toCSV()
-    {
-        String sprtr = ",";
-        String csv = "";
-        
-        csv+=this.major;
-        
-        csv+=sprtr;
-        
-        for(Integer i:this.concentration)
-        {
-            csv+=i;
-            csv+=sprtr;
-        }
-            
-            Iterator it = this.coursework.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry)it.next();
-       
-            for (int i = 0; i < pairs.getValue().size(); i++ )
-            {
-                csv+=pairs.getValue().get(i).getCRN();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getSubject();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getCourse_no();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getTerm();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getSection();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getInstruction_type();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getInstructor();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getLocation();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getWeekday();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getStart_time();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getEnd_time();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getStart_block();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getEnd_block();
-                csv+=sprtr;
-                csv+=pairs.getValue().get(i).getCoursename();
-                csv+=sprtr;
-            }
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-            
-        Iterator ia = this.availability.entrySet().iterator();
-        while (ia.hasNext()) 
-        {
-            Map.Entry pairs = (Map.Entry)ia.next();
-       
-            for (int i = 0; i < pairs.getValue().size(); i++ )
-            {
-                    csv+=pairs.getValue().get(i);
-                            csv+=sprtr;
-            }
-            ia.remove(); // avoids a ConcurrentModificationException
-        }
-        
-        //last attribute to add. if not the last element add a comma.
-        for(int i = 0; i < this.termOfferings.size(); i++)
-        {
-            csv+=this.termOfferings.get(i).getCRN();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getSubject();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getCourse_no();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getTerm();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getSection();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getInstruction_type();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getInstructor();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getLocation();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getWeekday();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getStart_time();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getEnd_time();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getStart_block();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getEnd_block();
-            csv+=sprtr;
-            csv+=this.termOfferings.get(i).getCoursename();
-            if(i < this.termOfferings.size()-1)
-            {
-                    csv+=sprtr;
-            }
-        }
-        
-        
-        return csv;
-    }
+//    public String toCSV()
+//    {
+//        String sprtr = ",";
+//        String csv = "";
+//
+//        csv+=this.major;
+//
+//        csv+=sprtr;
+//
+//        for(Integer i:this.concentration)
+//        {
+//            csv+=i;
+//            csv+=sprtr;
+//        }
+//
+//            Iterator it = this.coursework.entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry pairs = (Map.Entry)it.next();
+//
+//            for (int i = 0; i < pairs.getValue().size(); i++ )
+//            {
+//                csv+=pairs.getValue().get(i).getCRN();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getSubject();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getCourse_no();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getTerm();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getSection();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getInstruction_type();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getInstructor();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getLocation();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getWeekday();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getStart_time();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getEnd_time();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getStart_block();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getEnd_block();
+//                csv+=sprtr;
+//                csv+=pairs.getValue().get(i).getCoursename();
+//                csv+=sprtr;
+//            }
+//            it.remove(); // avoids a ConcurrentModificationException
+//        }
+//
+//        Iterator ia = this.availability.entrySet().iterator();
+//        while (ia.hasNext())
+//        {
+//            Map.Entry pairs = (Map.Entry)ia.next();
+//
+//            for (int i = 0; i < pairs.getValue().size(); i++ )
+//            {
+//                    csv+=pairs.getValue().get(i);
+//                            csv+=sprtr;
+//            }
+//            ia.remove(); // avoids a ConcurrentModificationException
+//        }
+//
+//        //last attribute to add. if not the last element add a comma.
+//        for(int i = 0; i < this.termOfferings.size(); i++)
+//        {
+//            csv+=this.termOfferings.get(i).getCRN();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getSubject();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getCourse_no();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getTerm();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getSection();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getInstruction_type();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getInstructor();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getLocation();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getWeekday();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getStart_time();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getEnd_time();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getStart_block();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getEnd_block();
+//            csv+=sprtr;
+//            csv+=this.termOfferings.get(i).getCoursename();
+//            if(i < this.termOfferings.size()-1)
+//            {
+//                    csv+=sprtr;
+//            }
+//        }
+//
+//
+//        return csv;
+//    }
 
 }
