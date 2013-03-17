@@ -14,7 +14,7 @@ public class filterproto {
 
     dbcredential db = new dbcredential();
 
-    protected ArrayList getMajors(){
+    public ArrayList getMajors(){
         ArrayList majors = new ArrayList();
 
 
@@ -36,7 +36,7 @@ public class filterproto {
      * @param MajorCode the major is converted into unique identifier for db to recognize
      * @return
      */
-    protected ArrayList getConcentration(Integer MajorCode){
+    public ArrayList getConcentration(Integer MajorCode){
         String table="track";
         String fields="coursename";
 
@@ -57,7 +57,7 @@ public class filterproto {
     * @param userHistory:   The User history object that is passed from DCS
     * @return
     */
-    protected ArrayList getCourses(Term term, SessionInfo userHistory){
+    public ArrayList getCourses(Term term, SessionInfo userHistory){
 
         //based off term
 
@@ -138,7 +138,7 @@ public class filterproto {
     * Method Description:  This method will get the descriptions based on classes
     * @return
     */
-    protected String getDescription(Integer CRN){
+    public String getDescription(Integer CRN){
         return "i am a description";
     };
 
