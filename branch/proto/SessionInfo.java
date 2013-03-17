@@ -9,12 +9,12 @@ import java.util.HashMap;
 public class SessionInfo 
 {
 
-	private long major = 0;
+	private Integer major = 0;
 	private ArrayList<String> concentration = new ArrayList<String>();
 	private HashMap<Term, ArrayList<Schedule>> coursework = 
 			new HashMap<Term, ArrayList<Schedule>>();
-	private ArrayList<ArrayList<Boolean>> availability = 
-			new ArrayList<ArrayList<Boolean>>();
+	private HashMap<Term, ArrayList<Boolean>> availability = 
+			new HashMap<Term, ArrayList<Boolean>>();
 	public Term[] planTerm;
 	public ArrayList<Schedule> termOfferings = new ArrayList<Schedule>();
 	
@@ -31,16 +31,17 @@ public class SessionInfo
 		this.concentration = s;
 	}
 	
-	public SessionInfo(Integer mj, ArrayList<Integer> tracks,
-               ArrayList<ArrayList<Schedule>> courses, ArrayList<Schedule> termClasses,
-               ArrayList<ArrayList<Boolean>> avail)
-	{
-		this.major = mj;
-		this.concentration = tracks;
-		this.coursework = courses;
-		this.availability = avail;
-		this.termOfferings = termClasses;
-	}
+	
+//	public SessionInfo(Integer mj, ArrayList<Integer> tracks,
+//               ArrayList<ArrayList<Schedule>> courses, ArrayList<Schedule> termClasses,
+//               ArrayList<ArrayList<Boolean>> avail)
+//	{
+//		this.major = mj;
+//		this.concentration = tracks;
+//		this.coursework = courses;
+//		this.availability = avail;
+//		this.termOfferings = termClasses;
+//	}
 	
 	/**
 	 * The <code>getMajor</code> function retrieves the major of the 
@@ -103,55 +104,21 @@ public class SessionInfo
 	 * term.
 	 * </br>
 	 * @param term
-	 * @param Schedule
+	 * @param schedule
 	 * @return
 	 */
 	
     //TODO same thing here, code clone
-	public void addClass(Term term, Schedule Schedule)
+	public void addClass(Term term, Schedule schedule)
 	{
-		Integer course_crn = Schedule.getCRN();
+		Integer course_crn = schedule.getCRN();
 		boolean exists = false;
-		int index = -1;
-		
-		switch(term)
+								
+		for (int i = 0; i < this.coursework.get(term).size(); i++ )
 		{
-			case History:
-				index = 0;
-				
-				break;
-				
-			case Fall:
-				index = 1;
-				
-				break;
-			
-			case Winter:
-				index = 2;
-				
-				break;
-				
-			case Spring:
-				index = 3;
-				
-				break;
-				
-			case Summer:
-				index = 4;
-				
-				break;
-			
-			default:
-				System.out.println("UHO: Invalid Term passed: " + term);
-				break;
-			
-		} //end switch
-						
-		for (int i = 0; i < coursework.get(index).size(); i++ )
-		{
-			if (coursework.get(index).get(i).getCRN() == course_crn )
+			if (this.coursework.get(term).get(i).getCRN() == course_crn )
 			{
-				this.coursework.get(index).set(i, Schedule);
+				this.coursework.get(term).set(i, schedule);
 				exists = true;
 				break;
 			}
@@ -160,7 +127,7 @@ public class SessionInfo
 		
 		if(exists != true)
 		{
-			this.coursework.get(index).add(Schedule);
+			this.coursework.get(index).add(schedule);
 		}
 	}
 	
@@ -169,51 +136,18 @@ public class SessionInfo
 	 * term.
 	 * </br>
 	 * @param  term
-	 * @param  timeslot
+	 * @param  schedule
 	 */
-	public void removeClass(Term term, Schedule timeslot)
+	public void removeClass(Term term, Schedule schedule)
 	{
-		Integer course_crn = timeslot.getCRN();
-		int index = -1;
-		
-		switch(term)
+		Integer course_crn = schedule.getCRN();
+		int 
+				
+		for (int i = 0; i < this.coursework.get(term).size(); i++ )
 		{
-			case History:
-				index = 0;
-				
-				break;
-				
-			case Fall:
-				index = 1;
-				
-				break;
-			
-			case Winter:
-				index = 2;
-				
-				break;
-				
-			case Spring:
-				index = 3;
-				
-				break;
-				
-			case Summer:
-				index = 4;
-				
-				break;
-			
-			default:
-				System.out.println("UHO: Invalid Term passed: " + term);
-				break;
-			
-		} //end switch
-		
-		for (int i = 0; i < coursework.get(index).size(); i++ )
-		{
-			if (coursework.get(index).get(i).getCRN() == course_crn )
+			if (this.coursework.get(term).get(i).getCRN() == course_crn )
 			{
-				this.coursework.get(index).remove(i);
+				this.coursework.get(term).remove(i);
 			}
 			
 		}
@@ -223,40 +157,32 @@ public class SessionInfo
 	 * The <code>modAvail</code> function updates the availability of a Schedule
 	 * provided the Schedule and a Term enum constant.
 	 * </br>
-	 * @param term History, Fall, Winter, Spring, or Summer
+	 * @param term - History, Fall, Winter, Spring, or Summer
 	 * @param add
-	 * @param Schedule
+	 * @param schedule
 	 */
-	public void modAvail(Term term, boolean add, Schedule Schedule)
+	public void modAvail(Term term, boolean add, Schedule schedule)
 	{
+		Integer crn = schedule.getCRN();
+		int schedule_index = -1;
 		
-		switch(term)
+		for (int i = 0; i < this.coursework.get(term).size(); i++ )
 		{
-		
-			case Fall:
-				
-				
+			if (this.coursework.get(term).get(i).getCRN() == course_crn )
+			{
+				schedule_index = i;
 				break;
-			
-			case Winter:
-				
-				
-				break;
-			
-			case Spring:
-				
-				
-				break;
-				
-			case Summer:
-				
-				
-				break;
-				
-			default:
-				System.err.println("UHO: You have selected an invalid couresbone.Term");
-				break;
+			}
 		}
+		
+		try
+		{
+			this.availability.get(term).set(schedule_index, add);
+			
+		}catch IndexOutOfBoundsException{
+			System.out.err("SI: Schedule not found in coursework! Index out of bounds!");
+		}
+		
 		
 	} //End of modAvail()
 	
@@ -281,44 +207,95 @@ public class SessionInfo
 			csv+=sprtr;
 		}
 		
-		for(int i = 0; i < this.coursework.size(); i++)
-		{
-			for (int k = 0; k < this.coursework.get(i).size(); k++)
-			{
-				csv+=this.coursework.get(i).get(k).getCRN();
+		Iterator it = this.coursework.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	   
+	        for (int i = 0; i < pairs.getValue().size(); i++ )
+	        {
+	        	csv+=pairs.getValue().get(i).getCRN();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getSubject();
+				csv+=pairs.getValue().get(i).getSubject();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getCourse_no();
+				csv+=pairs.getValue().get(i).getCourse_no();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getTerm();
+				csv+=pairs.getValue().get(i).getTerm();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getSection();
+				csv+=pairs.getValue().get(i).getSection();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getInstruction_type();
+				csv+=pairs.getValue().get(i).getInstruction_type();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getInstructor();
+				csv+=pairs.getValue().get(i).getInstructor();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getLocation();
+				csv+=pairs.getValue().get(i).getLocation();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getWeekday();
+				csv+=pairs.getValue().get(i).getWeekday();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getStart_time();
+				csv+=pairs.getValue().get(i).getStart_time();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getEnd_time();
+				csv+=pairs.getValue().get(i).getEnd_time();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getStart_block();
+				csv+=pairs.getValue().get(i).getStart_block();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getEnd_block();
+				csv+=pairs.getValue().get(i).getEnd_block();
 				csv+=sprtr;
-				csv+=this.coursework.get(i).get(k).getCoursename();
+				csv+=pairs.getValue().get(i).getCoursename();
 				csv+=sprtr;
-				
-				
-			}
-		}
+	        }
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
 		
-		for(int i = 0; i < this.availability.size(); i++)
+//		for(int i = 0; i < this.coursework.size(); i++)
+//		{
+//			for (int k = 0; k < this.coursework.get(i).size(); k++)
+//			{
+//				csv+=this.coursework.get(i).get(k).getCRN();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getSubject();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getCourse_no();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getTerm();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getSection();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getInstruction_type();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getInstructor();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getLocation();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getWeekday();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getStart_time();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getEnd_time();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getStart_block();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getEnd_block();
+//				csv+=sprtr;
+//				csv+=this.coursework.get(i).get(k).getCoursename();
+//				csv+=sprtr;
+//				
+//				
+//			}
+//		}
+		
+	    Iterator ia = this.availability.entrySet().iterator();
+	    while (ia.hasNext()) 
+	    {
+	        Map.Entry pairs = (Map.Entry)ia.next();
+	   
+	        for (int i = 0; i < pairs.getValue().size(); i++ )
+	        {
+	        	csv+=pairs.getValue().get(i);
+				csv+=sprtr;
+	        }
+	        ia.remove(); // avoids a ConcurrentModificationException
+	    }
+	    
+/*	    for(int i = 0; i < this.availability.size(); i++)
 		{
 			for (int k = 0; k < this.availability.get(i).size(); k++)
 			{
@@ -326,7 +303,7 @@ public class SessionInfo
 				csv+=sprtr;
 			}
 		}
-		
+*/
 		//last attribute to add. if not the last element add a comma.
 		for(int i = 0; i < this.termOfferings.size(); i++)
 		{
