@@ -10,6 +10,7 @@ public class SessionInfo
 {
 
 	private final static int NUM_TIMESLOTS = 498;
+	private Term term;
     private String major = "";
     private ArrayList<String> concentration = new ArrayList<String>();
     private HashMap<Term, ArrayList<Schedule>> coursework = 
@@ -124,12 +125,11 @@ public class SessionInfo
      */
     public void setClasses(Term term, ArrayList<Schedule> classes)
     {
-        Boolean avail = true;    
     	this.coursework.put(term, classes);
             
         for(Schedule s: classes)
         {
-        	modAvail( term, avail, s.getTimes() );
+        	modAvail( term, true, s.getTimes() );        	
         }
     }
     
@@ -143,7 +143,7 @@ public class SessionInfo
      */
     
 //TODO same thing here, code clone
-    public void addClass(Term term, Integer crn)
+    public void addClass( Integer crn)
     {
         Boolean avail = true;
         boolean exists = false;
@@ -187,7 +187,7 @@ public class SessionInfo
      * @param  term
      * @param  crn
      */
-    public void removeClass(Term term, Integer crn)
+    public void removeClass(Integer crn)
     {
         Boolean no_avail = false;
         //remove schedules of matching crn from provided term
@@ -210,16 +210,13 @@ public class SessionInfo
      * @param status - available or not available timeslot
      * @param times - times to be affected.
      */
-    private void modAvail(Term term, boolean status, ArrayList<Timeslot> times)
+    private void modAvail(Term term, boolean status, ArrayList<Integer> times)
     {
-        for (Timeslot t: times)
+        for (Integer t: times)
         {
-            ArrayList<Integer> time_blocks = t.getSlots();
-            
-            for(Integer i: time_blocks)
-            {
-                    this.availability.get(term).set( i.intValue(), status );
-            }
+               ArrayList<Boolean> x=this.availability.get(term);
+               x.set( t, status );
+               this.availability.put(term,x);
         }
             
             

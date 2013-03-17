@@ -17,7 +17,7 @@ public class Schedule {
     public String Weekday;
     public String Start_time;
     public String End_time;
-    public ArrayList<Boolean> Times;
+    public ArrayList<Integer> Times;
 
     public Schedule(){
 
@@ -74,7 +74,7 @@ public class Schedule {
         return this.Subject+this.Course_no.toString();
     }
     
-    public ArrayList<Boolean> getTimes(){
+    public ArrayList<Integer> getTimes(){
     	return this.Times;
     }
 	/**

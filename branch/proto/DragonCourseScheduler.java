@@ -19,12 +19,12 @@ public class DragonCourseScheduler {
 	public DragonCourseScheduler() {
 	}
 	
-	public static SessionInfo updateAdd (SessionInfo s, Long i) {
+	public static SessionInfo updateAdd (SessionInfo s, Integer i) {
 		s.addClass(i);
 		return s;
 		}
 	
-	public static SessionInfo updateRemove (SessionInfo s, Long i) {
+	public static SessionInfo updateRemove (SessionInfo s, Integer i) {
 		s.removeClass(i);
 		return s;
 	}
@@ -56,13 +56,13 @@ public class DragonCourseScheduler {
 	}
 	
 	private ArrayList<String> getMajors(){
-		return filter.getMajors();
+		return Filter.getMajors();
 	}
-	private ArrayList<String> getConcentrations(){
-		return filter.getConcentrations();
+	private ArrayList<String> getConcentrations(String s){
+		return Filter.getConcentrations(s);
 	}
-	private void setMajor(Long i){
-		user.setMajor(i);
+	private void setMajor(SessionInfo user, String s){
+		user.setMajor(s);
 	}
 	
 	private static ArrayList<Schedule> parseHistory(String s){
@@ -70,14 +70,14 @@ public class DragonCourseScheduler {
 		ArrayList<Schedule> hist=new ArrayList<Schedule>();
 		for(String l:classes){
 			Schedule x = new Schedule();
-			int len=x.length();
+			int len=s.length();
 			x.Course_no=Integer.parseInt(l.substring(len-3));
-			x.Subject=l.toUpperCase(l.substring(0,len-4);
+			x.Subject=l.substring(0,len-4).toUpperCase();
 			hist.add(x);
 		}
 		return hist;
 	}
-	
+	/*
 	private void inputFile(String s){//expects CSV input, can be over multiple lines for readability
 		BufferedReader inp;
 		try {
@@ -99,12 +99,13 @@ public class DragonCourseScheduler {
 		}
 		parseHistory(parseme);
 	}
+	*/
 	
-	private  addClass(Integer CRN){
+	private void addClass(SessionInfo user,Integer CRN){
 		user.addClass(CRN);
 	}
 	
-	private void removeClass(Integer CRN){
+	private void removeClass(SessionInfo user, Integer CRN){
 		user.removeClass(CRN);
 	}
 	
