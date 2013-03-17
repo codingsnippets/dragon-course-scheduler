@@ -81,26 +81,12 @@ public class DragonCourseScheduler {
 	
 	private static ArrayList<Schedule> parseHistory(String s){
 		String[] classes=s.split(",");
-		ArrayList<Long> courses=new ArrayList<Long>();
-		for(String c:classes){
-			String id="";
-			for(char x:c.toCharArray()){
-				if(Character.isDigit(x)){id+=x;	}
-				else{
-					Long val=(long) (x-65);//set A to 00, Z to 25;
-					String n=val.toString();
-					if(n.length()==1){//pad single digit values to 2 spaces
-						n="0"+n;
-					}
-					id+=n;
-				}
-			}
-			courses.add(Long.parseLong(id));
-		}
 		ArrayList<Schedule> hist=new ArrayList<Schedule>();
-		for(Long l:courses){
+		for(String l:classes){
 			Schedule x = new Schedule();
-			x.Course_no=l;
+			int l=x.length();
+			x.Course_no=l.substring(l-3);
+			x.Subject=l.toUpperCase().substring(0,l-4);
 			hist.add(x);
 		}
 		return hist;
