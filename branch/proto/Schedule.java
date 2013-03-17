@@ -11,6 +11,7 @@ public class Schedule {
     //TODO: convert in to array of fields
     public Integer CRN;
     public String Subject;
+    public Integer Course_no;
     public String Term;
     public Integer Section;
     public String Instruction_type;
@@ -19,16 +20,15 @@ public class Schedule {
     public String Weekday;
     public String Start_time;
     public String End_time;
-    public ArrayList<Timeslot> Times;
-    public Integer Course_no;
+    public ArrayList<Boolean> Times;
 
     public Schedule(){
 
     }
     /*
-        @param String dbhost
-        @param String dbuser
-        @param String dbpass
+        @param dbhost
+        @param dbuser
+        @param dbpass
      */
     public void getRecord(String dbhost, String dbuser, String dbpass){
         String fields = "*" ;
