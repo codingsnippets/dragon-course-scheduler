@@ -5,10 +5,7 @@ import java.util.IdentityHashMap;
     Course schedule Entity class
  */
 public class Schedule {
-    public static final String DBTABLE= "current_schedule";
-
-
-    //TODO: convert in to array of fields
+    public static final String DBTABLE= "schedule";
     public Integer CRN;
     public String Subject;
     public Integer Course_no;
@@ -18,8 +15,6 @@ public class Schedule {
     public String Instructor;
     public String Location;
     public String Weekday;
-    public ArrayList<Timeslot> Times;
-    public Integer Course_no;
     public ArrayList<Boolean> Times;
 
     public Schedule(){
@@ -45,7 +40,7 @@ public class Schedule {
         return this.CRN;
     }
 
-    public String getCourse_no() {
+    public Integer getCourse_no() {
         return this.Course_no;
     }
 
@@ -77,7 +72,7 @@ public class Schedule {
         return this.Subject+this.Course_no.toString();
     }
     
-    public ArrayList<Timeslots> getTimes(){
+    public ArrayList<Boolean> getTimes(){
     	return this.Times;
     }
 	/**
