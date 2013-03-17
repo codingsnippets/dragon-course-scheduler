@@ -2,7 +2,6 @@
  * Dragon Course Scheduler
  */
 
-package couresbone;
 
 import java.util.HashMap;
 public class TermTable 
@@ -47,7 +46,7 @@ public class TermTable
 	 * The <code>setOfferings()</code> function sets offerings provided a HashMap
 	 * of Integer to String.
 	 * </br>
-	 * @param HashMap<Integer, String> offerings
+	 * @param  offerings  HashMap<Integer, String>
 	 */
 	public void setOfferings(HashMap<Integer, String> offerings) 
 	{
@@ -67,7 +66,7 @@ public class TermTable
 	/**
 	 * The <code>setDescriptions()</code> function sets the descriptions.
 	 * </br>
-	 * @param HashMap<Integer, String> descriptions
+	 * @param  descriptions HashMap<Integer, String>
 	 */
 	public void setDescriptions(HashMap<Integer, String> descriptions) 
 	{
@@ -87,7 +86,7 @@ public class TermTable
 	/**
 	 * The <code>setDirty()</code> function sets dirty to true of false;
 	 * </br>
-	 * @param Boolean dirty
+	 * @param  dirty    Boolean
 	 */
 	public void setDirty(Boolean dirty) 
 	{
