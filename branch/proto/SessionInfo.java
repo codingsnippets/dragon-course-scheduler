@@ -24,6 +24,7 @@ public class SessionInfo
     	major = "";
     	concentration = new ArrayList<String>();
     	coursework = new HashMap<Term, ArrayList<Schedule>>();
+    	availability = new HashMap<Term, ArrayList<Boolean>>();
     	for (Term t:Term.values()){
     		coursework.put(t, new ArrayList<Schedule>());
 	    	availability.put(t, new ArrayList<Boolean>( Collections.nCopies(NUM_TIMESLOTS, false) ));
@@ -111,10 +112,6 @@ public class SessionInfo
     {
     	this.coursework.put(term, classes);
             
-        for(Schedule s: classes)
-        {
-        	modAvail( term, true, s.getTimes() );        	
-        }
     }
     
     /**
