@@ -15,6 +15,8 @@ public class Schedule {
     public String Instructor;
     public String Location;
     public String Weekday;
+    public String Start_time;
+    public String End_time;
     public ArrayList<Boolean> Times;
 
     public Schedule(){
