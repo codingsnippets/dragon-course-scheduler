@@ -8,13 +8,39 @@ import java.util.HashMap;
 
 public class SessionInfo 
 {
-
-	private Integer major = 0;
+	private final static int NUM_TIMESLOTS = 498;
+	private String major = "";
 	private ArrayList<String> concentration = new ArrayList<String>();
 	private HashMap<Term, ArrayList<Schedule>> coursework = 
 			new HashMap<Term, ArrayList<Schedule>>();
 	private HashMap<Term, ArrayList<Boolean>> availability = 
-			new HashMap<Term, ArrayList<Boolean>>();
+			new HashMap<Term, ArrayList<Boolean>>(){{
+					put(Term.Fall, new ArrayList<Boolean>(){{
+						for (int i = 0; i < NUM_TIMESLOTS; i++)
+						{
+							set(i, false);
+						}
+					}});
+					put(Term.Winter, new ArrayList<Boolean>(){{
+						for (int i = 0; i < NUM_TIMESLOTS; i++)
+						{
+							set(i, false);
+						}
+					}});
+					put(Term.Spring, new ArrayList<Boolean>(){{
+						for (int i = 0; i < NUM_TIMESLOTS; i++)
+						{
+							set(i, false);
+						}
+					}});
+					put(Term.Summer, new ArrayList<Boolean>(){{
+						for (int i = 0; i < NUM_TIMESLOTS; i++)
+						{
+							set(i, false);
+						}
+					}});
+			    }
+			}};
 	public Term[] planTerm;
 	public ArrayList<Schedule> termOfferings = new ArrayList<Schedule>();
 	
@@ -49,10 +75,20 @@ public class SessionInfo
 	 * </br>
 	 * @return The major set in the UserHistoryObject.
 	 */
-	public Integer getMajor()
+	public String getMajor()
 	{
 		return this.major;
 		
+	}
+	
+	/**
+	 * The <code>setMajor</code> function sets the major of the UserHistoryObject.
+	 * </br>
+	 * @param m The major represented as an integer.
+	 */
+	public void setMajor(String m)
+	{
+		this.major = m;
 	}
 	
 	/**
@@ -66,26 +102,16 @@ public class SessionInfo
 	}
 	
 	/**
-	 * The <code>setMajor</code> function sets the major of the UserHistoryObject.
+	 * The <code>setTermOffer</code> function sets the provided ArrayList of 
+	 * Schedule objects as the classes offered in the current Term.
 	 * </br>
-	 * @param m The major represented as an integer.
+	 * @param termClasses An ArrayList of 'Schedule' Objects
+	 * @see Schedule
 	 */
-	public void setMajor(Integer m)
+	public void setTermOffer(ArrayList<Schedule> termClasses)
 	{
-		this.major = m;
+		this.termOfferings = termClasses;
 	}
-	
-//	/**
-//	 * The <code>setTermOffer</code> function sets the provided ArrayList of 
-//	 * Schedule objects as the classes offered in the current Term.
-//	 * </br>
-//	 * @param termClasses An ArrayList of 'Schedule' Objects
-//	 * @see Schedule
-//	 */
-//	public void setTermOffer(ArrayList<Schedule> termClasses)
-//	{
-//		this.termOfferings = termClasses;
-//	}
 	
 	/**
 	 * The <code>setClasses</code> function sets the provided classes to the 
@@ -104,30 +130,45 @@ public class SessionInfo
 	 * term.
 	 * </br>
 	 * @param term
-	 * @param schedule
+	 * @param crn
 	 * @return
 	 */
 	
     //TODO same thing here, code clone
-	public void addClass(Term term, Schedule schedule)
+	public void addClass(Term term, Integer crn)
 	{
-		Integer course_crn = schedule.getCRN();
+		Boolean avail = true;
 		boolean exists = false;
-								
-		for (int i = 0; i < this.coursework.get(term).size(); i++ )
+		Schedule schedule
+		
+		//find schedule matching crn in termOfferings, and set
+		for (int i = 0; i < this.termOfferings.size(); i++ )
 		{
-			if (this.coursework.get(term).get(i).getCRN() == course_crn )
+			if ( this.termOfferings.get(i).getCRN() == crn )
 			{
-				this.coursework.get(term).set(i, schedule);
+				schedule = this.termOfferings.get(i);
+				break;
+			}
+			
+		}
+		
+		//check if schedule exists in coursework, if true override, else add
+		for (int j = 0; j < this.coursework.get(term).size(); j++ )
+		{
+			if (this.coursework.get(term).get(j).getCRN() == crn )
+			{
+				this.coursework.get(term).set(j, schedule);
+				modAvail(term, avail, schedule.getTimes() )
 				exists = true;
 				break;
 			}
 			
 		}
 		
-		if(exists != true)
+		if(!exists)
 		{
-			this.coursework.get(index).add(schedule);
+			this.coursework.get(term).add(schedule);
+			modAvail(term, avail, schedule.getTimes() );
 		}
 	}
 	
@@ -136,18 +177,18 @@ public class SessionInfo
 	 * term.
 	 * </br>
 	 * @param  term
-	 * @param  schedule
+	 * @param  crn
 	 */
-	public void removeClass(Term term, Schedule schedule)
+	public void removeClass(Term term, Integer crn)
 	{
-		Integer course_crn = schedule.getCRN();
-		int 
-				
+		Boolean no_avail = false;
+		//remove schedules of matching crn from provided term
 		for (int i = 0; i < this.coursework.get(term).size(); i++ )
 		{
-			if (this.coursework.get(term).get(i).getCRN() == course_crn )
+			if (this.coursework.get(term).get(i).getCRN() == crn )
 			{
 				this.coursework.get(term).remove(i);
+				modAvail(term, no_avail, this.coursework.get(term).get(i).getTimes() );
 			}
 			
 		}
@@ -158,29 +199,19 @@ public class SessionInfo
 	 * provided the Schedule and a Term enum constant.
 	 * </br>
 	 * @param term - History, Fall, Winter, Spring, or Summer
-	 * @param add
-	 * @param schedule
+	 * @param status - available or not available timeslot
+	 * @param times - times to be affected.
 	 */
-	public void modAvail(Term term, boolean add, Schedule schedule)
+	private static void modAvail(Term term, boolean status, ArrayList<Timeslot> times)
 	{
-		Integer crn = schedule.getCRN();
-		int schedule_index = -1;
-		
-		for (int i = 0; i < this.coursework.get(term).size(); i++ )
+		for (Timeslot t: times)
 		{
-			if (this.coursework.get(term).get(i).getCRN() == course_crn )
-			{
-				schedule_index = i;
-				break;
-			}
-		}
-		
-		try
-		{
-			this.availability.get(term).set(schedule_index, add);
+			ArrayList<Integer> time_blocks = t.getSlots();
 			
-		}catch IndexOutOfBoundsException{
-			System.out.err("SI: Schedule not found in coursework! Index out of bounds!");
+			for(Integer i: time_blocks)
+			{
+				this.availability.get(term).set( i.intValue(), status );
+			}
 		}
 		
 		
