@@ -117,9 +117,9 @@ public class UserHistory extends JPanel {
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				sessioninfo = DragonCourseScheduler.updateMajor(sessioninfo, getMajorCode());//what is the major value?
-				sessioninfo = DragonCourseScheduler.setTerms(sessioninfo, getTerms());
 				sessioninfo = DragonCourseScheduler.updateHistory(sessioninfo, PreviousClassesField.getText());
 				sessioninfo = DragonCourseScheduler.updateConcentrations(sessioninfo, getTrackList());// please fill in concentration info
+				sessioninfo = DragonCourseScheduler.setTerms(sessioninfo, getTerms());
 				
 				setVisible(false);
 			}
