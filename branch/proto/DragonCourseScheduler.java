@@ -31,6 +31,7 @@ public class DragonCourseScheduler {
 	
 	public static SessionInfo setTerms (SessionInfo s, Term[] i) {
 		s.planTerm = i;
+		s.termOfferings=Filter.getCourses(i[0], s);
 		return s;
 	}
 	
@@ -70,7 +71,7 @@ public class DragonCourseScheduler {
 		ArrayList<Schedule> hist=new ArrayList<Schedule>();
 		for(String l:classes){
 			Schedule x = new Schedule();
-			int len=s.length();
+			int len=l.length();
 			x.Course_no=Integer.parseInt(l.substring(len-3));
 			x.Subject=l.substring(0,len-4).toUpperCase();
 			hist.add(x);

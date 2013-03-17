@@ -12,8 +12,8 @@ public class Filter {
 
     dbcredential db = new dbcredential();
 
-    public static ArrayList getMajors(){
-        ArrayList majors = new ArrayList();
+    public static ArrayList<String> getMajors(){
+        ArrayList majors = new ArrayList<String>();
 
 
         // table of choice
@@ -34,11 +34,11 @@ public class Filter {
      * @param MajorCode the major is converted into unique identifier for db to recognize
      * @return
      */
-    public static ArrayList getConcentrations(String MajorCode){
+    public static ArrayList<String> getConcentrations(String MajorCode){
         String table="track";
         String fields="coursename";
 
-        ArrayList concentrations =  new ArrayList();
+        ArrayList<String> concentrations =  new ArrayList<String>();
         concentrations.add("Algor");
         concentrations.add("Software E");
         concentrations.add("OS") ;
@@ -55,7 +55,7 @@ public class Filter {
     * @param userHistory:   The User history object that is passed from DCS
     * @return
     */
-    public static ArrayList getCourses(Term term, SessionInfo userHistory){
+    public static ArrayList<Schedule> getCourses(Term term, SessionInfo userHistory){
 
         //based off term
 
@@ -79,10 +79,6 @@ public class Filter {
         s1.Instructor ="Nowak";
         s1.Location="Korman 137";
         s1.Weekday="M";
-        Boolean[] avaliabilities = new Boolean[498]  ;
-
-        Arrays.fill(avaliabilities,true);
-        s1.Times =(ArrayList)(Arrays.asList(avaliabilities));
 
         s2.Subject = "CS";
         s2.CRN=360873;
@@ -96,10 +92,6 @@ public class Filter {
         s2.Location="UC 153";
         s2.Weekday="W";
 
-        avaliabilities = new Boolean[498]  ;
-
-        Arrays.fill(avaliabilities,true);
-        s2.Times =(ArrayList)(Arrays.asList(avaliabilities));
 
         s3.Subject = "CS";
         s3.CRN=302141;
@@ -112,17 +104,6 @@ public class Filter {
         s3.Instructor ="Schmidt";
         s3.Location="Korman 153";
         s3.Weekday="T";
-        avaliabilities = new Boolean[498]  ;
-
-        Arrays.fill(avaliabilities,true);
-        s1.Times =(ArrayList)(Arrays.asList(avaliabilities));
-
-        Integer[] indexes = {54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226,261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273};
-
-        for(Integer currentIndex : indexes){
-            s1.Times.remove(currentIndex);
-        }
-
 
         scheduleCollection.add(s1);
         scheduleCollection.add(s2);
