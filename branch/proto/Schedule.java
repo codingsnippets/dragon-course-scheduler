@@ -20,8 +20,7 @@ public class Schedule {
     public String Start_time;
     public String End_time;
     public ArrayList<Timeslot> Times;
-    public Long Course_no;
-    public Integer coursename;
+    public Integer Course_no;
 
     public Schedule(){
 
@@ -46,7 +45,7 @@ public class Schedule {
         return this.CRN;
     }
 
-    public Long getCourse_no() {
+    public String getCourse_no() {
         return this.Course_no;
     }
 
@@ -83,8 +82,8 @@ public class Schedule {
     }
 
 
-    public Integer getCoursename() {
-        return this.coursename;
+    public String getCoursename() {
+        return this.Subject+this.Course_no.toString();
     }
 	
 	/**
