@@ -1,5 +1,6 @@
-import java.applet.Applet;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -8,7 +9,7 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class ClassSelection extends Applet{
+public class ClassSelection extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected static Term activeTerm = Term.Fall;
 	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Prereq. For"}, 15) {
@@ -26,7 +27,19 @@ public class ClassSelection extends Applet{
 	JTextArea UserInfo = new JTextArea(10,0);
 	JLabel Label1 = new JLabel("Currently Planning: " + activeTerm.toString() + " Term");
 
-	//TODO modal dialog "are you sure you want to remove this class?"
+	private SessionInfo sessioninfo = new SessionInfo();
+	
+	public ClassSelection() {
+		super();
+		init();
+	}
+	
+	public ClassSelection(SessionInfo si) {
+		super();
+		sessioninfo = si;
+		init();
+	}
+
 	public void init() {	
 		final JPanel SelectClasses = new JPanel();
 		SelectClasses.setLayout(new BoxLayout(SelectClasses, BoxLayout.Y_AXIS));
@@ -72,6 +85,14 @@ public class ClassSelection extends Applet{
 		int ySize = (int) ((int) tk.getScreenSize().getHeight()*(0.80));  
 		setSize(xSize/2,ySize);
 		setVisible(true);
+		
+		//listener for going back to menu
+		//TODO make work
+		GoToMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+								
+			}
+		});
 		
 		//lisenter for adding a double clicked class in the planning table
 		PlanningTable.addMouseListener(new MouseListener() {
@@ -177,5 +198,9 @@ public class ClassSelection extends Applet{
 	
 	private void removeClassFromWeekly(Integer CRN) {
 		
+	}
+	
+	public SessionInfo passSession() {
+		return sessioninfo;
 	}
 }
