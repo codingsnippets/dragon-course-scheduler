@@ -20,12 +20,13 @@ public class DragonCourseScheduler {
 	}
 	
 	public static SessionInfo updateAdd (SessionInfo s, Long i) {
-		return s.addClass(i);
-	}
+		s.addClass(i);
+		return s;
+		}
 	
 	public static SessionInfo updateRemove (SessionInfo s, Long i) {
-		
-		return s.removeClass(i);
+		s.removeClass(i);
+		return s;
 	}
 	
 	public static SessionInfo setTerms (SessionInfo s, Term[] i) {
@@ -33,8 +34,7 @@ public class DragonCourseScheduler {
 		return s;
 	}
 	
-	public static SessionInfo updateTerms (SessionInfo s, Term[] i) {
-		userTerms = i;
+	public static SessionInfo updateTerm (SessionInfo s, Term[] i) {
 		return s;
 	}
 	
@@ -45,19 +45,7 @@ public class DragonCourseScheduler {
 	
 	
 	public static SessionInfo updateMajor(SessionInfo s, String major) {
-		String result = "";
-		Integer chartoint = null;
-		char[] charArray = major.toUpperCase().toCharArray();
-		for (char majorchar : charArray) {
-			chartoint = Character.getNumericValue(majorchar)-9;
-			if (chartoint < 10) {
-				result += 0 + chartoint;
-			}
-			else {
-				result += chartoint;
-			}
-		}
-		s.setMajor(Long.parseLong(result));
+		s.setMajor(major);
 		return s;
 		
 	}
@@ -67,9 +55,7 @@ public class DragonCourseScheduler {
 		return s;
 	}
 	
-	//TODO handle tracks selected by user
-	
-	private ArrayList<Integer> getMajors(){
+	private ArrayList<String> getMajors(){
 		return filter.getMajors();
 	}
 	private ArrayList<String> getConcentrations(){
@@ -84,9 +70,9 @@ public class DragonCourseScheduler {
 		ArrayList<Schedule> hist=new ArrayList<Schedule>();
 		for(String l:classes){
 			Schedule x = new Schedule();
-			int l=x.length();
-			x.Course_no=l.substring(l-3);
-			x.Subject=l.toUpperCase().substring(0,l-4);
+			int len=x.length();
+			x.Course_no=Integer.parseInt(l.substring(len-3));
+			x.Subject=l.toUpperCase(l.substring(0,len-4);
 			hist.add(x);
 		}
 		return hist;
@@ -114,17 +100,12 @@ public class DragonCourseScheduler {
 		parseHistory(parseme);
 	}
 	
-	private void addClass(Long CRN){
+	private  addClass(Integer CRN){
 		user.addClass(CRN);
 	}
-		
 	
-	private void removeClass(Long CRN){
+	private void removeClass(Integer CRN){
 		user.removeClass(CRN);
-	}
-	
-	private void changeTerm(Term t){
-		currTerm=t;
 	}
 	
 }
