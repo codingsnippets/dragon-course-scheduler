@@ -4,45 +4,33 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class SessionInfo 
 {
-
-	private final static int NUM_TIMESLOTS = 498;
+	private static int NUM_TIMESLOTS;
 	private Term term;
-    private String major = "";
-    private ArrayList<String> concentration = new ArrayList<String>();
-    private HashMap<Term, ArrayList<Schedule>> coursework = 
-                    new HashMap<Term, ArrayList<Schedule>>();
-    private HashMap<Term, ArrayList<Boolean>> availability = 
-                    new HashMap<Term, ArrayList<Boolean>>(){{
-                            put(Term.Fall, new ArrayList<Boolean>(){{
-                                    for (int i = 0; i < NUM_TIMESLOTS; i++)
-                                    {
-                                            set(i, false);
-                                    }
-                            }});
-                            put(Term.Winter, new ArrayList<Boolean>(){{
-                                    for (int i = 0; i < NUM_TIMESLOTS; i++)
-                                    {
-                                            set(i, false);
-                                    }
-                            }});
-                            put(Term.Spring, new ArrayList<Boolean>(){{
-                                    for (int i = 0; i < NUM_TIMESLOTS; i++)
-                                    {
-                                            set(i, false);
-                                    }
-                            }});
-                            put(Term.Summer, new ArrayList<Boolean>(){{
-                                    for (int i = 0; i < NUM_TIMESLOTS; i++)
-                                    {
-                                            set(i, false);
-                                    }
-                            }});
-                    }
-    };
+    private String major;
+    private ArrayList<String> concentration ;
+    private HashMap<Term, ArrayList<Schedule>> coursework; 
+    private HashMap<Term, ArrayList<Boolean>> availability; 
+
+    public SessionInfo(){
+    
+    
+    	NUM_TIMESLOTS = 504;
+    	term=Term.Fall;
+    	major = "";
+    	concentration = new ArrayList<String>();
+    	coursework = new HashMap<Term, ArrayList<Schedule>>();
+    	for (Term t:Term.values()){
+    		coursework.put(t, new ArrayList<Schedule>());
+	    	availability.put(t, new ArrayList<Boolean>( Collections.nCopies(NUM_TIMESLOTS, false) ));
+    	}
+    
+    }
+    
 
     public Term[] planTerm;
     public ArrayList<Schedule> termOfferings = new ArrayList<Schedule>();
@@ -51,10 +39,6 @@ public class SessionInfo
      * The default constructor.
      * </br>
      */
-    public SessionInfo()
-    {
-            
-    }
 
     public void setConcentration( ArrayList<String> s){
             this.concentration = s;
