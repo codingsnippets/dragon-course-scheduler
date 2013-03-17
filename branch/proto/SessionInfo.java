@@ -68,11 +68,11 @@ public class SessionInfo
 	/**
 	 * The <code>setMajor</code> function sets the major of the UserHistoryObject.
 	 * </br>
-	 * @param l The major represented as an integer.
+	 * @param m The major represented as an integer.
 	 */
-	public void setMajor(long l)
+	public void setMajor(Integer m)
 	{
-		this.major = l;
+		this.major = m;
 	}
 	
 //	/**
