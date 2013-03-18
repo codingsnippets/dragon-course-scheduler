@@ -59,6 +59,9 @@ public class mysqlDBExecute {
             thisCourse.End_time =thisSchedule.get(10);
             //thisCourse.CourseName = 11
 
+            thisCourse.Title ="Pending implemntation";
+            thisCourse.Prerequisites = "Details comming";
+
 
             // Special treatment for the time slot information
             String timeSlots = thisSchedule.get(12);
@@ -72,6 +75,12 @@ public class mysqlDBExecute {
 
             //List<String> timeIndexes = Arrays.asList(slotsTaken);
             //thisCourse.Times =
+
+
+            // Based off the Subject + Course_no
+
+
+
 
             scheduleCollection.add(thisCourse);
 
