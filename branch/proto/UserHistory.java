@@ -8,7 +8,7 @@ import javax.swing.*;
 public class UserHistory extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField PreviousClassesField = new JTextField(5);
-	private JTextField MajorCodeField = new JTextField(5);
+	private JComboBox MajorCode = new JComboBox(new Object [] {"CS"});
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JList TrackList = new JList(new Object[]{"Algorithms and Data Structures", "Artificial Intelligence", "Computer and Network Security", "Computer Graphics and Vision", "Game Development and Design", "Human Computer Interaction", "Numerical Analysis", "Numeric and Symbolic Computation", "Programming Languages", "Software Engineering", "Systems"});
 	private JCheckBox Fall = new JCheckBox("Fall");
@@ -47,17 +47,17 @@ public class UserHistory extends JPanel {
 		UserBackground.add(PreviousClassesField);
 		PreviousClassesField.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		JLabel JL2 = new JLabel("Please enter your major code (i.e.: CS for computer science):");
+		JLabel JL2 = new JLabel("Please select your major code:");
 		
-		MajorCodeField.setHorizontalAlignment(JTextField.CENTER);
-		JL2.setLabelFor(MajorCodeField);
+		MajorCode.setAlignmentX(JComboBox.CENTER_ALIGNMENT);
+		JL2.setLabelFor(MajorCode);
 		UserBackground.add(JL2);
 		JL2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		UserBackground.add(MajorCodeField);
-		MajorCodeField.setAlignmentX(Component.CENTER_ALIGNMENT);
+		UserBackground.add(MajorCode);
+		MajorCode.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JL2.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
 		
-		JLabel JL3 = new JLabel("Please select your (2) tracks from the list below");
+		JLabel JL3 = new JLabel("Please select multiple tracks from the list below");
 		
 		TrackList.setLayoutOrientation(JList.VERTICAL_WRAP);
 		JL3.setLabelFor(TrackList);
@@ -133,7 +133,7 @@ public class UserHistory extends JPanel {
 	}
 	
 	public String getMajorCode() {
-		return MajorCodeField.getText();
+		return (String) MajorCode.getSelectedItem();
 	}
 	
 	public ArrayList<String> getTrackList() {

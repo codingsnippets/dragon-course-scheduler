@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -206,9 +209,13 @@ public class ClassSelection extends JPanel {
 	}
 	
 	private void populateTimes() {
-		String time = "8:00 AM";
+		long milli = 46800000;
+		Date time = new Date(milli);
+		SimpleDateFormat ft = new SimpleDateFormat ("hh:mm a");
 		for (int i = 0; i < 28; i++) {
-			WeeklyTableModel.setValueAt(time, i, 0);
+			WeeklyTableModel.setValueAt(ft.format(time), i, 0);
+			milli += 1800000;
+			time = new Date(milli);
 		}
 	}
 	

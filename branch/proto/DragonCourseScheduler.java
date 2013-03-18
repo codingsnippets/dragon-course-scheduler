@@ -67,14 +67,16 @@ public class DragonCourseScheduler {
 	}
 	
 	private static ArrayList<Schedule> parseHistory(String s){
-		String[] classes=s.split(",");
 		ArrayList<Schedule> hist=new ArrayList<Schedule>();
-		for(String l:classes){
-			Schedule x = new Schedule();
-			int len=l.length();
-			x.Course_no=Integer.parseInt(l.substring(len-3));
-			x.Subject=l.substring(0,len-4).toUpperCase();
-			hist.add(x);
+		if (!s.isEmpty()) {
+			String[] classes=s.split(",");
+			for(String l:classes){
+				Schedule x = new Schedule();
+				int len=l.length();
+				x.Course_no=Integer.parseInt(l.substring(len-3));
+				x.Subject=l.substring(0,len-4).toUpperCase();
+				hist.add(x);
+			}
 		}
 		return hist;
 	}
