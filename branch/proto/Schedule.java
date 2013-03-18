@@ -67,7 +67,7 @@ public class Schedule {
     }
 
     public String getTimeslot() {
-        return this.Start_time + " - " + this.End_time + " " + this.Weekday;
+        return this.Weekday + " " + this.Start_time + " - " + this.End_time;
     }
 
     public String getCoursename() {

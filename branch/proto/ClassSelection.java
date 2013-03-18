@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class ClassSelection extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected static Term activeTerm = Term.Fall;
-	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Prereq. For"}, 15) {
+	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Prereq. For"}, 0) {
 		private static final long serialVersionUID = 2098240965623242350L;
 		public boolean isCellEditable(int row, int column) {
 	       return false;
@@ -24,7 +24,7 @@ public class ClassSelection extends JPanel {
 	       return false;
 	    }
 	};
-	JTextArea UserInfo = new JTextArea(10,0);
+	JTextArea UserInfo = new JTextArea(10,20);
 	JLabel Label1 = new JLabel("Currently Planning: " + activeTerm.toString() + " Term");
 
 	private SessionInfo sessioninfo = new SessionInfo();
@@ -43,6 +43,12 @@ public class ClassSelection extends JPanel {
 	public void init() {	
 		final JPanel SelectClasses = new JPanel();
 		SelectClasses.setLayout(new BoxLayout(SelectClasses, BoxLayout.Y_AXIS));
+		//Set Size of panel
+		Toolkit tk = Toolkit.getDefaultToolkit();  
+		int xSize = ((int) tk.getScreenSize().getWidth());  
+		int ySize = (int) ((int) tk.getScreenSize().getHeight()*(0.70));
+		setSize(xSize/3,ySize);
+		setVisible(true);
 		
 		JLabel Header = new JLabel("Dragon Course Scheduler");
 		Header.setFont(new Font("Arial", Font.BOLD, 30));
@@ -51,6 +57,7 @@ public class ClassSelection extends JPanel {
 		Header.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
 		
 		JPanel UserHistory = new JPanel(new BorderLayout());
+		setUserInfoText();
 		JButton GoToMenu = new JButton("Menu (Change Term, Export/View Schedule, etc.)");
 		UserHistory.add(UserInfo, BorderLayout.CENTER);
 		UserHistory.add(GoToMenu, BorderLayout.EAST);
@@ -60,37 +67,34 @@ public class ClassSelection extends JPanel {
 		Label1.setFont(new Font("Arial", Font.PLAIN, 20));
 		Label1.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
 		final JTable PlanningTable = new JTable(PlanningTableModel);
-		PlanningTableModel.addRow(new Object[] {"12345", "Class", "Title", "Timeslot", "Instructor", "Prereq. For"});
 		JScrollPane PlanningScrollPane = new JScrollPane(PlanningTable);
+		PlanningTable.setPreferredScrollableViewportSize(new Dimension(xSize/3, 6 * PlanningTable.getRowHeight()));
+		PlanningScrollPane.setSize(PlanningTable.getPreferredScrollableViewportSize());
 		SelectClasses.add(Label1);
 		Label1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		SelectClasses.add(PlanningScrollPane);
 		PlanningScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//populate classes
+		populateClasses();
 		
 		//weekly schedule
 		JLabel Label2 = new JLabel(activeTerm.toString() + " Term Weekly Schedule");
 		JTable WeeklyTable = new JTable(WeeklyTableModel);
 		JScrollPane WeeklyScrollPane = new JScrollPane(WeeklyTable);
+		WeeklyTable.setPreferredScrollableViewportSize(new Dimension(xSize/3, WeeklyTable.getRowCount() * WeeklyTable.getRowHeight()));
+		WeeklyScrollPane.setSize(WeeklyTable.getPreferredScrollableViewportSize());
 		SelectClasses.add(Label2);
 		Label2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		SelectClasses.add(WeeklyScrollPane);
 		PlanningScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
 		SelectClasses.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		add(SelectClasses);
-		
-		//Set Size of frame and center
-		Toolkit tk = Toolkit.getDefaultToolkit();  
-		int xSize = ((int) tk.getScreenSize().getWidth());  
-		int ySize = (int) ((int) tk.getScreenSize().getHeight()*(0.80));  
-		setSize(xSize/2,ySize);
-		setVisible(true);
 		
 		//listener for going back to menu
 		//TODO make work
 		GoToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-								
+				
 			}
 		});
 		
@@ -100,13 +104,19 @@ public class ClassSelection extends JPanel {
 				if (PlanningTable.getSelectedRow() != -1) {
 					if (e.getClickCount() == 2) {
 						if (e.getSource() == PlanningTable) {
-							Integer CRN = Integer.parseInt((String) PlanningTableModel.getValueAt(PlanningTable.getSelectedRow(), 0));
-							addClassToUser(CRN);
-							removeClassFromPlanning(CRN);
-							addClassToWeekly(CRN);
+							int x = PlanningTable.getSelectedRow();
+							String classnumber = (String) PlanningTable.getValueAt(x, 1);
+							int n = JOptionPane.showConfirmDialog(SelectClasses, "Add " + classnumber +" to " + activeTerm.toString() + " schedule?", "Add Class", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+							if (n == 0) {
+								Integer CRN = (Integer) PlanningTableModel.getValueAt(x, 0);
+								addClassToUser(CRN);
+								removeClassFromPlanning(x);
+								addClassToWeekly(CRN);
+								setUserInfoText();
+							}
 						}
 					}
-				}				
+				}
 			}
 
 			public void mouseEntered(MouseEvent e) {}
@@ -125,12 +135,12 @@ public class ClassSelection extends JPanel {
 				if (PlanningTable.getSelectedRow() != -1) {
 					if(e.getKeyCode() == KeyEvent.VK_DELETE) {
 						if (e.getSource() == PlanningTable) {
-							if (PlanningTableModel.getValueAt(PlanningTable.getSelectedRow(), 0) != null) {
-								int n = JOptionPane.showConfirmDialog(SelectClasses, "Are you sure you would like to remove this row?", "Remove Class", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+							int x = PlanningTable.getSelectedRow();
+							if (PlanningTableModel.getValueAt(x, 0) != null) {
+								String classnumber = (String) PlanningTable.getValueAt(x, 1);
+								int n = JOptionPane.showConfirmDialog(SelectClasses, "Are you sure you would like to remove " + classnumber +"?", "Remove Class", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 								if (n == 0) {
-									Integer CRN = Integer.parseInt((String) PlanningTableModel.getValueAt(PlanningTable.getSelectedRow(), 0));
-									removeClassFromPlanning(CRN);
-									removeClassFromWeekly(CRN);
+									removeClassFromPlanning(x);
 								}
 								
 							}
@@ -138,11 +148,19 @@ public class ClassSelection extends JPanel {
 					}
 					else if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 						if (e.getSource() == PlanningTable) {
-							if (PlanningTableModel.getValueAt(PlanningTable.getSelectedRow(), 0) != null) {
-								Integer CRN = Integer.parseInt((String) PlanningTableModel.getValueAt(PlanningTable.getSelectedRow(), 0));
-								addClassToUser(CRN);
-								removeClassFromPlanning(CRN);
-								addClassToWeekly(CRN);
+							int x = PlanningTable.getSelectedRow();
+							if (PlanningTableModel.getValueAt(x, 0) != null) {
+								
+								String classnumber = (String) PlanningTable.getValueAt(x, 1);
+								int n = JOptionPane.showConfirmDialog(SelectClasses, "Add " + classnumber +" to " + activeTerm.toString() + " schedule?", "Add Class", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								if (n == 0) {
+									Integer CRN = (Integer) PlanningTableModel.getValueAt(x, 0);
+									addClassToUser(CRN);
+									removeClassFromPlanning(x);
+									addClassToWeekly(CRN);
+									setUserInfoText();
+								}
+								
 							}
 						}
 					}
@@ -164,40 +182,63 @@ public class ClassSelection extends JPanel {
 	}
 	
 	//setters/adders/removes
-	public void setActiveTerm(Term t) {
+	private void setActiveTerm(Term t) {
 		activeTerm = t;
 	}
 	
-	public void setUserInfoBox(String userInfo) {
+	private void setUserInfoBox(String userInfo) {
 		UserInfo.setText(userInfo);
 	}
 	
-	//TODO actually get class info based on crn
-	public void addClassToPlanning(Integer CRN) {
-		PlanningTableModel.addRow(new Object[] {CRN, "Class", "Title", "Timeslot", "Instructor", "Prereq. For"});
+	private void removeClassFromPlanning(int SelectedRow) {
+		PlanningTableModel.removeRow(SelectedRow);
 	}
 	
-	public void removeClassFromPlanning(Integer CRN) {
-		for (int i = 0; i < PlanningTableModel.getRowCount(); i++) {
-			if (PlanningTableModel.getValueAt(i, 0) != null) {
-				if (Integer.parseInt((String) PlanningTableModel.getValueAt(i, 0)) == CRN) {
-					PlanningTableModel.removeRow(i);
-				}
-			}
-		}
-		removeClassFromWeekly(CRN);
-	}
-	
-	public void addClassToUser(Integer CRN) {
-		
+	private void addClassToUser(Integer CRN) {
+		sessioninfo.addClass(CRN);
 	}
 	
 	private void addClassToWeekly(Integer CRN) {
 		
 	}
 	
-	private void removeClassFromWeekly(Integer CRN) {
-		
+	private void populateClasses() {
+		for(Schedule schedule :  sessioninfo.termOfferings) {
+			PlanningTableModel.addRow(new Object[] {schedule.getCRN(), schedule.getCoursename(), "Title", schedule.getTimeslot(), schedule.getInstructor(), "Prereq. For"});
+		}
+	}
+	
+	private void setUserInfoText() {
+		String s = "Concentrations/Tracks:\n" + sessioninfo.getConcentrationString() + "\n\n";
+		if (!sessioninfo.getCoursework().get(Term.Fall).isEmpty()) {
+			String returnString = "";
+	    	for (Schedule schedule : sessioninfo.getCoursework().get(Term.Fall)) {
+	    		returnString += schedule.getCoursename() +", ";
+	    	}
+	    	s += "Fall Term Courses: " + returnString.substring(0, returnString.length()-2) + "\n";
+		}
+		if (!sessioninfo.getCoursework().get(Term.Winter).isEmpty()) {
+			String returnString = "";
+	    	for (Schedule schedule : sessioninfo.getCoursework().get(Term.Winter)) {
+	    		returnString += schedule.getCoursename() +", ";
+	    	}
+	    	s += "Winter Term Courses: " + returnString.substring(0, returnString.length()-2) + "\n";
+		}
+		if (!sessioninfo.getCoursework().get(Term.Spring).isEmpty()) {
+			String returnString = "";
+	    	for (Schedule schedule : sessioninfo.getCoursework().get(Term.Spring)) {
+	    		returnString += schedule.getCoursename() +", ";
+	    	}
+	    	s += "Spring Term Courses: " + returnString.substring(0, returnString.length()-2) + "\n";
+		}
+		if (!sessioninfo.getCoursework().get(Term.Summer).isEmpty()) {
+			String returnString = "";
+	    	for (Schedule schedule : sessioninfo.getCoursework().get(Term.Summer)) {
+	    		returnString += schedule.getCoursename() +", ";
+	    	}
+	    	s += "Summer Term Courses: " + returnString.substring(0, returnString.length()-2) + "\n";
+		}
+		UserInfo.setText(s);
 	}
 	
 	public SessionInfo passSession() {
