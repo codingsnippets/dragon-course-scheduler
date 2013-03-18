@@ -20,6 +20,8 @@ public class Schedule {
     public String End_time;
     public ArrayList<Integer> Times;
 
+    private ArrayList<String> Prerequisites;
+
     public Schedule(){
 
     }
@@ -66,6 +68,10 @@ public class Schedule {
     public String getTimeSchedule(){
         return this.Weekday + " " + this.Start_time + " - " + this.End_time;
 
+    }
+
+    public ArrayList<String> getPrereq(){
+        return  this.Prerequisites;
     }
     /**
      * The <code>toCsv</code> function creates a string of comma separated
