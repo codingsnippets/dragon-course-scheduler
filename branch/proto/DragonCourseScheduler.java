@@ -31,7 +31,7 @@ public class DragonCourseScheduler {
 	
 	public static SessionInfo setTerms (SessionInfo s, Term[] i) {
 		s.planTerm = i;
-		s.termOfferings=Filter.getCourses(i[0], s);
+		s.termOfferings=Filter.getClasses(i[0], s);
 		return s;
 	}
 	
