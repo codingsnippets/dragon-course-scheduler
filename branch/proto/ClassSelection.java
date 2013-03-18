@@ -37,6 +37,7 @@ public class ClassSelection extends JPanel {
 	public ClassSelection(SessionInfo si) {
 		super();
 		sessioninfo = si;
+		populateTimes();
 		init();
 	}
 
@@ -47,7 +48,7 @@ public class ClassSelection extends JPanel {
 		Toolkit tk = Toolkit.getDefaultToolkit();  
 		int xSize = ((int) tk.getScreenSize().getWidth());  
 		int ySize = (int) ((int) tk.getScreenSize().getHeight()*(0.70));
-		setSize(xSize/3,ySize);
+		setSize((int) (xSize/2.5),ySize);
 		setVisible(true);
 		
 		JLabel Header = new JLabel("Dragon Course Scheduler");
@@ -68,7 +69,7 @@ public class ClassSelection extends JPanel {
 		Label1.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
 		final JTable PlanningTable = new JTable(PlanningTableModel);
 		JScrollPane PlanningScrollPane = new JScrollPane(PlanningTable);
-		PlanningTable.setPreferredScrollableViewportSize(new Dimension(xSize/3, 6 * PlanningTable.getRowHeight()));
+		PlanningTable.setPreferredScrollableViewportSize(new Dimension((int) (xSize/2.5), 6 * PlanningTable.getRowHeight()));
 		PlanningScrollPane.setSize(PlanningTable.getPreferredScrollableViewportSize());
 		SelectClasses.add(Label1);
 		Label1.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -81,7 +82,7 @@ public class ClassSelection extends JPanel {
 		JLabel Label2 = new JLabel(activeTerm.toString() + " Term Weekly Schedule");
 		JTable WeeklyTable = new JTable(WeeklyTableModel);
 		JScrollPane WeeklyScrollPane = new JScrollPane(WeeklyTable);
-		WeeklyTable.setPreferredScrollableViewportSize(new Dimension(xSize/3, WeeklyTable.getRowCount() * WeeklyTable.getRowHeight()));
+		WeeklyTable.setPreferredScrollableViewportSize(new Dimension((int) (xSize/2.5), WeeklyTable.getRowCount() * WeeklyTable.getRowHeight()));
 		WeeklyScrollPane.setSize(WeeklyTable.getPreferredScrollableViewportSize());
 		SelectClasses.add(Label2);
 		Label2.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -186,10 +187,6 @@ public class ClassSelection extends JPanel {
 		activeTerm = t;
 	}
 	
-	private void setUserInfoBox(String userInfo) {
-		UserInfo.setText(userInfo);
-	}
-	
 	private void removeClassFromPlanning(int SelectedRow) {
 		PlanningTableModel.removeRow(SelectedRow);
 	}
@@ -204,7 +201,14 @@ public class ClassSelection extends JPanel {
 	
 	private void populateClasses() {
 		for(Schedule schedule :  sessioninfo.termOfferings) {
-			PlanningTableModel.addRow(new Object[] {schedule.getCRN(), schedule.getCoursename(), "Title", schedule.getTimeslot(), schedule.getInstructor(), "Prereq. For"});
+			PlanningTableModel.addRow(new Object[] {schedule.getCRN(), schedule.getCoursename(), "Title", schedule.getTimes(), schedule.getInstructor(), "Prereq. For"});
+		}
+	}
+	
+	private void populateTimes() {
+		String time = "8:00 AM";
+		for (int i = 0; i < 28; i++) {
+			WeeklyTableModel.setValueAt(time, i, 0);
 		}
 	}
 	

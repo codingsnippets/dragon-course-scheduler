@@ -17,7 +17,6 @@ public class Schedule {
     public String Weekday;
     public String Start_time;
     public String End_time;
-    public ArrayList<Integer> Times;
 
     public Schedule(){
 
@@ -66,22 +65,12 @@ public class Schedule {
         return this.Instructor;
     }
 
-    public String getTimeslot() {
-        return this.Weekday + " " + this.Start_time + " - " + this.End_time;
-    }
-
     public String getCoursename() {
         return this.Subject+this.Course_no.toString();
     }
     
-    public ArrayList<Integer> getTimes() {
-    	if (this.Times != null) {
-    		return this.Times;
-    	}
-    	else {
-    		//TODO actually create times if it doesn't exist
-    		return new ArrayList<Integer>();
-    	}
+    public String getTimes() {
+    	return this.Weekday + " " + this.Start_time + " - " + this.End_time;
     }
 	/**
 	 * The <code>toCsv</code> function creates a string of comma separated
