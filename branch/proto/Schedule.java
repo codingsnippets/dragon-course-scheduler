@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 
@@ -17,22 +18,12 @@ public class Schedule {
     public String Weekday;
     public String Start_time;
     public String End_time;
+    public ArrayList<Integer> Times;
 
     public Schedule(){
 
     }
-    /*
-        @param dbhost
-        @param dbuser
-        @param dbpass
-     */
-    public void getRecord(String dbhost, String dbuser, String dbpass){
-        String fields = "*" ;
-        ArrayList<String > newRecord = course_db_connect.getRecord(dbhost,dbuser,dbpass,DBTABLE,fields);
-        for (String field : newRecord){
-        }
-     }
-    
+
     public String getSubject() {
         return this.Subject;
     }
@@ -68,20 +59,24 @@ public class Schedule {
     public String getCoursename() {
         return this.Subject+this.Course_no.toString();
     }
-    
-    public String getTimes() {
-    	return this.Weekday + " " + this.Start_time + " - " + this.End_time;
+
+    public ArrayList<Integer> getTimes() {
+        return this.Times;
     }
-	/**
-	 * The <code>toCsv</code> function creates a string of comma separated
-	 * values of the schedule.
-	 * </br>
-	 * @return  csv string
-	 */
-	public String toCsv()
-	{
-		String csv = "";
-		
-		return csv;
-	}
+    public String getTimeSchedule(){
+        return this.Weekday + " " + this.Start_time + " - " + this.End_time;
+
+    }
+    /**
+     * The <code>toCsv</code> function creates a string of comma separated
+     * values of the schedule.
+     * </br>
+     * @return  csv string
+     */
+    public String toCsv()
+    {
+        String csv = "";
+
+        return csv;
+    }
 }
