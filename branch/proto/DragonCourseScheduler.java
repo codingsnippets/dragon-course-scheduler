@@ -7,14 +7,6 @@ import java.util.ArrayList;
 import javax.xml.ws.Action;
 
 public class DragonCourseScheduler {
-	//added
-	/*
-	public void update(Action a, Long i, SessionInfo uho){
-		if (a.equals(Add))){ uho.addClass(i);}
-		else if (a.equals(Remove)){ uho.removeClass(i))}
-		else{ uho.term=Term(i) )
-	}
-	*/
 	
 	public DragonCourseScheduler() {
 	}

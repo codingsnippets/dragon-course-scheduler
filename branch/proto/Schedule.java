@@ -20,8 +20,8 @@ public class Schedule {
     public String End_time;
     public ArrayList<Integer> Times;
 
-    private String Title;
-    private String Prerequisites;
+    public String Title;
+    public String Prerequisites;
 
     public Schedule(){
 

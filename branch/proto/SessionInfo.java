@@ -114,7 +114,16 @@ public class SessionInfo
             
     }
     
-    public ArrayList<String> getConcentration() {
+    public Term getTerm() {
+		return term;
+	}
+
+
+	public void setTerm(Term term) {
+		this.term = term;
+	}
+
+	public ArrayList<String> getConcentration() {
 		return concentration;
 	}
 

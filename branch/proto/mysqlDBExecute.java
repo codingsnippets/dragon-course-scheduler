@@ -38,7 +38,7 @@ public class mysqlDBExecute {
 
         // based off termName
 
-        String constraints = "where `Term` = \"" + termName + "\"";
+        String constraints = "where `Term` = \"" + termName.toString() + "\"";
 
         ArrayList<ArrayList<String>> records =  mysqlStatement.startConnection("SELECT *", "schedule", constraints);
 
