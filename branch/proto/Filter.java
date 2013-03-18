@@ -14,10 +14,10 @@ class Filter {
     //TODO  change the signature back to protected after the prototype
     public static ArrayList<String> getMajors(){
 
-        mysqlDBExecute sessionMajor = new mysqlDBExecute();
+       // mysqlDBExecute sessionMajor = new mysqlDBExecute();
 
 
-        return sessionMajor.PullMajors();
+        return mysqlDBExecute.PullMajors();
 
     }
 
@@ -30,11 +30,10 @@ class Filter {
      */
     public static ArrayList<String> getConcentrations(String MajorString){
 
-        mysqlDBExecute sessionConcentrations = new mysqlDBExecute();
+        //mysqlDBExecute sessionConcentrations = new mysqlDBExecute();
 
-        return sessionConcentrations.PullConcentrations(MajorString);
-    };
-
+        return mysqlDBExecute.PullConcentrations(MajorString);
+    }
 
 
     /*
@@ -46,10 +45,10 @@ class Filter {
     */
     public static ArrayList<Schedule> getClasses(Term termName, SessionInfo userSession){
 
-        mysqlDBExecute sessionSchedule = new mysqlDBExecute();
+       // mysqlDBExecute sessionSchedule = new mysqlDBExecute();
 
 
-        return sessionSchedule.PullSchedule(termName, userSession);
+        return mysqlDBExecute.PullSchedule(termName, userSession);
     }
 
 
