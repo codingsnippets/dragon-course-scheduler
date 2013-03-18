@@ -45,14 +45,6 @@ public class SessionInfo
             this.concentration = s;
     }
     
-    public String getConcentrationString() {
-    	String returnString = "";
-    	for (String s : concentration) {
-    		returnString += s +", ";
-    	}
-    	return returnString.substring(0, returnString.length()-2);
-    }
-    
     
 //  public SessionInfo(Integer mj, ArrayList<Integer> tracks,
 //           ArrayList<ArrayList<Schedule>> courses, ArrayList<Schedule> termClasses,
@@ -122,7 +114,12 @@ public class SessionInfo
             
     }
     
-    /**
+    public ArrayList<String> getConcentration() {
+		return concentration;
+	}
+
+
+	/**
      * The <code>addClass</code> function adds a class section to the provided 
      * term.
      * </br>

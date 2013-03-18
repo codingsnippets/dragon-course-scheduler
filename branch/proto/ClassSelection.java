@@ -213,7 +213,11 @@ public class ClassSelection extends JPanel {
 	}
 	
 	private void setUserInfoText() {
-		String s = "Concentrations/Tracks:\n" + sessioninfo.getConcentrationString() + "\n\n";
+		String s = "Concentrations/Tracks:\n";
+		for (String x:sessioninfo.getConcentration()){
+			s+=x+"\n";
+		}
+			s+="\n\n";
 		if (!sessioninfo.getCoursework().get(Term.Fall).isEmpty()) {
 			String returnString = "";
 	    	for (Schedule schedule : sessioninfo.getCoursework().get(Term.Fall)) {
