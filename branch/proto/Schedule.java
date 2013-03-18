@@ -20,10 +20,14 @@ public class Schedule {
     public String End_time;
     public ArrayList<Integer> Times;
 
-    private ArrayList<String> Prerequisites;
+    private String Title;
+    private String Prerequisites;
 
     public Schedule(){
 
+    }
+    public String getTitle(){
+        return this.Title;
     }
 
     public String getSubject() {
@@ -70,7 +74,7 @@ public class Schedule {
 
     }
 
-    public ArrayList<String> getPrereq(){
+    public String getPrereq(){
         return  this.Prerequisites;
     }
     /**
