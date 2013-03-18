@@ -1,24 +1,19 @@
 public class dbcredential {
 
-    private String ost="jdbc:mysql://cs451dbremote.db.10419053.hostedresource.com/";
-    private String dbname= "cs451dbremote";
-    private String dbpass= "S4aw6WRA4u!";
-    private String dbdriver = "com.mysql.jdbc.Driver";
-
     protected String getDbpass() {
-        return dbpass;
+        return  "S4aw6WRA4u!";
     }
 
     protected String getDbname() {
-        return dbname;
+        return "cs451dbremote";
     }
 
     protected String getOst() {
-        return ost;
+        return  "jdbc:mysql://cs451dbremote.db.10419053.hostedresource.com/";
     }
 
     protected String getDbdriver(){
-        return dbdriver;
+        return  "com.mysql.jdbc.Driver";
     }
 
 
