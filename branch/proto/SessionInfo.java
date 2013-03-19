@@ -18,6 +18,10 @@ public class SessionInfo
     public Term[] planTerm;
     public ArrayList<Schedule> termOfferings = new ArrayList<Schedule>();
 
+
+
+    public Action lastAction;
+
     public SessionInfo(){
     
     
@@ -32,6 +36,14 @@ public class SessionInfo
 	    	availability.put(t, new ArrayList<Boolean>( Collections.nCopies(NUM_TIMESLOTS, false) ));
     	}
     
+    }
+
+    public Action getlastAction() {
+        return lastAction;
+    }
+
+    public void setlastAction(Action lastAction) {
+        this.lastAction = lastAction;
     }
     
 
