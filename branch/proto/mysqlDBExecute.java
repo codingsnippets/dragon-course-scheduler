@@ -59,15 +59,19 @@ public class mysqlDBExecute {
             thisCourse.End_time =thisSchedule.get(10);
             //thisCourse.CourseName = 11
 
-            //thisCourse.Title ="Pending implemntation";
-
             ArrayList<ArrayList<String>> courseReferences = mysqlStatement.startConnection(" SELECT name ", "courseRef", " WHERE coursename LIKE \""+ thisCourse.Subject + thisCourse.Course_no + "\"" );
 
             for (ArrayList<String> myTitle : courseReferences){
                 thisCourse.Title = myTitle.get(0);
             }
 
-            thisCourse.Prerequisites = "Details comming";
+            ArrayList<ArrayList<String>> classRequires = mysqlStatement.startConnection("select `postreq`", "`require`", " where courseno = " + thisCourse.Course_no + "");
+
+
+            for (ArrayList<String> myTitle : classRequires){
+                thisCourse.Prerequisites = myTitle.get(0);
+            }
+            //thisCourse.Prerequisites = "Details comming";
 
 
             // Special treatment for the time slot information
