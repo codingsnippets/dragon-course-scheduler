@@ -109,18 +109,17 @@ public class mysqlDBExecute {
 
     private static Boolean filterConflicts(Term filteredTerm, SessionInfo userSession, ArrayList<Integer> timeIndeces){
 
-        Boolean conflicts = true;
 
         SessionInfo currentSession = userSession;
         ArrayList<Boolean> compareFree =   currentSession.getAvaliabiltiy().get(filteredTerm);
 
         for(Integer currentIndex: timeIndeces){
             if (compareFree.get(currentIndex)){
-                conflicts = false;
+                return false;
             }
         }
 
-        return conflicts;
+        return true;
 
     }
 
