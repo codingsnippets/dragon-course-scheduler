@@ -1,3 +1,5 @@
+
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ import javax.swing.*;
 public class UserHistory extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField PreviousClassesField = new JTextField(5);
-	private JComboBox MajorCode = new JComboBox(new Object [] {"CS"});
+	private JComboBox MajorCode;
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JList TrackList = new JList(new Object[]{"Algorithms and Data Structures", "Artificial Intelligence", "Computer and Network Security", "Computer Graphics and Vision", "Game Development and Design", "Human Computer Interaction", "Numerical Analysis", "Numeric and Symbolic Computation", "Programming Languages", "Software Engineering", "Systems"});
 	private JCheckBox Fall = new JCheckBox("Fall");
@@ -30,6 +32,9 @@ public class UserHistory extends JPanel {
 	}
 	
 	public void init() {
+		//populate major code
+		setMajorCode();
+		
 		JPanel UserBackground = new JPanel();
 		UserBackground.setLayout(new BoxLayout(UserBackground, BoxLayout.Y_AXIS));
 		
@@ -166,6 +171,19 @@ public class UserHistory extends JPanel {
 	
 	public SessionInfo passSession() {
 		return sessioninfo;
+	}
+	
+	private void setMajorCode() {
+		ArrayList<String> majors = Filter.getMajors();
+		String[] array = new String[majors.size()];
+		int i = 0;
+		for (String major : majors) {
+			major = major.replace("[", "");
+			major = major.replace("]", "");
+			array[i] = major; 
+			i++;
+		}
+		MajorCode = new JComboBox(array);
 	}
 	
 }

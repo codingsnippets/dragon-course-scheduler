@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class ClassSelection extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected Term activeTerm = Term.Fall;
-	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Prereq."}, 0) {
+	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Location", "Prereq."}, 0) {
 		private static final long serialVersionUID = 2098240965623242350L;
 		public boolean isCellEditable(int row, int column) {
 	       return false;
@@ -248,7 +248,7 @@ public class ClassSelection extends JPanel {
 		    }
 		}
 		for(Schedule schedule :  sessioninfo.termOfferings) {
-			PlanningTableModel.addRow(new Object[] {schedule.getCRN(), schedule.getCoursename(), schedule.getTitle(), schedule.getTimeSchedule(), schedule.getInstructor(), schedule.getPrereq()});
+			PlanningTableModel.addRow(new Object[] {schedule.getCRN(), schedule.getCoursename(), schedule.getTitle(), schedule.getTimeSchedule(), schedule.getInstructor(), schedule.getLocation(),schedule.getPrereq()});
 		}
 	}
 	
