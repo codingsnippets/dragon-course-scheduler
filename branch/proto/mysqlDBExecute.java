@@ -1,4 +1,6 @@
 
+import javax.swing.text.StyledEditorKit;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
@@ -91,9 +93,11 @@ public class mysqlDBExecute {
             // Based off the Subject + Course_no
 
 
+            if (filterConflicts(termName, userSession, timeIndices)){
+                scheduleCollection.add(thisCourse);
+            }
 
 
-            scheduleCollection.add(thisCourse);
 
         }
 
@@ -103,7 +107,20 @@ public class mysqlDBExecute {
 
     }
 
-    public void filterConflicts(SessionInfo userSession){
+    private static Boolean filterConflicts(Term filteredTerm, SessionInfo userSession, ArrayList<Integer> timeIndeces){
+
+        Boolean conflicts = true;
+
+        SessionInfo currentSession = userSession;
+        ArrayList<Boolean> compareFree =   currentSession.getAvaliabiltiy().get(filteredTerm);
+
+        for(Integer currentIndex: timeIndeces){
+            if (compareFree.get(currentIndex)){
+                conflicts = false;
+            }
+        }
+
+        return conflicts;
 
     }
 
