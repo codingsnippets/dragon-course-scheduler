@@ -1,4 +1,6 @@
 
+import javax.swing.text.StyledEditorKit;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
@@ -59,8 +61,19 @@ public class mysqlDBExecute {
             thisCourse.End_time =thisSchedule.get(10);
             //thisCourse.CourseName = 11
 
-            thisCourse.Title ="Pending implemntation";
-            thisCourse.Prerequisites = "Details comming";
+            ArrayList<ArrayList<String>> courseReferences = mysqlStatement.startConnection(" SELECT name ", "courseRef", " WHERE coursename LIKE \""+ thisCourse.Subject + thisCourse.Course_no + "\"" );
+
+            for (ArrayList<String> myTitle : courseReferences){
+                thisCourse.Title = myTitle.get(0);
+            }
+
+            ArrayList<ArrayList<String>> classRequires = mysqlStatement.startConnection("select `postreq`", "`require`", " where courseno = " + thisCourse.Course_no + "");
+
+
+            for (ArrayList<String> myTitle : classRequires){
+                thisCourse.Prerequisites = myTitle.get(0);
+            }
+            //thisCourse.Prerequisites = "Details comming";
 
 
             // Special treatment for the time slot information
@@ -80,9 +93,11 @@ public class mysqlDBExecute {
             // Based off the Subject + Course_no
 
 
+            if (filterConflicts(termName, userSession, timeIndices)){
+                scheduleCollection.add(thisCourse);
+            }
 
 
-            scheduleCollection.add(thisCourse);
 
         }
 
@@ -92,7 +107,19 @@ public class mysqlDBExecute {
 
     }
 
-    public void filterConflicts(SessionInfo userSession){
+    private static Boolean filterConflicts(Term filteredTerm, SessionInfo userSession, ArrayList<Integer> timeIndeces){
+
+
+        SessionInfo currentSession = userSession;
+        ArrayList<Boolean> compareFree =   currentSession.getAvaliabiltiy().get(filteredTerm);
+
+        for(Integer currentIndex: timeIndeces){
+            if (compareFree.get(currentIndex)){
+                return false;
+            }
+        }
+
+        return true;
 
     }
 
