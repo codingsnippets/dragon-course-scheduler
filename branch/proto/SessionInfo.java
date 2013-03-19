@@ -150,32 +150,13 @@ public class SessionInfo
             if ( this.termOfferings.get(i).getCRN() == crn )
             {
                 schedule = this.termOfferings.get(i);
-                ArrayList<Schedule> x=this.termOfferings;
-                x.remove(i);
-                this.termOfferings=x;
                 break;
             }
                 
         }
+        this.coursework.get(term).add(schedule);
+        modAvail(term, avail, schedule.getTimes() );
         
-        //check if schedule exists in coursework, if true override, else add
-        for (int j = 0; j < this.coursework.get(term).size(); j++ )
-        {
-            if (this.coursework.get(term).get(j).getCRN() == crn )
-            {
-                this.coursework.get(term).set(j, schedule);
-                modAvail(term, avail, schedule.getTimes() );
-                exists = true;
-                break;
-            }
-                
-        }
-        
-        if(!exists)
-        {
-            this.coursework.get(term).add(schedule);
-            modAvail(term, avail, schedule.getTimes() );
-        }
     }
     
     /**

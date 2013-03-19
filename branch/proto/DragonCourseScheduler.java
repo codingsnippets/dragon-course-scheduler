@@ -13,22 +13,28 @@ public class DragonCourseScheduler {
 	
 	public static SessionInfo updateAdd (SessionInfo s, Integer i) {
 		s.addClass(i);
+		Term t = s.getTerm();
+		s.termOfferings=Filter.getClasses(t, s);
 		return s;
 		}
 	
 	public static SessionInfo updateRemove (SessionInfo s, Integer i) {
 		s.removeClass(i);
+		Term t = s.getTerm();
+		s.termOfferings=Filter.getClasses(t, s);
 		return s;
 	}
 	
-	public static SessionInfo setTerms (SessionInfo s, Term[] i) {
+	public static SessionInfo setTerms(SessionInfo s, Term[] i) {
 		s.planTerm = i;
 		s.setTerm(i[0]);
 		s.termOfferings=Filter.getClasses(i[0], s);
 		return s;
 	}
 	
-	public static SessionInfo updateTerm (SessionInfo s, Term[] i) {
+	public static SessionInfo updateTerm(SessionInfo s, Term i) {
+		s.setTerm(i);
+		Filter.getClasses(i, s);
 		return s;
 	}
 	
@@ -96,13 +102,5 @@ public class DragonCourseScheduler {
 		parseHistory(parseme);
 	}
 	*/
-	
-	private void addClass(SessionInfo user,Integer CRN){
-		user.addClass(CRN);
-	}
-	
-	private void removeClass(SessionInfo user, Integer CRN){
-		user.removeClass(CRN);
-	}
 	
 }
