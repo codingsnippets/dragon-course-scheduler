@@ -34,7 +34,7 @@ public class DragonCourseScheduler {
 	
 	public static SessionInfo updateTerm(SessionInfo s, Term i) {
 		s.setTerm(i);
-		Filter.getClasses(i, s);
+		s.termOfferings = Filter.getClasses(i, s);
 		return s;
 	}
 	

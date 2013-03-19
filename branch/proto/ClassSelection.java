@@ -14,8 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClassSelection extends JPanel {
 	private static final long serialVersionUID = 1L;
-	protected static Term activeTerm = Term.Fall;
-	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Prereq. For"}, 0) {
+	protected Term activeTerm = Term.Fall;
+	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Prereq."}, 0) {
 		private static final long serialVersionUID = 2098240965623242350L;
 		public boolean isCellEditable(int row, int column) {
 	       return false;
@@ -27,8 +27,9 @@ public class ClassSelection extends JPanel {
 	       return false;
 	    }
 	};
-	JTextArea UserInfo = new JTextArea(10,20);
-	JLabel Label1 = new JLabel("Currently Planning: " + activeTerm.toString() + " Term");
+	JTextArea UserInfo = new JTextArea(8,20);
+	protected JLabel Label1 = new JLabel();
+	protected JLabel Label2 = new JLabel();
 
 	private SessionInfo sessioninfo = new SessionInfo();
 	
@@ -40,6 +41,9 @@ public class ClassSelection extends JPanel {
 	public ClassSelection(SessionInfo si) {
 		super();
 		sessioninfo = si;
+		setActiveTerm(sessioninfo.getTerm());
+		Label1 = new JLabel("Currently Planning: " + activeTerm.toString() + " Term");
+		Label2 = new JLabel(activeTerm.toString() + " Term Weekly Schedule");
 		populateTimes();
 		init();
 	}
@@ -58,18 +62,18 @@ public class ClassSelection extends JPanel {
 		Header.setFont(new Font("Arial", Font.BOLD, 30));
 		SelectClasses.add(Header);
 		Header.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Header.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
+		Header.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 		
 		JPanel UserHistory = new JPanel(new BorderLayout());
 		setUserInfoText();
-		JButton GoToMenu = new JButton("Menu (Change Term, Export/View Schedule, etc.)");
+		JButton GoToMenu = new JButton("Menu (Change Term)");
 		UserHistory.add(UserInfo, BorderLayout.CENTER);
 		UserHistory.add(GoToMenu, BorderLayout.EAST);
 		SelectClasses.add(UserHistory);
 		
 		//currently planning
 		Label1.setFont(new Font("Arial", Font.PLAIN, 20));
-		Label1.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
+		Label1.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 		final JTable PlanningTable = new JTable(PlanningTableModel);
 		JScrollPane PlanningScrollPane = new JScrollPane(PlanningTable);
 		PlanningTable.setPreferredScrollableViewportSize(new Dimension((int) (xSize/2.5), 6 * PlanningTable.getRowHeight()));
@@ -82,7 +86,6 @@ public class ClassSelection extends JPanel {
 		populateClasses();
 		
 		//weekly schedule
-		JLabel Label2 = new JLabel(activeTerm.toString() + " Term Weekly Schedule");
 		JTable WeeklyTable = new JTable(WeeklyTableModel);
 		JScrollPane WeeklyScrollPane = new JScrollPane(WeeklyTable);
 		WeeklyTable.setPreferredScrollableViewportSize(new Dimension((int) (xSize/2.5), WeeklyTable.getRowCount() * WeeklyTable.getRowHeight()));
@@ -98,7 +101,43 @@ public class ClassSelection extends JPanel {
 		//TODO make work
 		GoToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				JRadioButton Fall = new JRadioButton("Fall", true);
+				JRadioButton Winter = new JRadioButton("Winter");
+				JRadioButton Spring = new JRadioButton("Spring");
+				JRadioButton Summer = new JRadioButton("Summer");
+				ButtonGroup group = new ButtonGroup();
+				group.add(Fall);
+				group.add(Winter);
+				group.add(Spring);
+				group.add(Summer);
+				JPanel radioPanel = new JPanel(new GridLayout(0, 1));
+		        radioPanel.add(Fall);
+		        radioPanel.add(Winter);
+		        radioPanel.add(Spring);
+		        radioPanel.add(Summer);
+		        int n = JOptionPane.showConfirmDialog(SelectClasses, radioPanel, "Menu", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
+		        if (n == 0) {
+		        	if (Fall.isSelected()) {
+		        		sessioninfo = DragonCourseScheduler.updateTerm(sessioninfo, Term.Fall);
+			        	setActiveTerm(Term.Fall);
+			        }
+			        else if (Winter.isSelected()) {
+			        	sessioninfo = DragonCourseScheduler.updateTerm(sessioninfo, Term.Winter);
+			        	setActiveTerm(Term.Winter);
+			        }
+			        else if (Spring.isSelected()) {
+			        	sessioninfo = DragonCourseScheduler.updateTerm(sessioninfo, Term.Spring);
+			        	setActiveTerm(Term.Spring);
+			        }
+			        else if (Summer.isSelected()) {
+			        	sessioninfo = DragonCourseScheduler.updateTerm(sessioninfo, Term.Summer);
+			        	setActiveTerm(Term.Summer);
+			        }
+			        Label1.setText("Currently Planning: " + activeTerm.toString() + " Term");
+			        Label2.setText(activeTerm.toString() + " Term Weekly Schedule");
+			        populateClasses();
+			        SelectClasses.repaint();
+		        }
 			}
 		});
 		
@@ -203,8 +242,13 @@ public class ClassSelection extends JPanel {
 	}
 	
 	private void populateClasses() {
+		if (PlanningTableModel.getRowCount() > 0) {
+			for (int i = PlanningTableModel.getRowCount() - 1; i > -1; i--) {
+		        PlanningTableModel.removeRow(i);
+		    }
+		}
 		for(Schedule schedule :  sessioninfo.termOfferings) {
-			PlanningTableModel.addRow(new Object[] {schedule.getCRN(), schedule.getCoursename(), "Title", schedule.getTimes(), schedule.getInstructor(), "Prereq. For"});
+			PlanningTableModel.addRow(new Object[] {schedule.getCRN(), schedule.getCoursename(), schedule.getTitle(), schedule.getTimeSchedule(), schedule.getInstructor(), schedule.getPrereq()});
 		}
 	}
 	

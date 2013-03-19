@@ -123,6 +123,10 @@ public class SessionInfo
 		this.term = term;
 	}
 
+	public HashMap<Term, ArrayList<Boolean>> getAvaliabiltiy() {
+		return this.availability;
+	}
+	
 	public ArrayList<String> getConcentration() {
 		return concentration;
 	}
