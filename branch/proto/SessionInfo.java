@@ -15,6 +15,8 @@ public class SessionInfo
     private ArrayList<String> concentration ;
     private HashMap<Term, ArrayList<Schedule>> coursework; 
     private HashMap<Term, ArrayList<Boolean>> availability; 
+    public Term[] planTerm;
+    public ArrayList<Schedule> termOfferings = new ArrayList<Schedule>();
 
     public SessionInfo(){
     
@@ -33,8 +35,6 @@ public class SessionInfo
     }
     
 
-    public Term[] planTerm;
-    public ArrayList<Schedule> termOfferings = new ArrayList<Schedule>();
     
     /**
      * The default constructor.
@@ -150,6 +150,9 @@ public class SessionInfo
             if ( this.termOfferings.get(i).getCRN() == crn )
             {
                 schedule = this.termOfferings.get(i);
+                ArrayList<Schedule> x=this.termOfferings;
+                x.remove(i);
+                this.termOfferings=x;
                 break;
             }
                 
