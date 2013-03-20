@@ -7,9 +7,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class ClassSelection extends JPanel {
@@ -44,7 +47,6 @@ public class ClassSelection extends JPanel {
 		setActiveTerm(sessioninfo.getTerm());
 		Label1 = new JLabel("Currently Planning: " + activeTerm.toString() + " Term");
 		Label2 = new JLabel(activeTerm.toString() + " Term Weekly Schedule");
-		populateTimes();
 		init();
 	}
 
@@ -87,6 +89,12 @@ public class ClassSelection extends JPanel {
 		
 		//weekly schedule
 		JTable WeeklyTable = new JTable(WeeklyTableModel);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		for(int i = 0; i < WeeklyTable.getColumnModel().getColumnCount(); i++) {
+			 WeeklyTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+		}
+		populateTimes();
 		JScrollPane WeeklyScrollPane = new JScrollPane(WeeklyTable);
 		WeeklyTable.setPreferredScrollableViewportSize(new Dimension((int) (xSize/2.5), WeeklyTable.getRowCount() * WeeklyTable.getRowHeight()));
 		WeeklyScrollPane.setSize(WeeklyTable.getPreferredScrollableViewportSize());
@@ -135,7 +143,8 @@ public class ClassSelection extends JPanel {
 			        }
 			        Label1.setText("Currently Planning: " + activeTerm.toString() + " Term");
 			        Label2.setText(activeTerm.toString() + " Term Weekly Schedule");
-			        populateClasses();
+			        clearClassesToWeekly();
+			        setClassesToWeekly(activeTerm);
 			        SelectClasses.repaint();
 		        }
 			}
@@ -237,8 +246,34 @@ public class ClassSelection extends JPanel {
 		sessioninfo.addClass(CRN);
 	}
 	
+	private void clearClassesToWeekly() {
+		WeeklyTableModel.setRowCount(0);
+		WeeklyTableModel.setRowCount(28);
+		populateTimes();
+	}
+	
+	private void setClassesToWeekly(Term term) {
+		HashMap<Term, ArrayList<Schedule>> classes = sessioninfo.getCoursework();
+		for(Schedule schedule : classes.get(activeTerm)) {
+			for(Integer time : schedule.getTimes()) {
+				if (time % 3 == 0) {
+					WeeklyTableModel.setValueAt("X", (time % 84)/3, ((time/84)+1));
+				}
+			}
+		}
+	}
+	
 	private void addClassToWeekly(Integer CRN) {
-		
+		HashMap<Term, ArrayList<Schedule>> classes = sessioninfo.getCoursework();
+		for(Schedule schedule : classes.get(activeTerm)) {
+			if(schedule.getCRN().equals(CRN)) {
+				for(Integer time : schedule.getTimes()) {
+					if (time % 3 == 0) {
+						WeeklyTableModel.setValueAt("X", (time % 84)/3, ((time/84)+1));
+					}
+				}
+			}
+		}
 	}
 	
 	private void populateClasses() {
