@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class ClassSelection extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected Term activeTerm = Term.Fall;
-	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Location", "Prereq."}, 0) {
+	protected DefaultTableModel PlanningTableModel = new DefaultTableModel(new Object[]{"CRN", "Class", "Title", "Timeslot", "Instructor", "Location", "Prereq. For"}, 0) {
 		private static final long serialVersionUID = 2098240965623242350L;
 		public boolean isCellEditable(int row, int column) {
 	       return false;
@@ -33,6 +33,7 @@ public class ClassSelection extends JPanel {
 	JTextArea UserInfo = new JTextArea(8,20);
 	protected JLabel Label1 = new JLabel();
 	protected JLabel Label2 = new JLabel();
+	private boolean isPlanning = true;
 
 	private SessionInfo sessioninfo = new SessionInfo();
 	
@@ -125,6 +126,7 @@ public class ClassSelection extends JPanel {
 		        radioPanel.add(Summer);
 		        int n = JOptionPane.showConfirmDialog(SelectClasses, radioPanel, "Menu", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
 		        if (n == 0) {
+		        	isPlanning = true;
 		        	if (Fall.isSelected()) {
 		        		sessioninfo = DragonCourseScheduler.updateTerm(sessioninfo, Term.Fall);
 			        	setActiveTerm(Term.Fall);
@@ -145,6 +147,10 @@ public class ClassSelection extends JPanel {
 			        Label2.setText(activeTerm.toString() + " Term Weekly Schedule");
 			        clearClassesToWeekly();
 			        setClassesToWeekly(activeTerm);
+			        populateClasses();
+			        if (PlanningTableModel.getRowCount() == 0 && isPlanning) {
+			        	planningToOverview();
+			        }
 			        SelectClasses.repaint();
 		        }
 			}
@@ -155,7 +161,7 @@ public class ClassSelection extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (PlanningTable.getSelectedRow() != -1) {
 					if (e.getClickCount() == 2) {
-						if (e.getSource() == PlanningTable) {
+						if (e.getSource() == PlanningTable && isPlanning) {
 							int x = PlanningTable.getSelectedRow();
 							String classnumber = (String) PlanningTable.getValueAt(x, 1);
 							int n = JOptionPane.showConfirmDialog(SelectClasses, "Add " + classnumber +" to " + activeTerm.toString() + " schedule?", "Add Class", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -165,6 +171,11 @@ public class ClassSelection extends JPanel {
 								removeClassFromPlanning(x);
 								addClassToWeekly(CRN);
 								setUserInfoText();
+								//if there is nothing left to plan, switch to classes overview
+								if (PlanningTableModel.getRowCount() == 0) {
+									planningToOverview();
+									SelectClasses.repaint();
+								}
 							}
 						}
 					}
@@ -186,20 +197,39 @@ public class ClassSelection extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				if (PlanningTable.getSelectedRow() != -1) {
 					if(e.getKeyCode() == KeyEvent.VK_DELETE) {
-						if (e.getSource() == PlanningTable) {
+						if (e.getSource() == PlanningTable && isPlanning) {
 							int x = PlanningTable.getSelectedRow();
 							if (PlanningTableModel.getValueAt(x, 0) != null) {
 								String classnumber = (String) PlanningTable.getValueAt(x, 1);
 								int n = JOptionPane.showConfirmDialog(SelectClasses, "Are you sure you would like to remove " + classnumber +"?", "Remove Class", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 								if (n == 0) {
 									removeClassFromPlanning(x);
+									//if there is nothing left to plan, switch to classes overview
+									if (PlanningTableModel.getRowCount() == 0 && isPlanning) {
+										planningToOverview();
+										SelectClasses.repaint();
+									}
 								}
 								
 							}
 						}
+						else if (e.getSource() == PlanningTable && !isPlanning) {
+							int x = PlanningTable.getSelectedRow();
+							if (PlanningTableModel.getValueAt(x, 0) != null) {
+								String classnumber = (String) PlanningTable.getValueAt(x, 1);
+								int n = JOptionPane.showConfirmDialog(SelectClasses, "Are you sure you would like to remove " + classnumber +" from your schedule?", "Remove Class", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								if (n == 0) {
+									Integer CRN = (Integer) PlanningTableModel.getValueAt(x, 0);
+									removeClassFromPlanning(x);
+									removeClassFromUser(CRN);
+									removeClassFromWeekly(CRN);
+									setUserInfoText();
+								}
+							}
+						}
 					}
 					else if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-						if (e.getSource() == PlanningTable) {
+						if (e.getSource() == PlanningTable && isPlanning) {
 							int x = PlanningTable.getSelectedRow();
 							if (PlanningTableModel.getValueAt(x, 0) != null) {
 								
@@ -211,6 +241,11 @@ public class ClassSelection extends JPanel {
 									removeClassFromPlanning(x);
 									addClassToWeekly(CRN);
 									setUserInfoText();
+									//if there is nothing left to plan, switch to classes overview
+									if (PlanningTableModel.getRowCount() == 0 && isPlanning) {
+										planningToOverview();
+										SelectClasses.repaint();
+									}
 								}
 								
 							}
@@ -244,6 +279,12 @@ public class ClassSelection extends JPanel {
 	
 	private void addClassToUser(Integer CRN) {
 		sessioninfo.addClass(CRN);
+		//sessioninfo = DragonCourseScheduler.updateAdd(sessioninfo, CRN);
+	}
+	
+	private void removeClassFromUser(Integer CRN) {
+		sessioninfo.removeClass(CRN);
+		//sessioninfo = DragonCourseScheduler.updateRemove(sessioninfo, CRN);
 	}
 	
 	private void clearClassesToWeekly() {
@@ -270,6 +311,19 @@ public class ClassSelection extends JPanel {
 				for(Integer time : schedule.getTimes()) {
 					if (time % 3 == 0) {
 						WeeklyTableModel.setValueAt("X", (time % 84)/3, ((time/84)+1));
+					}
+				}
+			}
+		}
+	}
+	
+	private void removeClassFromWeekly(Integer CRN) {
+		HashMap<Term, ArrayList<Schedule>> classes = sessioninfo.getCoursework();
+		for(Schedule schedule : classes.get(activeTerm)) {
+			if(schedule.getCRN().equals(CRN)) {
+				for(Integer time : schedule.getTimes()) {
+					if (time % 3 == 0) {
+						WeeklyTableModel.setValueAt("", (time % 84)/3, ((time/84)+1));
 					}
 				}
 			}
@@ -333,6 +387,19 @@ public class ClassSelection extends JPanel {
 	    	s += "Summer Term Courses: " + returnString.substring(0, returnString.length()-2) + "\n";
 		}
 		UserInfo.setText(s);
+	}
+	
+	private void planningToOverview() {
+		if (PlanningTableModel.getRowCount() > 0) {
+			for (int i = PlanningTableModel.getRowCount() - 1; i > -1; i--) {
+		        PlanningTableModel.removeRow(i);
+		    }
+		}
+		isPlanning = false;
+		Label1.setText("Currently Viewing Selected Classes for " + activeTerm.toString() + " Term");
+		for(Schedule schedule :  sessioninfo.getCoursework().get(activeTerm)) {
+			PlanningTableModel.addRow(new Object[] {schedule.getCRN(), schedule.getCoursename(), schedule.getTitle(), schedule.getTimeSchedule(), schedule.getInstructor(), schedule.getLocation(),schedule.getPrereq()});
+		}		
 	}
 	
 	public SessionInfo passSession() {
