@@ -45,29 +45,13 @@ public class SessionInfo
     public void setlastAction(Action lastAction) {
         this.lastAction = lastAction;
     }
-    
 
-    
-    /**
-     * The default constructor.
-     * </br>
-     */
 
     public void setConcentration( ArrayList<String> s){
             this.concentration = s;
     }
     
-    
-//  public SessionInfo(Integer mj, ArrayList<Integer> tracks,
-//           ArrayList<ArrayList<Schedule>> courses, ArrayList<Schedule> termClasses,
-//           ArrayList<ArrayList<Boolean>> avail)
-//  {
-//          this.major = mj;
-//          this.concentration = tracks;
-//          this.coursework = courses;
-//          this.availability = avail;
-//          this.termOfferings = termClasses;
-//  }
+
     
     /**
      * The <code>getMajor</code> function retrieves the major of the 
@@ -148,16 +132,13 @@ public class SessionInfo
      * The <code>addClass</code> function adds a class section to the provided 
      * term.
      * </br>
-     * @param term
      * @param crn
      * @return
      */
     
-//TODO same thing here, code clone
     public void addClass( Integer crn)
     {
         Boolean avail = true;
-        boolean exists = false;
         Schedule schedule = new Schedule();
         
         //find schedule matching crn in termOfferings, and set
@@ -179,7 +160,6 @@ public class SessionInfo
      * The <code>removeClass</code> function removes a class from the provided 
      * term.
      * </br>
-     * @param  term
      * @param  crn
      */
     public void removeClass(Integer crn)
