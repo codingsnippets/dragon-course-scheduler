@@ -3,7 +3,7 @@ import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import static org.junit.Assert.*;
-
+import java.util.ArrayList;
 
 
 /**
@@ -16,26 +16,11 @@ import static org.junit.Assert.*;
  *
  *
  */
-//        System.out.println("Testing method " + name.getMethodName().substring(4) + "() by: ");
-//        /****   Sample New Test Case *********/
-//        System.out.println("\t" + "<what are you passing>... ");
-//
-//        //initialize your vars
-//        Object si = new Object();
-//        si.testMethod(params);
-//        expected =
-//        test = si.gettestMethod()
-//
-//        try{
-//        assertTrue( test.equals(expected) );
-//        System.out.println("Passed!");
-//        } catch(AssertionError e){
-//        System.out.println("Failed!");
-//        }
+
 public class SessionInfoTest extends Object {
     @Rule public TestName name = new TestName();
 
-    filterproto fp = new filterproto();
+    mockFilter fp = new mockFilter();
     Object expected;
     Object test;
 
@@ -51,13 +36,13 @@ public class SessionInfoTest extends Object {
 
     @Test
     public void testSetConcentration() throws Exception {
-        System.out.println("Testing method " + name.getMethodName().substring(4) + "() by: ");
+        System.out.println("\nTesting method " + name.getMethodName().substring(4) + "() by: ");
 
         /****   New Test Case *********/
         System.out.println("\t" + "setting a populated concentrations arraylist... ");
 
         SessionInfo si = new SessionInfo();
-        //si.setConcentration( fp.getConcentration() );
+        si.setConcentration( fp.getConcentration() );
         expected = new String("Algor");
         test = si.getConcentration().get(0);
 
@@ -87,7 +72,7 @@ public class SessionInfoTest extends Object {
 
     @Test
     public void testSetMajor() throws Exception {
-        System.out.println("Testing method " + name.getMethodName().substring(4) + "() by: ");
+        System.out.println("\nTesting method " + name.getMethodName().substring(4) + "() by: ");
 
         /****   New Test Case *********/
         System.out.println("\t" + "setting a String... ");
@@ -109,15 +94,14 @@ public class SessionInfoTest extends Object {
 
     @Test
     public void testSetTermOffer() throws Exception {
-        System.out.println("Testing method " + name.getMethodName().substring(4) + "() by: ");
+        System.out.println("\nTesting method " + name.getMethodName().substring(4) + "() by: ");
 
         /****   New Test Case *********/
         System.out.println("\t" + "setting populated arrayList... ");
 
         SessionInfo si = new SessionInfo();
         expected = new String("Korman 137");
-//        System.out.print("TYPE: " + fp.getCourses().getClass().toString());
-//        si.setTermOffer( fp.getCourses() );
+        si.setTermOffer( fp.getCourses() );
 
         String test = si.getTermOffer().get(0).getLocation();
 
@@ -130,23 +114,51 @@ public class SessionInfoTest extends Object {
     }
 
     @Test
-    public void testSetClasses() throws Exception {
-
-    }
-
-    @Test
-    public void testSetTerm() throws Exception {
-
-    }
-
-    @Test
     public void testAddClass() throws Exception {
+        System.out.println("Testing method " + name.getMethodName().substring(4) + "() by: ");
+        /****   New Test Case *********/
+        System.out.println("\t" + "adding an a course that is offered... ");
 
+        //initialize your vars
+        SessionInfo si = new SessionInfo();
+        si.setTermOffer( fp.getCourses() );
+        si.addClass(new Integer(360873));
+        expected = new Integer(360873);
+        test = si.getCoursework().get(Term.Fall).get(0).getCRN();
+
+        try
+        {
+            assertTrue( test.equals(expected) );
+            System.out.println("Passed!");
+        }
+        catch(AssertionError e){
+            System.out.println("Failed!");
+        }
     }
 
     @Test
     public void testRemoveClass() throws Exception {
+        System.out.println("Testing method " + name.getMethodName().substring(4) + "() by: ");
+        /****   New Test Case *********/
+        System.out.println("\t" + "adding an a course that is offered... ");
 
+        //initialize your vars
+        SessionInfo si = new SessionInfo();
+        si.setClasses( Term.Fall, fp.getCourses() );
+        si.removeClass(new Integer(360873));
+        expected = new Integer(360873);
+        //test = si.getCoursework().get(Term.Fall).get(0).getCRN();
+
+        try
+        {
+            assertFalse( testHelper.containsCRNmatch(si.getCoursework().get(Term.Fall), new Integer(360873)) );
+            System.out.println("Passed!");
+        }
+        catch(AssertionError e){
+            System.out.println("Failed!");
+        }
     }
+
+
 
 }
