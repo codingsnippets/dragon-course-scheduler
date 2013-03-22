@@ -85,11 +85,41 @@ public class DragonCourseSchedulerTest extends Object {
         catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("test: " + test2.get(1).getCourse_no());
-        System.out.println("expected " + expected.get(1).getCourse_no());
+
         try
         {
             assertTrue( test2.get(1).getCourse_no().equals(expected.get(1).getCourse_no()) );
+            System.out.println("Passed!");
+        }
+        catch(AssertionError e)
+        {
+            System.out.println("Failed!");
+            e.printStackTrace();
+        }
+
+        /****   New Test Case *********/
+        System.out.println("\t" + "passing an empty String... ");
+
+        String emptyString = "";
+        ArrayList<Schedule> test3 = new ArrayList<Schedule>();
+        //ArrayList<Schedule> expected3 = new ArrayList<Schedule>();
+
+        try
+        {
+            test3 = (ArrayList<Schedule>) PrivateAccessor.invoke(DragonCourseScheduler.class,
+                    "parseHistory",
+                    new Class[]{String.class},
+                    new Object[]{emptyString}
+            );
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try
+        {
+            assertTrue( test3.isEmpty() );
             System.out.println("Passed!");
         }
         catch(AssertionError e)
