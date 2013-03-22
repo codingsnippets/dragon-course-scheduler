@@ -173,10 +173,11 @@ public class SessionInfo
         //remove schedules of matching crn from provided term
         for (int i = 0; i < this.coursework.get(term).size(); i++ )
         {
-            if (this.coursework.get(term).get(i).getCRN() == crn )
+            if (this.coursework.get(term).get(i).getCRN().equals(crn) )
             {
-                this.coursework.get(term).remove(i);
                 modAvail(term, no_avail, this.coursework.get(term).get(i).getTimes() );
+                this.coursework.get(term).remove(i);
+
             }
                 
         }
