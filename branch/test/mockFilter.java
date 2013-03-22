@@ -1,10 +1,10 @@
-import sun.jvm.hotspot.tools.PMap;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class filterproto {
+public class mockFilter{
     /*
      * Method Name: getMajors
      * Method Description:  This method will get major information based on the UHO and return classes for the user to select
@@ -36,7 +36,7 @@ public class filterproto {
      * @param MajorCode the major is converted into unique identifier for db to recognize
      * @return
      */
-    public ArrayList getConcentration(Integer MajorCode){
+    public ArrayList getConcentration(/*Integer MajorCode*/){
         String table="track";
         String fields="coursename";
 
@@ -57,7 +57,7 @@ public class filterproto {
     * @param userHistory:   The User history object that is passed from DCS
     * @return
     */
-    public ArrayList getCourses(Term term, SessionInfo userHistory){
+    public ArrayList getCourses(/*Term term, SessionInfo userHistory*/){
 
         //based off term
 

@@ -96,6 +96,11 @@ public class SessionInfo
     {
             this.termOfferings = termClasses;
     }
+
+    public ArrayList<Schedule> getTermOffer()
+    {
+        return this.termOfferings;
+    }
     
     /**
      * The <code>setClasses</code> function sets the provided classes to the 
@@ -144,7 +149,7 @@ public class SessionInfo
         //find schedule matching crn in termOfferings, and set
         for (int i = 0; i < this.termOfferings.size(); i++ )
         {
-            if ( this.termOfferings.get(i).getCRN() == crn )
+            if ( this.termOfferings.get(i).getCRN().equals(crn) )
             {
                 schedule = this.termOfferings.get(i);
                 break;
@@ -187,13 +192,12 @@ public class SessionInfo
      */
     private void modAvail(Term term, boolean status, ArrayList<Integer> times)
     {
+        ArrayList<Boolean> x = this.availability.get(term);
         for (Integer t: times)
         {
-               ArrayList<Boolean> x=this.availability.get(term);
-               x.set( t, status );
-               this.availability.put(term,x);
+               x.set( t.intValue(), status );
         }
-            
+        this.availability.put(term,x);
             
     } //End of modAvail()
     
