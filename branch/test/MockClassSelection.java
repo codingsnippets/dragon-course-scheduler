@@ -6,16 +6,20 @@
  * To change this template use File | Settings | File Templates.
  */
 
+import org.mockito.Mockito;
 import org.mockito.Mockito.*;
 
+import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 public class MockClassSelection extends ClassSelection {
-    SessionInfo sessioninfo = new SessionInfo();
-
+    SessionInfo sessioninfo = Mockito.mock(SessionInfo.class);
+    ArrayList<Integer> classes = new ArrayList<Integer>();
+    Term activeTerm = Term.Fall;
+    DefaultTableModel mockTable = Mockito.mock(DefaultTableModel.class);
 
     public MockClassSelection() {
 
@@ -25,12 +29,12 @@ public class MockClassSelection extends ClassSelection {
         activeTerm = t;
     }
 
-    public void removeClassFromPlanning(int SelectedRow) {
-        PlanningTableModel.removeRow(SelectedRow);
+    public void removeClassFromPlanning(Integer SelectedRow) {
+        mockTable.removeRow(SelectedRow);
     }
 
     public void addClassToUser(Integer CRN) {
-        sessioninfo.addClass(CRN);
+        classes.add(CRN);
         //sessioninfo = DragonCourseScheduler.updateAdd(sessioninfo, CRN);
     }
 

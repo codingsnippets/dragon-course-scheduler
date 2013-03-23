@@ -3,7 +3,6 @@ import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import static org.junit.Assert.*;
-import java.util.ArrayList;
 
 
 /**
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 public class SessionInfoTest extends Object {
     @Rule public TestName name = new TestName();
 
-    mockFilter fp = new mockFilter();
+    MockFilter fp = new MockFilter();
     Object expected;
     Object test;
 
@@ -42,7 +41,7 @@ public class SessionInfoTest extends Object {
         System.out.println("\t" + "setting a populated concentrations arraylist... ");
 
         SessionInfo si = new SessionInfo();
-        si.setConcentration( fp.getConcentration() );
+        si.setConcentration( fp.mockGetConcentration() );
         expected = new String("Algor");
         test = si.getConcentration().get(0);
 
@@ -101,7 +100,7 @@ public class SessionInfoTest extends Object {
 
         SessionInfo si = new SessionInfo();
         expected = new String("Korman 137");
-        si.setTermOffer( fp.getCourses() );
+        si.setTermOffer( fp.mockGetCourses() );
 
         String test = si.getTermOffer().get(0).getLocation();
 
@@ -121,7 +120,7 @@ public class SessionInfoTest extends Object {
 
         //initialize your vars
         SessionInfo si = new SessionInfo();
-        si.setTermOffer( fp.getCourses() );
+        si.setTermOffer( fp.mockGetCourses() );
         si.addClass(new Integer(360873));
         expected = new Integer(360873);
         test = si.getCoursework().get(Term.Fall).get(0).getCRN();
@@ -144,7 +143,7 @@ public class SessionInfoTest extends Object {
 
         //initialize your vars
         SessionInfo si = new SessionInfo();
-        si.setClasses( Term.Fall, fp.getCourses() );
+        si.setClasses( Term.Fall, fp.mockGetCourses() );
         si.removeClass(new Integer(360873));
         expected = new Integer(360873);
         //test = si.getCoursework().get(Term.Fall).get(0).getCRN();
